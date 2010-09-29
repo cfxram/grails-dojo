@@ -8,3 +8,20 @@
 //
 //    ant.mkdir(dir:"${basedir}/grails-app/jobs")
 //
+
+Ant.property(environment: "env")
+grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
+def dojoDir = "/web-app/js/dojo/1.4.3/dojo"
+
+Ant.sequential {
+  event("StatusUpdate", ["Installing Dojo Core 1.4.3."])
+
+  mkdir(dir: "${basedir}${dojoDir}")
+  copy(todir: "${basedir}${dojoDir}") {
+    fileset(dir: "${pluginBasedir}${dojoDir}") {
+      include(name: "dojo.js")
+    }
+  }
+}
+
+event("StatusFinal", ["Dojo Core 1.4.3 has been installed into the application."])

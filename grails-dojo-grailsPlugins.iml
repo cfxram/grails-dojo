@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$USER_HOME_GRAILS$/1.3.4/projects/grails-dojo/plugins/hibernate-1.3.4" />
+    <content url="file://$USER_HOME_GRAILS$/1.3.4/projects/grails-dojo/plugins/tomcat-1.3.4">
+      <sourceFolder url="file://$USER_HOME_GRAILS$/1.3.4/projects/grails-dojo/plugins/tomcat-1.3.4/src/groovy" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-1.3.4" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library name="Grails User Library">
+        <CLASSES>
+          <root url="file://$USER_HOME_GRAILS$/1.3.4/projects/grails-dojo/plugins/tomcat-1.3.4/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$USER_HOME_GRAILS$/1.3.4/projects/grails-dojo/plugins/tomcat-1.3.4/lib" recursive="false" />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
