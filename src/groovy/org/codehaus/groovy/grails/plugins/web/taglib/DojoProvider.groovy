@@ -53,7 +53,7 @@ class DojoProvider implements JavascriptProvider {
     "dojo.xhr('${method}',{" +
         (!async ? "sync:${async}, ": "") +
         "preventCache:${preventCache}, " +
-        (formName?.length() ? "form:'${formName}', " : "") + 
+        (formName?.length() ? "form:${formName}, " : "") + 
         "url:'${url}', " +
         "load:function(response){" +
             "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
@@ -135,6 +135,13 @@ class DojoProvider implements JavascriptProvider {
       attrs.method = "Post"
     }
 
-    attrs.formName = attrs.name
+    if(attrs?.forSubmitTag){
+      // This is for <g:submitToRemote>
+      attrs.formName = "this.form"  
+    }
+    else{
+      // This is for <g:remoteForm>
+      attrs.formName = "'${attrs.name}'"
+    }
   }
 }

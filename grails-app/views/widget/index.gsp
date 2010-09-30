@@ -89,7 +89,7 @@
   </li>
 </ul>
 
-<div style="width:400px; height:300px; float:right; margin-right:2em; border:1px solid gray; background:#eee; padding:1em"> 
+<div style="width:400px; height:400px; float:right; margin-right:2em; border:1px solid gray; background:#eee; padding:1em"> 
   <g:formRemote name="myForm" action="remoteFormSubmit" update="myUpdateRegion" url="[action:'remoteFormSubmit']">
     <div>
       FormRemote
@@ -120,6 +120,23 @@
     </div>
     <g:submitButton name="save" value="Save Data"/>
   </g:formRemote>
+   <br/>
+
+
+  <g:form>
+    <div>
+      Submit To Remote
+    </div>
+    <div>
+      <label for="firstName">First Name:</label>
+      <g:textField name="firstName"/>
+    </div>
+    <div>
+      <label for="lastName">Last Name:</label>
+      <g:textField name="lastName"/>
+    </div>
+    <g:submitToRemote action="remoteFormSubmit" value="Save Data" update="myUpdateRegion2"/>
+  </g:form>
 </div>
 
 
