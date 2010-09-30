@@ -39,25 +39,21 @@ class DojoProvider implements JavascriptProvider {
     def updateDomElem       = props?.updateDomElem ?: ""
     def errorDomElem        = props?.errorDomElem ?: ""
     def async               = props?.async ?: true
-    def onSuccess           = props?.onSuccess+";" ?: ""
-    def onFailure           = props?.onFailure+";" ?: ""
-    def onLoading           = props?.onLoading+";" ?: ""
-    def onLoaded            = props?.onLoaded+";" ?: ""
-    def onComplete          = props?.onComplete+";" ?: ""
+    def onSuccess           = (props?.onSuccess) ? "${props?.onSuccess};" : ""
+    def onFailure           = (props?.onFailure) ? "${props?.onFailure};" : ""
+    def onLoading           = (props?.onLoading) ? "${props?.onLoading};" : ""
+    def onLoaded            = (props?.onLoaded) ? "${props?.onLoaded};" : ""
+    def onComplete          = (props?.onComplete) ? "${props?.onComplete};" : ""
     def statusCodeHandlers  = props?.statusCodeHandlers ?: ""
-    def syncForm            = props?.syncForm ?: false
+    def formName            = props?.formName ?: ""
     def preventCache        = props?.preventCache ?: false
 
-    def form = "null"
-    if (syncForm) {
-      form = "dojo.byId(this.form)"
-    }
     def dojoString =
-    " ${onLoading} " +
+    "${onLoading}" +
     "dojo.xhr('${method}',{" +
         (!async ? "sync:${async}, ": "") +
         "preventCache:${preventCache}, " +
-        "form:${form}, " +
+        (formName?.length() ? "form:'${formName}', " : "") + 
         "url:'${url}', " +
         "load:function(response){" +
             "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
@@ -90,12 +86,16 @@ class DojoProvider implements JavascriptProvider {
         method = tmpMethod
       }
     }
+    def url           = taglib.createLink(attrs)
+    def updateDomElem = (attrs.update instanceof Map ? attrs.update.success : attrs.update)
+    def errorDomElem  = (attrs.update instanceof Map ? attrs.update.failure : attrs.update)
     def sync          = attrs.sync && attrs.sync == "true" ?: "false"
     def onSuccess     = attrs?.onSuccess
     def onFailure     = attrs?.onFailure
     def onLoading     = attrs?.onLoading
     def onLoaded      = attrs?.onLoaded
     def onComplete    = attrs?.onComplete
+    def formName      = attrs?.formName
     def preventCache  = attrs?.preventCache
     ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache'].each{attrs.remove(it)}
 
@@ -113,9 +113,9 @@ class DojoProvider implements JavascriptProvider {
     // Generate XHR Output
     out << getDojoXhrString([
       method: method,
-      url: taglib.createLink(attrs),
-      updateDomElem: (attrs.update instanceof Map ? attrs.update.success : attrs.update),
-      errorDomElem: (attrs.update instanceof Map ? attrs.update.failure : attrs.update),
+      url: url,
+      updateDomElem: updateDomElem,
+      errorDomElem: errorDomElem,
       async: sync,
       onSuccess: onSuccess,
       onFailure: onFailure,
@@ -123,7 +123,7 @@ class DojoProvider implements JavascriptProvider {
       onLoaded: onLoaded,
       onComplete: onComplete,
       statusCodeHandlers: statusCodeHandlers,                  
-      syncForm: null,
+      formName: formName,
       preventCache: preventCache])
   }
 
@@ -131,11 +131,10 @@ class DojoProvider implements JavascriptProvider {
 
   
   def prepareAjaxForm(attrs) {
-    if (attrs.options) {
-      attrs.options.formNode = "dojo.byId('${attrs.name}')"
+    if(!attrs.method){
+      attrs.method = "Post"
     }
-    else {
-      attrs.options = [formNode: "dojo.byId('${attrs.name}')"]
-    }
+
+    attrs.formName = attrs.name
   }
 }

@@ -7,4 +7,8 @@ class WidgetController {
     def remotePage = {
       
     }
+
+    def remoteFormSubmit = {
+      println params
+    }
 }
