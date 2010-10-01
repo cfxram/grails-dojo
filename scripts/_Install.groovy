@@ -14,14 +14,14 @@ grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 def dojoDir = "/web-app/js/dojo/1.4.3/dojo"
 
 Ant.sequential {
-  event("StatusUpdate", ["Installing Dojo Core 1.4.3."])
+  event("StatusUpdate", ["Copying dojo.js file into the application"])
 
   mkdir(dir: "${basedir}${dojoDir}")
   copy(todir: "${basedir}${dojoDir}") {
     fileset(dir: "${pluginBasedir}${dojoDir}") {
       include(name: "dojo.js")
+      include(name: "LICENSE")
     }
   }
 }
-
-event("StatusFinal", ["Dojo Core 1.4.3 has been installed into the application."])
+event("StatusFinal", ["\nDone.\n'${dojoDir}/dojo.js' has been copied into the application.\nTo install the full Dojo Toolkit type 'grails install-dojo'."])

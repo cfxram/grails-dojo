@@ -10,4 +10,4 @@ def dojoDir = "/web-app/js/dojo"
 Ant.sequential {
   delete(dir: "${basedir}${dojoDir}")
 }
-event("StatusFinal", ["Dojo Core 1.4.3 has been removed."])
+event("StatusFinal", ["Dojo Base 1.4.3 has been removed."])

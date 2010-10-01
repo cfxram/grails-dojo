@@ -8,3 +8,7 @@
 //
 //    ant.mkdir(dir:"${basedir}/grails-app/jobs")
 //
+
+
+
+// Nothing needed here for the Dojo

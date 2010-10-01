@@ -5,17 +5,25 @@ class DojoGrailsPlugin {
   def grailsVersion = "1.3.4 > *"
   def dependsOn = [:]
   def pluginExcludes = [
-          "grails-app/views/*"
+          "grails-app/views/error.gsp",
+          "grails-app/views/widget/index.gsp",
+          "grails-app/views/widget/remoteFormSubmit.gsp",
+          "grails-app/views/widget/remoteFunctionAction.gsp",
+          "grails-app/views/widget/remotePage.gsp",
+          "grails-app/controllers/dojo/WidgetController.groovy"        
   ]
   def author = "Rob Meidal"
-  def authorEmail = "cfxram at gmail"
-  def title = "Dojo for Grails"
-  def description = "Adds the Dojo Toolkit as a Javascript Provider for Grails."
-  def documentation = "http://grails.org/plugin/grails-dojo"
+  def authorEmail = "cfxram@gmail.com, rob@netapplogic.com"
+  def title = "Dojo 1.4.3 for Grails"
+  def description = """
+    Adds Dojo Base as a Javascript Provider for Grails. This provides full support for
+    <g:formRemote>, <g:remoteField>, <g:remoteFunction>, <g:remoteLink> and <g:submitToRemote>.
+    For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
+  """  
+  def documentation = "http://grails.org/plugin/dojo"
 
   def doWithApplicationContext = { applicationContext ->
     JavascriptTagLib.PROVIDER_MAPPINGS.dojo = DojoProvider.class
-    // expects /js/dojo/1.4.3/dojo/dojo.js
     JavascriptTagLib.LIBRARY_MAPPINGS.dojo = ["dojo/${version}/dojo/dojo"]
   }
 }
