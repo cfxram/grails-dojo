@@ -98,6 +98,8 @@ class DojoProvider implements JavascriptProvider {
 
 
   def doRemoteFunction(taglib, attrs, out) {
+    println attrs.url
+    
     def allowedMethods = ["Get", "Post", "Put", "Delete"]
     def method = "Get"
     if (attrs.method) {
@@ -108,7 +110,7 @@ class DojoProvider implements JavascriptProvider {
     }
     def parameters    = convertParamsToDojoJson(attrs?.params)
     attrs.remove('params') // to not duplicate these params on the url.
-    def url           = taglib.createLink(attrs)
+    def url           = attrs?.url instanceof String ? attrs.url : taglib.createLink(attrs)
     def updateDomElem = (attrs?.update instanceof Map ? attrs.update.success : attrs.update)
     def errorDomElem  = (attrs?.update instanceof Map ? attrs.update.failure : attrs.update)
     def sync          = attrs.sync && attrs.sync == "true" ?: "false"

@@ -83,6 +83,16 @@
     </g:remoteLink>
   </li>
   <li>
+    <g:remoteLink url="remotePage.gsp" update="myUpdateRegion" method="post">
+      Do Request with url as string
+    </g:remoteLink>
+  </li>
+  <li>
+    <g:remoteLink url="[action:'remotePage']" update="myUpdateRegion" method="post">
+      Do Request with url as map
+    </g:remoteLink>
+  </li>
+  <li>
     <g:remoteLink  action="remotePage" update="myUpdateRegion" asynchronous="false">
       Synchronized
     </g:remoteLink>
