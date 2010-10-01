@@ -2,7 +2,7 @@ import org.codehaus.groovy.grails.plugins.web.taglib.*
 
 class DojoGrailsPlugin {
   def version = "1.4.3"
-  def grailsVersion = "1.3.4 > *"
+  def grailsVersion = "1.3.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
           "grails-app/views/error.gsp",
@@ -13,7 +13,7 @@ class DojoGrailsPlugin {
           "grails-app/controllers/dojo/WidgetController.groovy"        
   ]
   def author = "Rob Meidal"
-  def authorEmail = "cfxram@gmail.com, rob@netapplogic.com"
+  def authorEmail = "cfxram@codehaus.org"
   def title = "Dojo 1.4.3 for Grails"
   def description = """
     Adds Dojo Base as a Javascript Provider for Grails. This provides full support for
