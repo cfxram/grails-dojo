@@ -53,7 +53,7 @@
             onLoaded="onLoaded()"
             onComplete="onComplete()"
             on404="onFailure404()"
-            on200="onFailure200()">
+            on200="onFailure200()" params="[userid:1, myName:'Rob']">
       Click Here to Test
     </g:remoteLink>
   </li>
@@ -73,7 +73,7 @@
   </li>
 
   <li>
-    <g:remoteLink action="remotePage2" update="myUpdateRegion">
+    <g:remoteLink action="remotePage2" update="myUpdateRegion" >
       Fail without Handlers
     </g:remoteLink>
   </li>
@@ -86,6 +86,30 @@
     <g:remoteLink  action="remotePage" update="myUpdateRegion" asynchronous="false">
       Synchronized
     </g:remoteLink>
+  </li>
+  <li>
+    Remote Function
+    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color='+this.value")}">
+      <option value="">Choose a Color:</option>
+      <option value="red">Red</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="transparent">No Color</option>
+    </select>
+  </li>
+  <li>
+    Remote Function with Map Params
+    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:[color:'this.value'])}">
+      <option value="">Choose a Color:</option>
+      <option value="red">Red</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="transparent">No Color</option>
+    </select>
+  </li>  
+  <li>
+    Remote Field:
+    <g:remoteField action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
   </li>
 </ul>
 
@@ -137,6 +161,8 @@
     </div>
     <g:submitToRemote action="remoteFormSubmit" value="Save Data" update="myUpdateRegion2"/>
   </g:form>
+
+
 </div>
 
 

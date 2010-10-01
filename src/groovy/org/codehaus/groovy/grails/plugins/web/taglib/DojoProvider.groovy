@@ -15,27 +15,47 @@ package org.codehaus.groovy.grails.plugins.web.taglib;
  */
 class DojoProvider implements JavascriptProvider {
 
-  /**
-   * 
-   * @param method
-   * @param url
-   * @param updateDomElem
-   * @param errorDomElem
-   * @param async
-   * @param onSuccess
-   * @param onFailure
-   * @param onLoading
-   * @param onLoaded
-   * @param onComplete
-   * @param httpErrorHandlers
-   * @param syncForm
-   * @param preventCache
-   * @return
-   */
 
+  
+  /**
+   * Grails formats params like this: 'color='+this.value. Dojo needs {'color':this.value}.
+   * <g:remoteField> automagically changes this to the above format.. we need to convert it back to a json obj.
+   * @param params
+   * @return String
+   */
+  private def convertParamsToDojoJson(params) {
+    def paramString = ""
+    if(params instanceof Map){
+      def paramList = []      
+      params.each{k, v ->
+        if(v instanceof String && (!v.find(/this./)) ){
+          v = "'${v}'"
+        }
+        paramList.add("'${k}':${v}")
+
+      }
+      paramString = "{${paramList.join(",")} }"
+    }
+    else if(params?.length()){
+      paramString = params.replaceAll(/\+/,":").replaceAll(/\=/,"")
+      paramString = "{${paramString}}"
+    }
+    return paramString
+  }
+
+
+
+
+   /**
+    * Will generate the Ajax javascript to be applied to the html dom node.
+    *
+    * @param props
+    * @return
+    */
   def private getDojoXhrString(Map props){
     def method              = props?.method ?: "Get"
     def url                 = props?.url ?: ""
+    def parameters          = props?.parameters ?: ""
     def updateDomElem       = props?.updateDomElem ?: ""
     def errorDomElem        = props?.errorDomElem ?: ""
     def async               = props?.async ?: true
@@ -52,8 +72,9 @@ class DojoProvider implements JavascriptProvider {
     "${onLoading}" +
     "dojo.xhr('${method}',{" +
         (!async ? "sync:${async}, ": "") +
+        (parameters?.length() ? "content:${parameters}, " : "") +
+        (formName?.length() ? "form:${formName}, " : "") +
         "preventCache:${preventCache}, " +
-        (formName?.length() ? "form:${formName}, " : "") + 
         "url:'${url}', " +
         "load:function(response){" +
             "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
@@ -76,7 +97,6 @@ class DojoProvider implements JavascriptProvider {
 
 
 
-
   def doRemoteFunction(taglib, attrs, out) {
     def allowedMethods = ["Get", "Post", "Put", "Delete"]
     def method = "Get"
@@ -86,9 +106,11 @@ class DojoProvider implements JavascriptProvider {
         method = tmpMethod
       }
     }
+    def parameters    = convertParamsToDojoJson(attrs?.params)
+    attrs.remove('params') // to not duplicate these params on the url.
     def url           = taglib.createLink(attrs)
-    def updateDomElem = (attrs.update instanceof Map ? attrs.update.success : attrs.update)
-    def errorDomElem  = (attrs.update instanceof Map ? attrs.update.failure : attrs.update)
+    def updateDomElem = (attrs?.update instanceof Map ? attrs.update.success : attrs.update)
+    def errorDomElem  = (attrs?.update instanceof Map ? attrs.update.failure : attrs.update)
     def sync          = attrs.sync && attrs.sync == "true" ?: "false"
     def onSuccess     = attrs?.onSuccess
     def onFailure     = attrs?.onFailure
@@ -99,10 +121,9 @@ class DojoProvider implements JavascriptProvider {
     def preventCache  = attrs?.preventCache
     ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache'].each{attrs.remove(it)}
 
-    
     // Http Status Code Handlers
     def statusCodes = attrs.findAll { k,v ->
-        k ==~ /on(\p{Upper}|\d){1}\w+/
+      k ==~ /on(\p{Upper}|\d){1}\w+/
     }
     def statusCodeHandlers = ""
     statusCodes.each{k,v ->
@@ -112,24 +133,25 @@ class DojoProvider implements JavascriptProvider {
 
     // Generate XHR Output
     out << getDojoXhrString([
-      method: method,
-      url: url,
-      updateDomElem: updateDomElem,
-      errorDomElem: errorDomElem,
-      async: sync,
-      onSuccess: onSuccess,
-      onFailure: onFailure,
-      onLoading: onLoading,
-      onLoaded: onLoaded,
-      onComplete: onComplete,
-      statusCodeHandlers: statusCodeHandlers,                  
-      formName: formName,
-      preventCache: preventCache])
+            method: method,
+            url: url,
+            parameters: parameters,
+            updateDomElem: updateDomElem,
+            errorDomElem: errorDomElem,
+            async: sync,
+            onSuccess: onSuccess,
+            onFailure: onFailure,
+            onLoading: onLoading,
+            onLoaded: onLoaded,
+            onComplete: onComplete,
+            statusCodeHandlers: statusCodeHandlers,
+            formName: formName,
+            preventCache: preventCache])
   }
 
 
 
-  
+
   def prepareAjaxForm(attrs) {
     if(!attrs.method){
       attrs.method = "Post"
@@ -137,7 +159,7 @@ class DojoProvider implements JavascriptProvider {
 
     if(attrs?.forSubmitTag){
       // This is for <g:submitToRemote>
-      attrs.formName = "this.form"  
+      attrs.formName = "this.form"
     }
     else{
       // This is for <g:remoteForm>
