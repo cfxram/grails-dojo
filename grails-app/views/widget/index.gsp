@@ -140,6 +140,7 @@
   </g:formRemote>
   <br/>
 
+  
   <g:formRemote name="myForm2" action="remoteFormSubmit" update="myUpdateRegion" url="[action:'remoteFormSubmit']" method="Get" on200="onFailure200()">
     <div>
       FormRemote with Get
