@@ -5,6 +5,7 @@ class DojoGrailsPlugin {
   def grailsVersion = "1.3.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
+          "grails-app/conf/Config.groovy",
           "grails-app/views/error.gsp",
           "grails-app/views/widget/index.gsp",
           "grails-app/views/widget/remoteFormSubmit.gsp",
