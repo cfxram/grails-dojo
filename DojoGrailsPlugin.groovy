@@ -6,12 +6,14 @@ class DojoGrailsPlugin {
   def dependsOn = [:]
   def pluginExcludes = [
           "grails-app/conf/Config.groovy",
+          "grails-app/conf/BootStrap.groovy",
+          "grails-app/controllers/org/dojotoolkit/WidgetController.groovy",
+          "grails-app/domain/org/dojotoolkit/Widget.groovy",
           "grails-app/views/error.gsp",
           "grails-app/views/widget/index.gsp",
           "grails-app/views/widget/remoteFormSubmit.gsp",
           "grails-app/views/widget/remoteFunctionAction.gsp",
-          "grails-app/views/widget/remotePage.gsp",
-          "grails-app/controllers/dojo/WidgetController.groovy"        
+          "grails-app/views/widget/remotePage.gsp"  
   ]
   def author = "Rob Meidal"
   def authorEmail = "cfxram@codehaus.org"
