@@ -116,8 +116,8 @@ class DojoTagLib {
 
 
 
-    // Add remoteLink specific attrs.
-    ['method','sync','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','update'].each{
+    // Add remoteLink specific attrs. (and formName)
+    ['method','sync','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','update','formName'].each{
       if(attrs[it]){
         linkTagAttrs[it] = attrs[it];        
       }
