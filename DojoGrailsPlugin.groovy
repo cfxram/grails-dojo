@@ -11,6 +11,8 @@ class DojoGrailsPlugin {
           "grails-app/domain/org/dojotoolkit/Widget.groovy",
           "grails-app/views/error.gsp",
           "grails-app/views/widget/index.gsp",
+          "grails-app/views/widget/index.gsp",
+          "grails-app/views/widget/list.gsp",          
           "grails-app/views/widget/remoteFormSubmit.gsp",
           "grails-app/views/widget/remoteFunctionAction.gsp",
           "grails-app/views/widget/remotePage.gsp"  
