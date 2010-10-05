@@ -12,7 +12,7 @@
             on404="onFailure404()"
             on200="onFailure200()"/>
 
-    <dojo:sortableColumn elementID="colorSort" action="listFragment" property="color" title="Color" update="myUpdateRegion"/>
+    <dojo:sortableColumn action="listFragment" property="color" title="Color" update="myUpdateRegion"/>
   </tr>
   </thead>
   <tbody>
