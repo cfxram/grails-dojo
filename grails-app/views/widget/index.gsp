@@ -163,12 +163,12 @@
       Submit To Remote
     </div>
     <div>
-      <label for="firstName">First Name:</label>
-      <g:textField name="firstName"/>
+      <label for="state">State:</label>
+      <g:textField name="state"/>
     </div>
     <div>
-      <label for="lastName">Last Name:</label>
-      <g:textField name="lastName"/>
+      <label for="zipCode">Zip Code:</label>
+      <g:textField name="zipCode"/>
     </div>
     <g:submitToRemote action="remoteFormSubmit" value="Save Data" update="myUpdateRegion2"/>
   </g:form>
