@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Widget Tester Page</title>
-  <g:javascript library="dojo"/>
+  <g:javascript library="prototype"/>
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
@@ -38,7 +38,14 @@
     }
 
 
+    function rename(name){
+      var renamedString= prompt ("Enter new name:", name);
+      ${remoteFunction(action:'remoteFunctionAction', update:'myUpdateRegion',params:"'name='+renamedString")}
+    }
   </g:javascript>
+
+
+
 </head>
 <body>
 
@@ -83,9 +90,11 @@
     </g:remoteLink>
   </li>
   <li>
+    %{-- Only works in dojo. not prototype.
     <g:remoteLink url="remotePage.gsp" update="myUpdateRegion" method="post">
       Do Request with url as string
     </g:remoteLink>
+    --}%
   </li>
   <li>
     <g:remoteLink url="[action:'remotePage']" update="myUpdateRegion" method="post">
@@ -109,7 +118,7 @@
   </li>
   <li>
     Remote Function with Map Params
-    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:[color:'this.value'])}">
+    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:[color:'this.value',myName:'\'Rob\''])}">
       <option value="">Choose a Color:</option>
       <option value="red">Red</option>
       <option value="green">Green</option>
@@ -121,6 +130,7 @@
     Remote Field:
     <g:remoteField action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
   </li>
+  <li>Remote Function: <button onclick="rename('Rob')">Click Me</button></li>
 </ul>
 
 <div style="width:400px; height:400px; float:right; margin-right:2em; border:1px solid gray; background:#eee; padding:1em"> 

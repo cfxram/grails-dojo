@@ -28,11 +28,7 @@ class DojoProvider implements JavascriptProvider {
     if(params instanceof Map){
       def paramList = []      
       params.each{k, v ->
-        if(v instanceof String && (!v.find(/this./)) ){
-          v = "'${v}'"
-        }
         paramList.add("'${k}':${v}")
-
       }
       paramString = "{${paramList.join(",")} }"
     }
