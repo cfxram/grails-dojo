@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Widget Tester Page</title>
-  <g:javascript library="prototype"/>
+  <g:javascript library="dojo"/>
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
@@ -37,11 +37,17 @@
       console.log("Had a 200 failure.")
     }
 
-
-    function rename(name){
+    /* The params attribute changes depending on if you are using prototype or dojo.
+    function renameForPrototype(name, myId){
       var renamedString= prompt ("Enter new name:", name);
-      ${remoteFunction(action:'remoteFunctionAction', update:'myUpdateRegion',params:"'name='+renamedString")}
+      ${remoteFunction(action:'remoteFunctionAction', update:'myUpdateRegion',params:"'name='+renamedString+'&myId='+myId")}
     }
+    */
+
+    function renameForDojo(name, myId){
+      var renamedString= prompt ("Enter new name:", name);
+      ${remoteFunction(action:'remoteFunctionAction', update:'myUpdateRegion',params:[name:'renamedString',myId:'myId'])}
+    }    
   </g:javascript>
 
 
@@ -130,7 +136,7 @@
     Remote Field:
     <g:remoteField action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
   </li>
-  <li>Remote Function: <button onclick="rename('Rob')">Click Me</button></li>
+  <li>Remote Function: <button onclick="renameForDojo('Rob',34)">Click Me</button></li>
 </ul>
 
 <div style="width:400px; height:400px; float:right; margin-right:2em; border:1px solid gray; background:#eee; padding:1em"> 

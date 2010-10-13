@@ -16,7 +16,9 @@ class DojoGrailsPlugin {
           "grails-app/views/widget/list.gsp",          
           "grails-app/views/widget/remoteFormSubmit.gsp",
           "grails-app/views/widget/remoteFunctionAction.gsp",
-          "grails-app/views/widget/remotePage.gsp"  
+          "grails-app/views/widget/remotePage.gsp",
+          "web-app/js/prototype/prototype.js"
+          
   ]
   def author = "Rob Meidal"
   def authorEmail = "cfxram@codehaus.org"
