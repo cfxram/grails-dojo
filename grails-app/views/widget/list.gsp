@@ -38,17 +38,34 @@
     }
   </g:javascript>
   <style type="text/css">
-    .paginate{
-      
+    .paginateBar{
+        padding-bottom:0.5em;
     }
-    .nextLink{
-      
+
+    .paginateBar .step,
+    .paginateBar .nextLink,
+    .paginateBar .prevLink,
+    .paginateBar .currentStep{
+        padding: 0.3em 0.7em 0.3em 0.7em;
+        border: 1px solid rgb(192, 192, 192);
+        margin:2px;
     }
-    .prevLink{
-      
+    .paginateBar .step{
+        background:#eee;
+        color:gray;
     }
-    .step{
-      
+    .paginateBar .currentStep{
+        font-weight:bold;
+        border:1px solid gray;
+    }
+    .paginateBar .nextLink, .paginateBar .prevLink{
+        padding: 0.3em 0.7em 0.3em 0.7em;
+        border: 1px solid rgb(192, 192, 192);
+        border-bottom: 1px solid rgb(155, 155, 155);
+        font-weight: normal;
+        line-height: 38px;
+        color: black;
+        outline: none;
     }
   </style>
 </head>

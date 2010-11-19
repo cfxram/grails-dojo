@@ -46,7 +46,7 @@
 
     function renameForDojo(name, myId){
       var renamedString= prompt ("Enter new name:", name);
-      ${remoteFunction(action:'remoteFunctionAction', update:'myUpdateRegion',params:[name:'renamedString',myId:'myId'])}
+      ${remoteFunction(action:'remoteFunctionAction', update:'myUpdateRegion',params:"'name':renamedString,'myId':myId")}
     }    
   </g:javascript>
 
@@ -66,7 +66,7 @@
             onLoaded="onLoaded()"
             onComplete="onComplete()"
             on404="onFailure404()"
-            on200="onFailure200()" params="[userid:1, myName:'\'Rob\'']">
+            on200="onFailure200()" params="[userid:1, myName:'Rob']">
       Click Here to Test
     </g:remoteLink>
   </li>
@@ -114,7 +114,7 @@
   </li>
   <li>
     Remote Function
-    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color='+this.value")}">
+    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color':this.value")}">
       <option value="">Choose a Color:</option>
       <option value="red">Red</option>
       <option value="green">Green</option>
@@ -124,7 +124,7 @@
   </li>
   <li>
     Remote Function with Map Params
-    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:[color:'this.value',myName:'\'Rob\''])}">
+    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color':this.value,'myName':'Rob'")}">
       <option value="">Choose a Color:</option>
       <option value="red">Red</option>
       <option value="green">Green</option>

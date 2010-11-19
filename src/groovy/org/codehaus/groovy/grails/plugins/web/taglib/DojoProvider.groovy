@@ -18,8 +18,14 @@ class DojoProvider implements JavascriptProvider {
 
   
   /**
-   * Grails formats params like this: 'color='+this.value. Dojo needs {'color':this.value}.
-   * <g:remoteField> automagically changes this to the above format.. we need to convert it back to a json obj.
+   * This will convert remoteXXX tag params to a dojo friendly format. Most params should be passed as a regular map but
+   * there are some exceptions.
+   *
+   * The remoteField tag passes the params as a GString. So we deal with that differently.
+   *
+   * If the user wishes to pass in javascript values as part of the params attribute, the best way is to pass a string
+   * that is structured like this: params="'myVar1':myJsValue, 'myVar2':myJsValue2". 
+   *
    * @param params
    * @return String
    */
@@ -28,13 +34,21 @@ class DojoProvider implements JavascriptProvider {
     if(params instanceof Map){
       def paramList = []      
       params.each{k, v ->
+        if(v instanceof String){
+          v = "'${v}'"
+        }
         paramList.add("'${k}':${v}")
       }
       paramString = "{${paramList.join(",")} }"
     }
-    else if(params?.length()){
+    // Used ONLY for <g:remoteField>
+    else if(params instanceof GString){
+      //<g:remoteField> passes in the param like this: 'color='+this.value. So lets convert to 'color':this.value
       paramString = params.replaceAll(/\+/,":").replaceAll(/\=/,"")
       paramString = "{${paramString}}"
+    }
+    else if(params instanceof String){
+      paramString = "{${params}}"      
     }
     return paramString
   }

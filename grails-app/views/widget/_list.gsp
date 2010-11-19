@@ -24,6 +24,6 @@
   </g:each>
   </tbody>
 </table>
-<div class="paginate">
+<div class="paginateBar">
   <dojo:paginate total="${total}" update="myUpdateRegion" next="Next Page" prev="Prev Page" action="listFragment"/>
 </div>
