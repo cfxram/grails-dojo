@@ -6,7 +6,10 @@ class WidgetController {
     def index = { }
 
     def remotePage = {
-      
+
+    }
+    def remotePage2 = {
+      render(view:'remotePage')
     }
 
     def remoteFormSubmit = {

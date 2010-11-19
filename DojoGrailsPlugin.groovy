@@ -8,16 +8,10 @@ class DojoGrailsPlugin {
   def pluginExcludes = [
           "grails-app/conf/Config.groovy",
           "grails-app/conf/BootStrap.groovy",
-          "grails-app/controllers/org/dojotoolkit/WidgetController.groovy",
-          "grails-app/domain/org/dojotoolkit/Widget.groovy",
-          "grails-app/views/error.gsp",
-          "grails-app/views/widget/index.gsp",
-          "grails-app/views/widget/index.gsp",
-          "grails-app/views/widget/list.gsp",          
-          "grails-app/views/widget/remoteFormSubmit.gsp",
-          "grails-app/views/widget/remoteFunctionAction.gsp",
-          "grails-app/views/widget/remotePage.gsp",
-          "web-app/js/prototype/prototype.js"
+          "grails-app/controllers/**",
+          "grails-app/domain/**",
+          "grails-app/views/**",
+          "web-app/js/prototype/**"
           
   ]
   def author = "Rob Meidal"
