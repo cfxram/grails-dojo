@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Widget Tester Page</title>
-  <g:javascript library="dojo"/>
+  <meta name="layout" content="main"/>
   <g:javascript>
     function beforeEvent() {
       console.log("Before");

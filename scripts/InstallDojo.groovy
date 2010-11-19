@@ -1,7 +1,17 @@
 Ant.property(environment:"env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
 
-// http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3/
+/*
+ Link to compressed (but not zipped):
+ http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3/
+ 
+ Link to the source (zipped):
+ http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3-src.zip
+
+ Link to compressed (zipped):
+ http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3.zip
+*/
+
 def dojoVersion = "1.4.3"
 def destinationDir = "${basedir}/web-app/js/dojo/${dojoVersion}"
 

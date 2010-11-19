@@ -1,8 +1,8 @@
-import org.codehaus.groovy.grails.plugins.web.taglib.*
-
+import org.dojotoolkit.*
+import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptTagLib
+// Uncompressed 
 class DojoGrailsPlugin {
   def version = "1.4.3.2"
-  def dojoVersion = "1.4.3"
   def grailsVersion = "1.3.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
@@ -30,6 +30,6 @@ class DojoGrailsPlugin {
 
   def doWithApplicationContext = { applicationContext ->
     JavascriptTagLib.PROVIDER_MAPPINGS.dojo = DojoProvider.class
-    JavascriptTagLib.LIBRARY_MAPPINGS.dojo = ["dojo/${dojoVersion}/dojo/dojo"]
+    JavascriptTagLib.LIBRARY_MAPPINGS.dojo = ["dojo/${Dojo.version}/dojo/dojo"]
   }
 }

@@ -2,16 +2,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>
-        <g:layoutTitle/>
-    </title>
+    <title><g:layoutTitle/></title>
+    <dojo:header/>
     <g:layoutHead/>
 </head>
-<body>
+<body class="tundra">
   <div style="height:30px; border:1px solid #ccc; background:#eee; font-weight:bold">
     Dojo Widget Tester
-
-
   </div>
   <g:layoutBody/>
 </body>
