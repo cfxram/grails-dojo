@@ -2,7 +2,7 @@ package org.dojotoolkit
 
 class DojoTagLib {
   static namespace = 'dojo'
-  def DOJO_HOME = "${g.resource(dir: 'js')}/dojo/${Dojo.version}"
+  def DOJO_HOME = "${g.resource(dir:pluginContextPath)}/js/dojo/${Dojo.version}"
   
   /**
    * Alternative to <g:javascript library="dojo"/>. This will include the dojo.js file,

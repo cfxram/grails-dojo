@@ -18,9 +18,11 @@
     <resource>Config</resource>
     <resource>DataSource</resource>
     <resource>UrlMappings</resource>
-    <resource>org.dojotoolkit.ProjectController</resource>
+    <resource>org.dojotoolkit.WidgetController</resource>
     <resource>org.dojotoolkit.Widget</resource>
     <resource>org.dojotoolkit.DojoTagLib</resource>
+    <resource>org.dojotoolkit.PaginateTagLib</resource>
+    <resource>org.dojotoolkit.SortableColumnTagLib</resource>
   </resources>
   <dependencies />
   <behavior />

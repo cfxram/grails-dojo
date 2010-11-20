@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title><g:layoutTitle/></title>
-    <dojo:header/>
+    <dojo:header theme="tundra"/>
     <g:layoutHead/>
 </head>
 <body class="tundra">
