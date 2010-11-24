@@ -59,6 +59,17 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     arg(value: "optimize=shrinksafe")
     arg(value: "copyTests=off")
   }
+  delete(includeemptydirs:true){
+    fileset(dir:dojoReleaseDir, includes:"**/tests/**/")
+    fileset(dir:dojoReleaseDir, includes:"**/demos/**/")
+    fileset(dir:dojoReleaseDir, includes:"**/themeTester*")
+    fileset(dir:dojoReleaseDir, includes:"**/*.psd")
+    fileset(dir:dojoReleaseDir, includes:"**/*.fla")
+    fileset(dir:dojoReleaseDir, includes:"**/*.svg")
+    fileset(dir:dojoReleaseDir, includes:"**/*.as")
+    fileset(dir:dojoReleaseDir, includes:"**/*.swf")
+    fileset(dir:dojoReleaseDir, includes:"**/*.uncompressed.js")    
+  }
   copy(todir: "${destinationDir}-custom") {
     fileset(dir: dojoReleaseDir, includes: "**/**")
   }

@@ -3,6 +3,8 @@ package org.dojotoolkit
 class DojoTagLib {
   static namespace = 'dojo'
   def DOJO_HOME = "${g.resource(dir:pluginContextPath)}/js/dojo/${Dojo.version}"
+  def CUSTOM_DOJO = "${g.resource()}/js/dojo/${Dojo.version}-custom"
+  
   
   /**
    * Alternative to <g:javascript library="dojo"/>. This will include the dojo.js file,
@@ -23,6 +25,7 @@ class DojoTagLib {
     }
 
     // If there is a custom dojo created... then include the correct js files here.
+    
   }
 
   
