@@ -3,8 +3,7 @@
   <title>Various Dijit Components</title>
   <meta name="layout" content="main"/>
 </head>
-<body>
-  <dojo:require modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
+<body
   <div dojoType="dijit.layout.TabContainer" style="width:600px; height:300px">
     <div dojoType="dijit.layout.ContentPane" title="Red">
       Red

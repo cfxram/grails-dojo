@@ -18,10 +18,11 @@ class DojoTagLib {
       out << stylesheets(attrs)  
     }
     out << "<script type='text/javascript' src='${DOJO_HOME}/dojo/dojo.js' djConfig='isDebug:${debug}, parseOnLoad:${parseOnLoad}'></script>"
-    if(attrs?.require){
-      attrs.modules = attrs?.require
+    if(attrs?.modules){
       out << require(attrs)
     }
+
+    // If there is a custom dojo created... then include the correct js files here.
   }
 
   
