@@ -42,9 +42,10 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
  *              http://www.ibm.com/developerworks/websphere/techjournal/1003_col_haverlock/1003_col_haverlock.html
  */
 target(buildDojo: "This will run shrinksafe to create an optimized version of dojo") {
+  println stagingDir
   depends(downloadDojoSource)
   def Dojo = classLoader.loadClass("org.dojotoolkit.Dojo")
-  def destinationDir  = "${basedir}/web-app/js/dojo/${Dojo.version}"
+  def destinationDir  = "${stagingDir}/web-app/js/dojo/${Dojo.version}"
   def downloadDir     = "${grailsWorkDir}/download" 
   def dojoUtilDir     = "${downloadDir}/dojo-release-${Dojo.version}-src/util/"
   def dojoReleaseDir  = "${downloadDir}/dojo-release-${Dojo.version}-src/release/dojo"
