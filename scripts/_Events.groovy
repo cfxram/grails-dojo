@@ -1,6 +1,6 @@
 import grails.util.GrailsUtil
 
-includeTargets << new File("${basedir}/scripts/InstallDojo.groovy")
+includeTargets << new File("${basedir}/scripts/_DojoTasks.groovy")
 
 /**
  * In 1.1+ this is called after the staging dir is prepared but before the war is packaged.
