@@ -1,37 +1,46 @@
 
+
+def version = "1.4.3"
+def srcHref = "http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3-src.zip"
+def releaseHref = "http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3.zip"
+
+def destinationDir  = "${stagingDir}/web-app/js/dojo/${version}"
+def downloadDir     = "${grailsWorkDir}/download"
+def dojoUtilDir     = "${downloadDir}/dojo-release-${version}-src/util/"
+def dojoReleaseDir  = "${downloadDir}/dojo-release-${version}-src/release/dojo"
+def dojoProfile     = "${basedir}/grails-app/conf/dojo.profile.js"
+
+
+
+
 /**
  * Download the Dojo Release: Install the release version of dojo. (About 4MB)
  */
 target(downloadDojoRelease: "This will download and install the full dojo toolkit into the application.") {
-  def Dojo = classLoader.loadClass("org.dojotoolkit.Dojo")
-  def destinationDir  = "${basedir}/web-app/js/dojo/${Dojo.version}"
-  def downloadDir     = "${grailsWorkDir}/download"
-  event("StatusUpdate", ["\nDownloading Dojo ${Dojo.version} release.\n"])
+  event("StatusUpdate", ["\nDownloading Dojo ${version} release.\n"])
   Ant.sequential {
     mkdir(dir: downloadDir)
-    get(dest: "${downloadDir}/dojo-release-${Dojo.version}.zip", src: Dojo.releaseHref, verbose: true, usetimestamp: true)
-    unzip(dest: downloadDir, src: "${downloadDir}/dojo-release-${Dojo.version}.zip")
+    get(dest: "${downloadDir}/dojo-release-${version}.zip", src: releaseHref, verbose: true, usetimestamp: true)
+    unzip(dest: downloadDir, src: "${downloadDir}/dojo-release-${version}.zip")
     mkdir(dir: destinationDir)
     copy(todir: destinationDir) {
-      fileset(dir: "${downloadDir}/dojo-release-${Dojo.version}/", includes: "**/**")
+      fileset(dir: "${downloadDir}/dojo-release-${version}/", includes: "**/**")
     }
   }
-  event("StatusFinal", ["\nDojo ${Dojo.version} was downloaded and copied to the application.\n"])
+  event("StatusFinal", ["\nDojo ${version} was downloaded and copied to the application.\n"])
 }
 
 /**
  * DownloadSource - This will install the source version of Dojo. (About 25MB)
  */
 target(downloadDojoSource: "This will download the source version of Dojo.") {
-  def Dojo = classLoader.loadClass("org.dojotoolkit.Dojo")
-  def downloadDir     = "${grailsWorkDir}/download"  
-  event("StatusUpdate", ["\nDownloading Dojo ${Dojo.version} source files.\n"])
+  event("StatusUpdate", ["\nDownloading Dojo ${version} source files.\n"])
   Ant.sequential {
     mkdir(dir: downloadDir)
-    get(dest: "${downloadDir}/dojo-src-${Dojo.version}.zip", src: "${Dojo.srcHref}", verbose: true, usetimestamp: true)
-    unzip(dest: downloadDir, src: "${downloadDir}/dojo-src-${Dojo.version}.zip")
+    get(dest: "${downloadDir}/dojo-src-${version}.zip", src: "${srcHref}", verbose: true, usetimestamp: true)
+    unzip(dest: downloadDir, src: "${downloadDir}/dojo-src-${version}.zip")
   }
-  event("StatusFinal", ["\nDojo ${Dojo.version} source was downloaded and copied to the application.\n"])
+  event("StatusFinal", ["\nDojo ${version} source was downloaded and copied to the application.\n"])
 }
 
 
@@ -42,19 +51,11 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
  *              http://www.ibm.com/developerworks/websphere/techjournal/1003_col_haverlock/1003_col_haverlock.html
  */
 target(buildDojo: "This will run shrinksafe to create an optimized version of dojo") {
-  println stagingDir
   depends(downloadDojoSource)
-  def Dojo = classLoader.loadClass("org.dojotoolkit.Dojo")
-  def destinationDir  = "${stagingDir}/web-app/js/dojo/${Dojo.version}"
-  def downloadDir     = "${grailsWorkDir}/download" 
-  def dojoUtilDir     = "${downloadDir}/dojo-release-${Dojo.version}-src/util/"
-  def dojoReleaseDir  = "${downloadDir}/dojo-release-${Dojo.version}-src/release/dojo"
-  def dojoProfile     = "${basedir}/grails-app/conf/dojo.profile.js"
   def shrinksafe_classpath = Ant.path {
     pathelement(location: "${dojoUtilDir}/shrinksafe/js.jar")
     pathelement(location: "${dojoUtilDir}/shrinksafe/shrinksafe.jar")
   }
-
   java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true, dir: "${dojoUtilDir}/buildscripts", classpath: shrinksafe_classpath) {
     arg(value: "${dojoUtilDir}/buildscripts/build.js")
     arg(value: "profileFile=${dojoProfile}")

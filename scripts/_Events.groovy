@@ -10,7 +10,7 @@ eventCreateWarStart = { name, stagingDir ->
 
   if (customBuild) {
     println "\nCreating an Optimized Dojo build.\n"
-    buildDojo(stagingDir:stagingDir)
+    buildDojo()
   }
 }
 
