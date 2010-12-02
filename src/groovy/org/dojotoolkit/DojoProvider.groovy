@@ -69,7 +69,9 @@ class DojoProvider implements JavascriptProvider {
     def statusCodeHandlers  = props?.statusCodeHandlers ?: ""
     def formName            = props?.formName ?: ""
     def preventCache        = props?.preventCache ?: false
-
+    
+    // TODO: check for updateDomElem and if null then don't do an innerHTML. <g:remoteFunction> has update as optional.
+    
     def dojoString =
     "${onLoading}" +
     "dojo.xhr('${method}',{" +
