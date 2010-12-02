@@ -25,4 +25,4 @@ log4j = {
     warn   'org.mortbay.log'
 }
 
-dojo.customBuild = false
+dojo.customBuild = true

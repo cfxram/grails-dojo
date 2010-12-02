@@ -1,9 +1,8 @@
 includeTargets << grailsScript("Init")
 includeTargets << new File("${basedir}/scripts/_DojoTasks.groovy")
 
-
-target(main: "The description of the script goes here!") {
-    depends(buildDojo)
+target(main: "Will create the optimized dojo version and copy to the application.") {
+    depends(buildDojo,copyDojoToApp)
 }
 
 setDefaultTarget(main)
