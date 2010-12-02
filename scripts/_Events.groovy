@@ -12,6 +12,7 @@ eventCreateWarStart = { name, stagingDir ->
     println "\nCreating an Optimized Dojo build.\n"
     buildDojo()
     copyDojoToStage()
+    cleanup()
   }
 }
 
