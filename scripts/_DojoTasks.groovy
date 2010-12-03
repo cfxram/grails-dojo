@@ -27,8 +27,8 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
   move(todir:tmpWorkingDir){
       fileset(dir: "${downloadDir}/dojo-release-${version}-src", includes: "**/**")    
   }  
-  event("StatusFinal", ["\nDojo ${version} source was downloaded and copied to the application.\n"])
 }
+
 
 /**
  * Build Dojo - This will do the same as call the shell script to create the optimized
@@ -37,16 +37,20 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
  */
 target(buildDojo: "This will run shrinksafe to create an optimized version of dojo") {
   depends(downloadDojoSource)
+  event("StatusUpdate", ["\nCreating custom dojo build.\n"])
   def shrinksafe_classpath = Ant.path {
     pathelement(location: "${dojoUtilDir}/shrinksafe/js.jar")
     pathelement(location: "${dojoUtilDir}/shrinksafe/shrinksafe.jar")
   }
-  java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true, dir: "${dojoUtilDir}/buildscripts", classpath: shrinksafe_classpath) {
+  java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true, 
+    dir: "${dojoUtilDir}/buildscripts", classpath: shrinksafe_classpath) {
     arg(value: "${dojoUtilDir}/buildscripts/build.js")
     arg(value: "profileFile=${dojoProfile}")
     arg(value: "action=release")
-    arg(value: "optimize=shrinksafe")
+    arg(value: "optimize=shrinksafe,comments")
     arg(value: "copyTests=off")
+    arg(value: "layerOptimize=shrinksafe,comments")
+    arg(value: "cssOptimize=comments.keeplines")
   }
   delete(includeemptydirs: true) {
     fileset(dir: dojoReleaseDir, includes: "**/tests/**/")
@@ -59,8 +63,8 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     fileset(dir: dojoReleaseDir, includes: "**/*.swf")
     fileset(dir: dojoReleaseDir, includes: "**/*.uncompressed.js")
   }
-  event("StatusFinal", ["\n The customized version of dojo has been created.\n"])
 }
+
 
 /**
  * Will copy the customized dojo release to the staging directory during war
@@ -74,12 +78,13 @@ target(copyDojoToStage: "This will copy the optimized dojo release to stage.") {
   }
 }
 
+
 /**
  * Will copy the customized dojo release to the application. This is called
  * from InstallDojo.groovy.
  */
-target(copyDojoToApp: "This will copy the optimized dojo release to application.") {
-  event("StatusUpdate", ["Copying optimized dojo release to the application."])
+target(copyDojoToApp: "Copies the optimized dojo release to application.") {
+  event("StatusUpdate", ["Copying custom dojo build to the application."])
   def destinationDir = "${basedir}/web-app/js/dojo/${version}"
   copy(todir: "${destinationDir}-custom") {
     fileset(dir: dojoReleaseDir, includes: "**/**")
@@ -87,11 +92,11 @@ target(copyDojoToApp: "This will copy the optimized dojo release to application.
 }
 
 
-
 /**
  * This will delete the tmp Directory.
  */
 target(cleanup: "This will copy the optimized dojo release to application.") {
+    event("StatusUpdate", ["\nCleaning up custom dojo build tmp files.\n"])    
     delete(dir:tmpWorkingDir)
 }
 

@@ -8,13 +8,22 @@ dependencies = {
                 "dojo.io.iframe",
                 "dijit.Tooltip",
                 "dijit.Dialog",
-                "dijit.TooltipDialog"
+                "dijit.TooltipDialog",
+                "dojoui.dojoui",
+                "dojoui.layout.ContentPane",
+                "dojoui.dojouiGrid",
+                "dojoui.layout.TabContainer",
+                "dojoui.Bind",
+                "dojoui.widget.DropDownButton",
+                "dojoui.widget.DataSourceView",
+                "dojoui.widget.Tree"                
             ]
         }
     ],
 
     prefixes: [
         [ "dijit", "../dijit" ],
-        [ "dojox", "../dojox" ]
+        [ "dojox", "../dojox" ],
+        [ "dojoui", "../../dojoui" ]
     ]
 };

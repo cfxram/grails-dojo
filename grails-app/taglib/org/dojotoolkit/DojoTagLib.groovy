@@ -12,15 +12,16 @@ class DojoTagLib {
    * Returns the dojo.customBuild value from Config.groovy
    * @return
    */
-  private boolean hasCustomDojoBuild() {
-    return grailsApplication.config.dojo.customBuild
+  private boolean useCustomDojoBuild() {
+    def includeCustomScripts = grailsApplication.config.dojo.use.customBuild ?: false 
+    return includeCustomScripts
   }
 
   /**
    * Reads the dojo.profile.js file and converts into a grails object
    * @return JSONObject
    */
-  def getJSONProfile() {
+  def getDojoCustomProfile() {
     def jsonString = new File("grails-app/conf/dojo.profile.js").text;
     def jsonObj = JSON.parse("{${jsonString}}");
     return jsonObj.dependencies
@@ -31,7 +32,7 @@ class DojoTagLib {
    * @return String
    */
   def dojoHome() {
-    if (hasCustomDojoBuild()) {
+    if (useCustomDojoBuild()) {
       return CUSTOM_DOJO
     }
     else {
@@ -41,10 +42,11 @@ class DojoTagLib {
 
   /**
    * Will output custom js scripts that were created as part of the custom dojo build.
+   * Will check if dojo.include.custombuild.inHeader is true.
    */
-  def customDojoLayers = {
-    if (hasCustomDojoBuild()) {
-      def dependencies = getJSONProfile()
+  def customDojoScripts = {
+    if (useCustomDojoBuild()) {
+      def dependencies = getDojoCustomProfile()
       dependencies.layers.each {
         out << "<script type='text/javascript' src='${dojoHome()}/dojo/${it.name}'></script>"
       }
@@ -57,13 +59,16 @@ class DojoTagLib {
    *
    * @params attrs.require = This is a map of components to include
    * @params attrs.theme = (optional) Will include the theme if it is provided
-   * @params attrs.customDojo = (true) Will include the js files(layers) from dojo.profile.js
+   * @params attrs.includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
+   *                                    It is recommended you leave this to true. Setting to false, you will
+   *                                    have to manually include the generated files yourself but it give more
+   *                                    fine grain control on when the files get included. 
    */
   def header = {attrs ->
     def debug = attrs.remove("debug") ?: "false"
     def parseOnLoad = attrs.remove("parseOnLoad") ?: "true"
-    def customDojo = attrs.remove("customDojo") ?: true
-
+    def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
+    
     if (attrs?.theme) {
       out << stylesheets(attrs)
     }
@@ -71,8 +76,8 @@ class DojoTagLib {
     out << "<script type='text/javascript' src='${dojoHome()}/dojo/dojo.js' djConfig='isDebug:${debug}, parseOnLoad:${parseOnLoad}'></script>"
 
     // if custom build then include released js files
-    if(customDojo){
-      out << customDojoLayers()
+    if(includeCustomBuild == "true"){
+      out << customDojoScripts()
     }
     
     if (attrs?.modules) {

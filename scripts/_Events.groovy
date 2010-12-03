@@ -6,9 +6,9 @@ eventCreateWarStart = { name, stagingDir ->
   def classLoader = Thread.currentThread().contextClassLoader
   classLoader.addURL(new File(classesDirPath).toURL())
   def config = new ConfigSlurper(GrailsUtil.environment).parse(classLoader.loadClass('Config')).dojo
-  def customBuild = config.customBuild ?: false
+  def createCustomBuild = config.optimize.during.build ?: false
 
-  if (customBuild) {
+  if (createCustomBuild) {
     println "\nCreating an Optimized Dojo build.\n"
     buildDojo()
     copyDojoToStage()

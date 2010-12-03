@@ -1,0 +1,14 @@
+{ 
+	identifier: "id",
+	items:[
+		{ 
+			"id":12, 
+			"fullname":"Yellow Advisor",
+			"department":"IT",
+			"audience":0,
+			"roles":"Smack Boy",
+			"hasLoggedIn":true,
+			"hasViewedProgram":false
+		}
+	]
+}

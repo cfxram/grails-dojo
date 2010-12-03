@@ -1,0 +1,76 @@
+{ 
+	identifier: "id",
+	items:[{ 
+			"id":1, 
+			"fullname":"Steven Anderson",
+			"department":"HR",
+			"audience":2,
+			"roles":"Advisor, Learner, Facilitator",
+			"hasLoggedIn":true,
+			"hasViewedProgram":true
+		},
+		{ 
+			"id":2, 
+			"fullname":"Harry Callahan",
+			"department":"Sales",
+			"audience":1,
+			"roles":"Learner",
+			"hasLoggedIn":false,
+			"hasViewedProgram":false
+		},
+		{ 
+			"id":3, 
+			"fullname":"Donna Carvetti",
+			"department":"IT",
+			"audience":3,
+			"roles":"Learner",
+			"hasLoggedIn":true,
+			"hasViewedProgram":false
+		},
+		{ 
+			"id":4, 
+			"fullname":"Katherine Cho",
+			"department":"Sales",
+			"audience":1,
+			"roles":"Advisor, Learner",
+			"hasLoggedIn":true,
+			"hasViewedProgram":true
+		},	
+		{ 
+			"id":5, 
+			"fullname":"Elaine D'Amato",
+			"department":"Sales",
+			"audience":2,
+			"roles":"Learner",
+			"hasLoggedIn":true,
+			"hasViewedProgram":false
+		},		
+		{ 
+			"id":6, 
+			"fullname":"Ahmed Feghali",
+			"department":"IT",
+			"audience":0,
+			"roles":"",
+			"hasLoggedIn":true,
+			"hasViewedProgram":false
+		},
+		{ 
+			"id":7, 
+			"fullname":"Red Advisor",
+			"department":"IT",
+			"audience":0,
+			"roles":"",
+			"hasLoggedIn":true,
+			"hasViewedProgram":false
+		},
+		{ 
+			"id":8, 
+			"fullname":"Blue Advisor",
+			"department":"IT",
+			"audience":0,
+			"roles":"",
+			"hasLoggedIn":true,
+			"hasViewedProgram":false
+		}								
+	]
+}
