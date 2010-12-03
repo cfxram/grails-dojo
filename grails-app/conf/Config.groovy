@@ -26,5 +26,5 @@ log4j = {
 }
 
 dojo.optimize.during.build = true;
-dojo.use.customBuild = true;
-
+dojo.use.customBuild.js = true;
+dojo.use.customBuild.css = true;

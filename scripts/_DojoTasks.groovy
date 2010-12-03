@@ -1,3 +1,5 @@
+import grails.converters.deep.JSON
+
 def version = "1.4.3"
 def srcHref = "http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3-src.zip"
 def dojoProfile = "${basedir}/grails-app/conf/dojo.profile.js"
@@ -5,7 +7,7 @@ def downloadDir = "${grailsWorkDir}/download"
 def tmpWorkingDir = "${basedir}/web-app/js/dojoTmp"
 def dojoUtilDir = "${tmpWorkingDir}/util/"
 def dojoReleaseDir = "${tmpWorkingDir}/release/dojo"
-
+def dojoCssBuildFile = "${tmpWorkingDir}/css/custom-dojo.css"
 
 
 /**
@@ -20,7 +22,7 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
   event("StatusUpdate", ["\nDownloading Dojo ${version} source files.\n"])
   Ant.sequential {
     mkdir(dir: downloadDir)
-    mkdir(dir:tmpWorkingDir)
+    mkdir(dir: tmpWorkingDir)
     get(dest: "${downloadDir}/dojo-src-${version}.zip", src: "${srcHref}", verbose: true, usetimestamp: true)
     unzip(dest: downloadDir, src: "${downloadDir}/dojo-src-${version}.zip")
   }
@@ -31,12 +33,29 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
 
 
 /**
+ * This will create a css file and add @import statements that the build process can use.
+ */
+target(createDojoCssBuild:"This will create a css build file."){
+   event("StatusUpdate", ["\nCreating custom dojo css build.\n"]) 
+   def jsonString = new File(dojoProfile).text;
+   def jsonObj = JSON.parse("{${jsonString}}").dependencies;   
+   if(jsonObj?.css){
+        mkdir(dir:"${tmpWorkingDir}/css");
+        jsonObj?.css?.dependencies?.each{
+          echo(file:dojoCssBuildFile,append:true, message:"@import '${it}';\n")
+        }
+   }
+}
+
+
+
+/**
  * Build Dojo - This will do the same as call the shell script to create the optimized
  *              version of dojo. Thanks to Kevin Haverlock's article:
  *              http://www.ibm.com/developerworks/websphere/techjournal/1003_col_haverlock/1003_col_haverlock.html
  */
 target(buildDojo: "This will run shrinksafe to create an optimized version of dojo") {
-  depends(downloadDojoSource)
+  depends(downloadDojoSource,createDojoCssBuild)
   event("StatusUpdate", ["\nCreating custom dojo build.\n"])
   def shrinksafe_classpath = Ant.path {
     pathelement(location: "${dojoUtilDir}/shrinksafe/js.jar")
@@ -50,7 +69,7 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     arg(value: "optimize=shrinksafe,comments")
     arg(value: "copyTests=off")
     arg(value: "layerOptimize=shrinksafe,comments")
-    arg(value: "cssOptimize=comments.keeplines")
+    arg(value: "cssOptimize=comments,keepLines")
   }
   delete(includeemptydirs: true) {
     fileset(dir: dojoReleaseDir, includes: "**/tests/**/")

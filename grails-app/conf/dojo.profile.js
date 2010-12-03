@@ -1,7 +1,7 @@
 dependencies = {
     layers:  [
         {
-            name: "custom-dojo.js",     // Will include this file via <dojo:header>
+            name: "custom-dojo.js",     // Will be included via <dojo:header>
             dependencies: [
                 "dijit.layout.TabContainer",
                 "dijit.layout.ContentPane",
@@ -18,12 +18,25 @@ dependencies = {
                 "dojoui.widget.DataSourceView",
                 "dojoui.widget.Tree"                
             ]
-        }
+        }             
     ],
 
     prefixes: [
         [ "dijit", "../dijit" ],
         [ "dojox", "../dojox" ],
+        [ "css", "../css" ],
         [ "dojoui", "../../dojoui" ]
-    ]
-};
+    ],
+    
+    // This is a customization to the standard dojo build profile. Only the
+    // dojo plugin build process will understand this. It will just be
+    // ignored by the standard dojo build.
+    css: {
+        dependencies: [ 
+            "../dojo/resources/dojo.css",
+            "../dijit/themes/dijit.css",
+            "../dijit/themes/tundra/tundra.css",
+            "../dojox/grid/resources/tundraGrid.css" 
+        ]   
+    }    
+}

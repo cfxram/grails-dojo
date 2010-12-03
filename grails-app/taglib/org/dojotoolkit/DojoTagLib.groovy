@@ -12,10 +12,20 @@ class DojoTagLib {
    * Returns the dojo.customBuild value from Config.groovy
    * @return
    */
-  private boolean useCustomDojoBuild() {
-    def includeCustomScripts = grailsApplication.config.dojo.use.customBuild ?: false 
+  private boolean useCustomDojoJsBuild() {
+    def includeCustomScripts = grailsApplication.config.dojo.use.customBuild.js ?: false 
     return includeCustomScripts
   }
+
+  /**
+   * Returns the dojo.customBuild value from Config.groovy
+   * @return
+   */
+  private boolean useCustomDojoCssBuild() {
+    def includeCustomCss = grailsApplication.config.dojo.use.customBuild.css ?: false 
+    return includeCustomCss
+  }
+
 
   /**
    * Reads the dojo.profile.js file and converts into a grails object
@@ -32,7 +42,7 @@ class DojoTagLib {
    * @return String
    */
   def dojoHome() {
-    if (useCustomDojoBuild()) {
+    if (useCustomDojoJsBuild()) {
       return CUSTOM_DOJO
     }
     else {
@@ -45,7 +55,7 @@ class DojoTagLib {
    * Will check if dojo.include.custombuild.inHeader is true.
    */
   def customDojoScripts = {
-    if (useCustomDojoBuild()) {
+    if (useCustomDojoJsBuild()) {
       def dependencies = getDojoCustomProfile()
       dependencies.layers.each {
         out << "<script type='text/javascript' src='${dojoHome()}/dojo/${it.name}'></script>"
@@ -92,11 +102,18 @@ class DojoTagLib {
    */
   def stylesheets = {attrs ->
     def theme = attrs.remove("theme") ?: "tundra"
-    out << """
-      <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojo/resources/dojo.css" />
-      <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/dijit.css" />
-      <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/${theme}/${theme}.css" />
-    """
+    if(useCustomDojoCssBuild()){
+        out << """
+            <link rel="stylesheet" type="text/css" href="${dojoHome()}/css/custom-dojo.css" />
+        """        
+    }
+    else{
+        out << """
+          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojo/resources/dojo.css" />
+          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/dijit.css" />
+          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/${theme}/${theme}.css" />
+        """
+    }   
   }
 
   /**
