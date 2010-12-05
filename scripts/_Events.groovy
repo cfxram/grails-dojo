@@ -1,6 +1,6 @@
 import grails.util.GrailsUtil
 
-includeTargets << new File("${basedir}/scripts/_DojoTasks.groovy")
+includeTargets << new File("${dojoPluginDir}/scripts/_DojoTasks.groovy")
 
 eventCreateWarStart = { name, stagingDir ->
   def classLoader = Thread.currentThread().contextClassLoader

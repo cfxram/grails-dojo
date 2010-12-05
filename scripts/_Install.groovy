@@ -24,4 +24,4 @@ Ant.sequential {
     }
   }
 }
-event("StatusFinal", ["\nDone.'${dojoDir}/dojo.js' has been copied into the application.\n(Optional) - You may install the full Dojo Toolkit by running 'grails install-dojo'.\n"])
+event("StatusFinal", ["\nDone.'${dojoDir}/dojo.js' has been copied into the application.\n"])
