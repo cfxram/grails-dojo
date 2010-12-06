@@ -26,14 +26,13 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
     mkdir(dir: tmpWorkingDir)
     get(dest: "${downloadDir}/dojo-src-${version}.zip", src: "${srcHref}", verbose: true, usetimestamp: true)
     unzip(dest: downloadDir, src: "${downloadDir}/dojo-src-${version}.zip")
-  }
-  move(todir:tmpWorkingDir){
+    move(todir:tmpWorkingDir){
       fileset(dir: "${downloadDir}/dojo-release-${version}-src", includes: "**/**")    
-  }
-  // Copy DojoUI
-  copy(todir:"${tmpWorkingDir}/dojoui/"){
+    }
+    copy(todir:"${tmpWorkingDir}/dojoui/"){
       fileset(dir:dojoUiDir, includes: "**/**")    
-  }  
+    }  
+  }    
 }
 
 
@@ -73,7 +72,6 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     arg(value: "action=release")
     arg(value: "optimize=shrinksafe,comments")
     arg(value: "copyTests=off")
-    arg(value: "layerOptimize=shrinksafe,comments")
     arg(value: "cssOptimize=comments,keepLines")
   }
   delete(includeemptydirs: true) {
