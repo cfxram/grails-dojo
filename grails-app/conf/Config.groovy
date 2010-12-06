@@ -31,7 +31,7 @@ dojo.use.customBuild.css = true;
 environments {
   development {
     dojo.optimize.during.build = false;
-    dojo.use.customBuild.js = false;
-    dojo.use.customBuild.css = false;
+    dojo.use.customBuild.js = true;
+    dojo.use.customBuild.css = true;
   }
 }  

@@ -5,6 +5,7 @@
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
+	  dojoui.showSpinner();
     }
 
     function after() {
@@ -29,6 +30,7 @@
 
     function onComplete() {
       console.log("Complete");
+	  dojoui.hideSpinner();
     }
     function onFailure404() {
       console.log("Had a 404 failure.")

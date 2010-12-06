@@ -5,6 +5,9 @@ body div.dojoui-spinner{
 	display:none;
 	height:100%;
 	width:100%;
+	background-image:url(../images/ajax-loader.gif);
+	background-repeat:no-repeat;
+	background-position:center;
 }
 
 /******************************************/

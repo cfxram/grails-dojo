@@ -29,6 +29,10 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
   move(todir:tmpWorkingDir){
       fileset(dir: "${downloadDir}/dojo-release-${version}-src", includes: "**/**")    
   }
+  // Copy DojoUI
+  copy(todir:"${tmpWorkingDir}/dojoui/"){
+      fileset(dir: "${dojoPluginDir}/web-app/js/dojo/dojoui", includes: "**/**")    
+  }  
 }
 
 

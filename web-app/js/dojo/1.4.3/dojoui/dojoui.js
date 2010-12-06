@@ -56,12 +56,7 @@ dojoui.loadTab = function( /*String*/tabId, /*String*/ href, /*String*/tabViewId
 dojoui.createSpinner = function(){
 	var attrObj = {
 		className:"dojoui-spinner",
-		id:"dojouispinner",
-		style:{
-			backgroundImage:"url("+dojoUiImages+"/ajax-loader.gif)",
-			backgroundRepeat:"no-repeat",
-			backgroundPosition:"center"
-		}
+		id:"dojouispinner"
 	}
 	var spinner = dojo.create("div", attrObj, dojo.body(), 'first');
 	return spinner;
