@@ -8,6 +8,7 @@ def tmpWorkingDir = "${basedir}/web-app/js/dojoTmp"
 def dojoUtilDir = "${tmpWorkingDir}/util/"
 def dojoReleaseDir = "${tmpWorkingDir}/release/dojo"
 def dojoCssBuildFile = "${tmpWorkingDir}/css/custom-dojo.css"
+def dojoUiDir = "${dojoPluginDir}/web-app/js/dojo/${version}/dojoui"
 
 
 /**
@@ -31,7 +32,7 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
   }
   // Copy DojoUI
   copy(todir:"${tmpWorkingDir}/dojoui/"){
-      fileset(dir: "${dojoPluginDir}/web-app/js/dojo/dojoui", includes: "**/**")    
+      fileset(dir:dojoUiDir, includes: "**/**")    
   }  
 }
 
