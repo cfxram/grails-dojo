@@ -31,7 +31,7 @@ class DojoTagLib {
    * Reads the dojo.profile.js file and converts into a grails object
    * @return JSONObject
    */
-  def getDojoCustomProfile() {
+  private Map getDojoCustomProfile() {
     def jsonString = new File("grails-app/conf/dojo.profile.js").text;
     def jsonObj = JSON.parse("{${jsonString}}");
     return jsonObj.dependencies
@@ -83,7 +83,13 @@ class DojoTagLib {
       out << stylesheets(attrs)
     }
 
-    out << "<script type='text/javascript' src='${dojoHome()}/dojo/dojo.js' djConfig='isDebug:${debug}, parseOnLoad:${parseOnLoad}'></script>"
+    out << """
+      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js' djConfig='isDebug:${debug}, parseOnLoad:${parseOnLoad}'></script>
+      <script type="text/javascript">
+          var dojoUiImages = "${resource().toString()}/images/dojo-ui"
+          dojo.registerModulePath("dojoui", "../../../dojoui");
+      </script>
+    """
 
     // if custom build then include released js files
     if(includeCustomBuild == "true"){

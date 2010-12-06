@@ -11,8 +11,7 @@ class DojoGrailsPlugin {
           "grails-app/controllers/**",
           "grails-app/domain/**",
           "grails-app/views/**",
-          "web-app/js/prototype/**",          
-          "web-app/js/dojoui/**"          
+          "web-app/js/prototype/**"    
   ]
   def author = "Rob Meidal"
   def authorEmail = "cfxram@codehaus.org"
