@@ -86,8 +86,8 @@ class DojoTagLib {
     out << """
       <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js' djConfig='isDebug:${debug}, parseOnLoad:${parseOnLoad}'></script>
       <script type="text/javascript">
-          var dojoUiImages = "${resource().toString()}/images/dojo-ui"
-          dojo.registerModulePath("dojoui", "../../../dojoui");
+          var dojoUiImages = "${dojoHome()}/dojo/dojoui/resources/images/"
+          dojo.registerModulePath("dojoui", "../dojoui");
       </script>
     """
 
@@ -111,6 +111,9 @@ class DojoTagLib {
     if(useCustomDojoCssBuild()){
         out << """
             <link rel="stylesheet" type="text/css" href="${dojoHome()}/css/custom-dojo.css" />
+            <!--[if lt IE 8]>
+              <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui-ie.css" />
+            <![endif]-->            
         """        
     }
     else{
@@ -118,6 +121,10 @@ class DojoTagLib {
           <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojo/resources/dojo.css" />
           <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/dijit.css" />
           <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/${theme}/${theme}.css" />
+          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui.css" />
+          <!--[if lt IE 8]>
+            <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui-ie.css" />
+          <![endif]-->          
         """
     }   
   }

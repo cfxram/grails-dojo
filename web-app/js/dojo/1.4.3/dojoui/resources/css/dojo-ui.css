@@ -1,0 +1,273 @@
+
+body div.dojoui-spinner{
+	position:absolute; 
+	z-index:100; 
+	display:none;
+	height:100%;
+	width:100%;
+}
+
+/******************************************/
+/* dijit.Editor */
+.dojo-ui-editor {
+    display:inline-block;
+    padding:0;
+}
+.dojo-ui-editor .dijitComboBox {
+    width: 70px;
+}
+
+.dojo-ui-editor .DojoUiEditor {
+    border-top: 1px solid #ccc;
+}
+/* dijit.Editor */
+/******************************************/
+
+
+
+
+
+
+
+/******************************************/
+/* Tabs */
+.soria .dijitTabPane, .tundra .dijitTabPane{
+  padding:0; 
+  overflow:auto;
+}
+/* Tabs */
+/******************************************/
+
+
+
+
+
+/******************************************/
+/* Panel (Soria & Tundra) */
+table.dojo-ui-panel{
+  border-collapse:collapse;
+  position:relative;
+  top:0;
+	width:100%;
+	height:130px;
+  padding:0;
+  margin-bottom:1em;
+  border:1px solid #ccc;
+}
+.soria table.dojo-ui-panel{
+  border:1px solid #8BA0BD;
+}
+.tundra table.dojo-ui-panel{
+  border:1px solid #ccc;
+}
+.dojo-ui-panel-title, .dojo-ui-panel-footer{
+	height:2em;	
+  line-height:2em;
+	overflow:hidden;
+}
+.dojo-ui-panel-footer{
+	text-align:right;
+}
+.dojo-ui-title-text{
+	line-height:2em;
+	float:left;
+}
+td.dojo-ui-panel-body{
+  position:relative; 
+	padding:5px;
+	margin:5px;
+	vertical-align:top;
+}
+.dojo-ui-panel-help{
+	float:right;
+	margin-right:2px;
+	margin-top:4px;
+}
+.soria .dojo-ui-panel-title.dijitTitlePaneTitle{
+	border-width:0;
+	border-bottom:1px solid #8BA0BD;
+	color:#243C5F;
+}
+.dojo-ui-panel-title.dijitTitlePaneTitle{
+  background:#eee;
+  border:0;
+  border-bottom:1px solid #ccc;
+  color:black;  
+}
+
+/*Delete Icon*/
+.dojo-ui-panel-delete-icon{
+  cursor:pointer;
+  width:20px;
+  height:20px;
+  background-image:url(../images/icons/small/delete-round-gray.png);
+  background-repeat:no-repeat;
+  float:right;
+  margin-top:4px;
+}
+.dojo-ui-panel-delete-icon:hover{
+  background-image:url(../images/icons/small/delete-round.png);   
+}  
+
+/* Dialog Sheet */
+.dojo-ui-panel .dojo-ui-dialogsheet{
+  width:90%;
+  height:100px;
+  border:1px solid #ccc;
+  border-top:0;
+  position:absolute;
+  top:0;
+  margin-left:5%;
+  background-color:white;
+}
+.soria .dojo-ui-panel .dojo-ui-dialogsheet{
+  margin-top:31px;  
+}
+.tundra .dojo-ui-panel .dojo-ui-dialogsheet{
+  margin-top:35px;  
+}
+
+/* Panel (Soria & Tundra) */
+/******************************************/
+
+
+
+
+
+/******************************************/
+/* Tree (Soria) */
+.soria .dijitTreeIcon, .tundra .dijitTreeIcon{
+	background-image:none;
+	height:0;
+	width:0;
+	display:none;
+}
+.soria .dijitTreeExpando, .tundra .dijitTreeExpando{}
+
+.dijitTreeRow{
+	padding:0;
+}
+.soria .dijitTreeContent, .tundra .dijitTreeContent{
+	display:block;
+	width:90%;
+	margin:0;
+	margin-left:2em;
+	padding:0;
+	margin-top:-15px;
+}	
+.soria .dijitTreeLabel, .tundra .dijitTreeLabel{
+	display:block;
+	
+	margin:0;
+}	
+.soria .dijitTreeNodeHover, .tundra .dijitTreeNodeHover{
+	background-image:none;
+}			
+.soria .dijitTreeNodeSelected .dijitTreeLabel, .tundra .dijitTreeNodeSelected .dijitTreeLabel{
+	background-color:transparent;
+}
+/* Tree (Soria) */
+/******************************************/
+
+
+
+
+
+/******************************************/
+/* Data Grid */
+.dojoui-datagrid-center-column{
+  margin-left:45%; 
+  margin-right:45%;
+}
+/* Data Grid */
+/******************************************/
+
+
+
+
+
+/******************************************/
+/* Calendar (Soria) */
+
+/* Month View */
+.calendarView div, .calendarView td{
+	text-align:center;
+}
+.soria .calendarView .dijitCalendarDateTemplate{
+	padding:0;
+}
+.calendarView .omDate{
+	border:1px solid #eee;
+	height:25px;
+	
+}
+.calendarView .filled{
+	height:8px;
+	width:8px;
+	padding:0;
+	margin:0;
+	line-height:0;
+	background-color:green;
+	margin-top:.25em;
+	margin-left:auto;
+	margin-right:auto;
+}
+.calendarView .soria dijitToggleButton{
+	width:80px;
+}
+
+
+/* List View */
+.calendarView .eventListing{
+	width:100%;
+
+}
+.calendarView .dateLine{
+	border:1px solid gray;
+	height:	20px;
+	background:silver;
+	color:white;
+	font-weight:bold;
+}
+.calendarView .eventTime{
+	vertical-align:top;
+	font-weight:bold;
+}
+
+.calendarView .eventDesc{
+	font-weight:bold;	
+}
+/* Calendar (Soria) */
+/******************************************/
+
+
+
+
+
+/******************************************/
+/* dojox.widget.Wizard */
+.dojoxWizardButtons{
+	text-align:right; 
+}
+ul.dojoxWizardProgress{
+    list-style-type:none;
+    padding:0;
+    margin:0;
+    float:right;
+    height:10px;
+}
+li.dojoxWizardStatusPage{
+    height:10px;
+    width:10px;
+    background:#eee; 
+    border:1px solid gray; 
+    margin:2px;
+    float:left;   
+}
+li.dojoxWizardStatusPage.selected{
+    background:#557298;
+    border:1px solid navy;
+}
+/* dojox.widget.Wizard */
+/******************************************/
+

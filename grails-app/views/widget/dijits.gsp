@@ -5,12 +5,14 @@
   <dojo:require modules="['dojoui.layout.TabContainer','dojoui.layout.ContentPane']"/>
 </head>
 <body>
-  <div dojoType="dojoui.layout.TabContainer" style="width:600px; height:300px">
+	<div class="dojo-ui-panel-delete-icon"></div>	
+	
+  <div dojoType="dojoui.layout.TabContainer" style="width:650px; height:300px">
     <div dojoType="dojoui.layout.ContentPane" title="Red">
       Red
     </div>
-    <div dojoType="dojoui.layout.ContentPane" title="Blue">
-      Blue
+    <div dojoType="dojoui.layout.ContentPane" title="Blue" containLinks="true">
+		<g:link controller="widget" action="list">Click Me.</g:link>
     </div>    
   </div>
 </body>

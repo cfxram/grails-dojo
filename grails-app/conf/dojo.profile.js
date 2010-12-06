@@ -25,7 +25,7 @@ dependencies = {
         [ "dijit", "../dijit" ],
         [ "dojox", "../dojox" ],
         [ "css", "../css" ],
-        [ "dojoui", "../../dojoui" ]
+        [ "dojoui", "../dojoui" ]
     ],
     
     // This is a customization to the standard dojo build profile. Only the
@@ -36,7 +36,8 @@ dependencies = {
             "../dojo/resources/dojo.css",
             "../dijit/themes/dijit.css",
             "../dijit/themes/tundra/tundra.css",
-            "../dojox/grid/resources/tundraGrid.css" 
+            "../dojox/grid/resources/tundraGrid.css",
+            "../dojoui/resources/css/dojo-ui.css"
         ]   
     }    
 }
