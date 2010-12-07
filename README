@@ -1,7 +1,21 @@
-Adds Dojo Base as a Javascript Provider for Grails. This provides full support for
+Adds Dojo as a Javascript Provider for Grails. This provides full support for
 <g:formRemote>, <g:remoteField>, <g:remoteFunction>, <g:remoteLink> and <g:submitToRemote>.
 
 Also adds two dojo tags: <dojo:paginate> and <dojo:sortableColumn>. These do the same thing
 that the grails versions of the tags but will do them via ajax calls.
+
+The dojo toolkit is bundled with the library so to add more dojo resources to your app, use
+the tags: <dojo:header> and <dojo:require>.
+
+The dojo plugin also allows you to create a custom dojo release tailored for your application.
+This can be done during war creation or manually using the "install-custom-dojo" grails script.
+To define a custom dojo release, first create a file in your conf directory called: dojo.profile.js.
+Then add these settings to your Config.groovy file:
+dojo.optimize.during.build = true;
+dojo.use.customBuild.js = true;
+dojo.use.customBuild.css = true;
+
+Follow the instructions here to determine what goes in the dojo.profile.js file:
+http://www.dojotoolkit.org/reference-guide/quickstart/custom-builds.html
 
 For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.

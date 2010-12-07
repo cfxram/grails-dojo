@@ -94,7 +94,7 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
  */
 target(copyDojoToStage: "This will copy the optimized dojo release to stage.") {
   event("StatusUpdate", ["Copying optimized dojo release to the staging area."])
-  def destinationDir = "${stagingDir}/web-app/js/dojo/${version}"
+  def destinationDir = "${stagingDir}/js/dojo/${version}"
   copy(todir: "${destinationDir}-custom") {
     fileset(dir: dojoReleaseDir, includes: "**/**")
   }
