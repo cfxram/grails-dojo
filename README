@@ -9,13 +9,43 @@ the tags: <dojo:header> and <dojo:require>.
 
 The dojo plugin also allows you to create a custom dojo release tailored for your application.
 This can be done during war creation or manually using the "install-custom-dojo" grails script.
-To define a custom dojo release, first create a file in your conf directory called: dojo.profile.js.
 Then add these settings to your Config.groovy file:
 dojo.optimize.during.build = true;
 dojo.use.customBuild.js = true;
 dojo.use.customBuild.css = true;
+dojo.profile = """
+dojo.profile = """
+    dependencies = {
+        layers:  [
+            {
+                name: "custom-dojo.js",
+                dependencies: [
+                    "dijit.layout.TabContainer",
+                    "dijit.layout.ContentPane"
+                ]
+            }
+        ],
+        prefixes: [
+            [ "dijit", "../dijit" ],
+            [ "dojox", "../dojox" ],
+            [ "css", "../css" ],
+            [ "dojoui", "../dojoui" ]
+        ],
+        // This is a customization to the standard dojo build profile. Only the
+        // dojo plugin build process will understand this. It will just be
+        // ignored by the standard dojo build.
+        css: {
+            dependencies: [
+                "../dojo/resources/dojo.css",
+                "../dijit/themes/dijit.css",
+                "../dijit/themes/tundra/tundra.css",
+                "../dojox/grid/resources/tundraGrid.css",
+                "../dojoui/resources/css/dojo-ui.css"
+            ]
+        }
+    }
+"""
 
-Follow the instructions here to determine what goes in the dojo.profile.js file:
+Follow the instructions here to determine what goes in the dojo.profile setting here:
 http://www.dojotoolkit.org/reference-guide/quickstart/custom-builds.html
-
 For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
