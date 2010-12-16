@@ -22,7 +22,6 @@ class WidgetController {
     println params
   }
 
-
   def list = {
     if (!params.max) params.max = 10
     [widgetList: Widget.list(params), total: Widget.count()]
@@ -34,6 +33,27 @@ class WidgetController {
   }
 
   def dijits = {
-    
+
+  }
+
+  def grid = {
+
+  }
+
+  def listJson = {
+    def widgets = Widget.list(params)
+    render(contentType: "text/json") {
+      identifier("id")
+      items {
+        widgets.each {w ->
+          item(
+            id:w.id,      
+            name:w.name,
+            color:w.color,
+            shape:w.shape
+          )  
+        }
+      }
+    }
   }
 }

@@ -128,6 +128,15 @@ class DojoTagLib {
   }
 
   /**
+   * Includes a dojo specific css file. This is used mostly for extended css files in dojox.
+   * Please use <dojo:header> or <dojo:stylesheets> for the standard files.
+   */
+  def css = {attrs ->
+    out << "<link rel='stylesheet' type='text/css' href='${dojoHome()}/${attrs?.file}'/>" 
+  }
+
+
+  /**
    * Will include dojo modules via the dojo loader.
    * @params attrs.modules = This is a map of components to include 
    */
