@@ -82,4 +82,5 @@ environments {
     dojo.use.customBuild.js = false;
     dojo.use.customBuild.css = false;
   }
-}
+}grails.views.default.codec="none" // none, html, base64
+grails.views.gsp.encoding="UTF-8"
