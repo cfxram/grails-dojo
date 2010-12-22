@@ -1,8 +1,8 @@
 <html>
 <head>
-  <dojo:header theme="tundra" modules="['dojo.data.ItemFileWriteStore','dojoui.dojouiGrid', 'dojox.grid.DataGrid']"/>
-  <dojo:css file="dojox/grid/resources/Grid.css"/>
-  <dojo:css file="dojox/grid/resources/tundraGrid.css"/>
+	<link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
+  <dojo:header theme="tundra"/>
+
   <style type="text/css">
     .dojoGridInGrails{
       width:600px;
@@ -29,8 +29,8 @@
 <body class="tundra">
 
 
-  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid">
-    <dojo:col width="40%" name="Name">{row.name} ({row.id}) </dojo:col>
+  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" sort="name">
+    <dojo:col width="40%" name="Name" field="name"/>
     <dojo:col width="30%" name="Color" field="color"/>
     <dojo:col width="30%" name="Shape" field="shape"/>
   </dojo:grid>

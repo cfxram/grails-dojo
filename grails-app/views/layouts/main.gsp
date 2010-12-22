@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
     <title><g:layoutTitle/></title>
   
     <dojo:header theme="tundra" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>

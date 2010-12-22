@@ -27,11 +27,16 @@ class GridTagLib {
     def onRowClick = attrs.remove("onRowClick") ?: ""
     def onRowDblClick = attrs.remove("onRowDblClick") ?: ""
     def href = attrs.remove("href") ?: g.createLink(attrs)
+    def max = attrs.remove("max") ?: 10
+    def sort = attrs.remove("sort") ?: ""
 
+    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojox.grid.DataGrid'])
+    out << dojo.css(file:"dojox/grid/resources/Grid.css")
+    out << dojo.css(file:"dojox/grid/resources/tundraGrid.css")
     out << """
-        <div dojoType="dojo.data.ItemFileWriteStore" jsid="${storeId}" url="${href}" urlPreventCache="yes"></div>
+        <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}" defaultGrailsSort="${sort}"></div>
 
-        <table dojoType="dojox.grid.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)}>
+        <table dojoType="dojox.grid.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}">
             <script type="dojo/method">
                 var gridStruct = [{
                   cells:[
@@ -41,27 +46,7 @@ class GridTagLib {
                 }]
                 this.setStructure(gridStruct);
             </script>
-            <script type="dojo/connect" event="startup">
-                //dojoui.grid.attachFormHandler(this.id);
-                this.newItems = {};
-                this.delItems = {};
-            </script>
-            <script type="dojo/connect" event="onRowClick" args="e">
-                var row = e.grid.getItem(e.rowIndex);
-                // TODO: Destroy the publish que as it may previously exist. (This will prevent memory leaks)
-                dojo.publish(this.id,[{"selected":row}]);
-                dojo.publish(this.id,[e.grid]);
-                ${onRowClick}
-            </script>
-            <script type="dojo/connect" event="onRowDblClick" args="e">
-                var row = e.grid.getItem(e.rowIndex);
-                ${onRowDblClick}
-            </script>
         </table>
-        <div id="${id}_formFields">
-            <input type="hidden" name="${id}_added" id="${id}_added" value=""/>
-            <input type="hidden" name="${id}_deleted" id="${id}_deleted" value=""/>
-        </div>
     """
 
   }

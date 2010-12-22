@@ -1,5 +1,6 @@
 <html>
 <head>
+	<link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
   <title>Welcome to the Dojo Plugin Home</title>
 </head>
 <body>

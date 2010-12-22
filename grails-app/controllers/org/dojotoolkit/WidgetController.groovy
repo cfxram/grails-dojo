@@ -41,9 +41,13 @@ class WidgetController {
   }
 
   def listJson = {
+    println params  
+    def widgetsTotal = Widget.list().size();      
     def widgets = Widget.list(params)
+    
     render(contentType: "text/json") {
       identifier("id")
+      numRows(widgetsTotal)
       items {
         widgets.each {w ->
           item(
@@ -55,5 +59,6 @@ class WidgetController {
         }
       }
     }
+    
   }
 }
