@@ -27,16 +27,24 @@ class GridTagLib {
     def onRowClick = attrs.remove("onRowClick") ?: ""
     def onRowDblClick = attrs.remove("onRowDblClick") ?: ""
     def href = attrs.remove("href") ?: g.createLink(attrs)
-    def max = attrs.remove("max") ?: 10
+    def columnReordering = attrs.remove("columnReordering") ?: "true"
+    def max = attrs.remove("max") ?: 1000
     def sort = attrs.remove("sort") ?: ""
+    def order = attrs.remove("order") ?: "asc"   // asc or desc
+    def descending = "false"
+    
+    if(order == "desc"){
+      descending = "true"  
+    }
 
     out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojox.grid.DataGrid'])
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
     out << dojo.css(file:"dojox/grid/resources/tundraGrid.css")
     out << """
-        <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}" defaultGrailsSort="${sort}"></div>
+        <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}"></div>
 
-        <table dojoType="dojox.grid.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}">
+        <table dojoType="dojox.grid.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}" 
+          columnReordering="${columnReordering}" sortFields="[{attribute:'${sort}',descending:${descending}}]">
             <script type="dojo/method">
                 var gridStruct = [{
                   cells:[
@@ -44,7 +52,26 @@ class GridTagLib {
                     {hidden:true}
                   ]
                 }]
-                this.setStructure(gridStruct);
+                this.attr('structure', gridStruct);
+            </script>
+            
+            <script type="dojo/connect" method="postCreate">
+              if(!this.sortFields[0].attribute){
+                return;
+              }  
+              var cells = this.layout.cells;
+              var sortIndex = 0;              
+              for(var i=0;i<cells.length;i++){
+                if(cells[i].field == this.sortFields[0].attribute){
+                  sortIndex = i;
+                  break;
+                }
+              }
+              sortIndex += 1;
+              if(this.sortFields[0].descending){
+                sortIndex *= -1;
+              }
+              this.sortInfo = sortIndex;
             </script>
         </table>
     """
@@ -70,13 +97,9 @@ class GridTagLib {
     if (cleanedString.length()) {
       formatter = """
                 function(value,rowIndex,obj){
-                    var item = obj.grid.getItem(rowIndex);
-                    var row = {}
-                    for(i in item){
-                      row[i] = (item[i]) ? item[i][0] : '';
-                    }
+                    var item = obj.grid.getItem(rowIndex).i; 
                     var formatTemplate = ' ${cleanedString} ';
-                    return dojo.replace(formatTemplate, {"row":row});
+                    return dojo.replace(formatTemplate, {"row":item});
                 }
             """
     }

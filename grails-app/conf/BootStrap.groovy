@@ -32,6 +32,14 @@ class BootStrap {
     new Widget(name: "Amazon Kindle", color: "Black", shape: "Rect").save();
     new Widget(name: "Amazon Kindle", color: "White", shape: "Rect").save();
     new Widget(name: "B&N Nook", color: "Yes", shape: "Rect").save();
+    
+    
+    10.upto(99){
+      new Widget(name: "Prototype Widget ${it}", color: "", shape: "Square").save();
+    }
+    100.upto(199){
+      new Widget(name: "Mass Widget ${it}", color: "Transparent", shape: "Circle").save();
+    }    
   }
 
 

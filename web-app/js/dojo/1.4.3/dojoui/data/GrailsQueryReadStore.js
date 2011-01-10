@@ -3,8 +3,9 @@ dojo.require("dojox.data.QueryReadStore");
 
 dojo.declare("dojoui.data.GrailsQueryReadStore", dojox.data.QueryReadStore,{
   urlPreventCache:true,
-  max: 10,
-  defaultGrailsSort: "",  
+  max: 100,
+  sort: "",
+  order: "asc",   // asc or desc
   
   
   /**
@@ -22,32 +23,32 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", dojox.data.QueryReadStore,{
         
    */
    fetch:function(request){
-     console.log('fetch');
-     var order = "asc";
-     var sort = [];            
-     if(request.sort){
-       order = (request.sort[0].descending) ? "desc" : "asc",
-       sort = [request.sort[0].attribute];
+     var tmpOrder = "asc";
+     var tmpSort = null;
+     if(request.sort[0].attribute){      
+       tmpOrder = (request.sort[0].descending) ? "desc" : "asc";
+       tmpSort = [request.sort[0].attribute];
      } 
-     else{                
-       if(this.defaultGrailsSort.length > 0){
-         sort = [this.defaultGrailsSort];
-       }
+     else if(this.sort.length){
+       tmpOrder = (this.sort.descending) ? "desc" : "asc";
+       tmpSort = [this.sort];
      }
-
+     
+     request.count = null;
      request.serverQuery = {
-       order: order,
-       sort: sort,
+       order: tmpOrder,
        max: this.max, 
        offset: request.start
-     };
-     request.count = null;
-     request.sort = sort;      
+     };     
+     if(tmpSort){
+       request.sort = tmpSort;
+       request.serverQuery.sort = tmpSort;     
+     }
      return this.inherited(arguments);               
    },    
   
   
-  
+
   
   
   _fetchItems: function(request, fetchHandler, errorHandler){
