@@ -1,7 +1,7 @@
 dojo.provide("dojoui.data.GrailsQueryReadStore");
 dojo.require("dojox.data.QueryReadStore");
 
-dojo.declare("dojoui.data.GrailsQueryReadStore", dojox.data.QueryReadStore,{
+dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
   urlPreventCache:true,
   max: 100,
   sort: "",

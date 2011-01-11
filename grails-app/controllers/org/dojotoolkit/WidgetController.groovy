@@ -52,6 +52,7 @@ class WidgetController {
         widgets.each {w ->
           item(
             id:w.id,
+            selectRow:1,      
             name:w.name,
             color:w.color,
             shape:w.shape

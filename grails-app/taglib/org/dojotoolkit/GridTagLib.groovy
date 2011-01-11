@@ -25,23 +25,20 @@ class GridTagLib {
   def grid = {attrs, body ->
     def id = attrs.remove("id") ?: "dojo_ui_grid${randomId()}"
     def storeId = attrs.remove("storeId") ?: "${id}_store"
-    def onRowClick = attrs.remove("onRowClick") ?: ""
-    def onRowDblClick = attrs.remove("onRowDblClick") ?: ""
     def href = attrs.remove("href") ?: g.createLink(attrs)
-    def columnReordering = attrs.remove("columnReordering") ?: "true"
     def max = attrs.remove("max") ?: 1000
     def sort = attrs.remove("sort") ?: ""
     def order = attrs.remove("order") ?: "asc" // asc or desc
     def descending = (order == "desc") ? "true" : "false"    
 
-    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid'])    
+    out << dojo.require(modules:['dojoui.data.GrailsQueryWriteStore','dojoui.widget.DataGrid'])    
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
     out << dojo.css(file:"dojox/grid/resources/tundraGrid.css")    
     out << """
-        <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}"></div>
+        <div dojoType="dojoui.data.GrailsQueryWriteStore" jsid="${storeId}" url="${href}" max="${max}"></div>
 
-        <table dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}" 
-          columnReordering="${columnReordering}" sortFields="[{attribute:'${sort}',descending:${descending}}]" plugins="{indirectSelection: true}">
+        <div dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}"
+          sortFields="[{attribute:'${sort}',descending:${descending}}]" plugins="{indirectSelection: true}">
             <script type="dojo/method">
                 var gridStruct = [{                
                   cells:[
@@ -51,7 +48,7 @@ class GridTagLib {
                 }]
                 this.setGridStructure(gridStruct);                
             </script>
-        </table>
+        </div>
     """
 
   }
