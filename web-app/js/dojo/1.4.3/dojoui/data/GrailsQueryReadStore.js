@@ -6,8 +6,7 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", dojox.data.QueryReadStore,{
   max: 100,
   sort: "",
   order: "asc",   // asc or desc
-  
-  
+    
   /**
    *
       {
@@ -50,7 +49,9 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", dojox.data.QueryReadStore,{
   
 
   
-  
+  /**
+   * Copied from dojox.data.QueryReadStore. 
+   */
   _fetchItems: function(request, fetchHandler, errorHandler){
     var serverQuery = request.serverQuery || request.query || {};
     if(!this.doClientPaging){
