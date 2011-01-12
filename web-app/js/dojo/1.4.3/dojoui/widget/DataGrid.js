@@ -3,9 +3,23 @@ dojo.require("dojox.grid.DataGrid");
 dojo.require("dijit.form.CheckBox");
 
 dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
-    indirectSelection:true,
+    indirectSelection:false,
     selectedRows:{},
     selectionMode:'none',
+
+    /**
+     * This overrides the built in can sort routine. It will turn off sorting of the
+     * selection Col if it is enabled.
+     * @param col
+     */
+    canSort:function(sortIndex){
+        if(this.indirectSelection){
+            return (Math.abs(sortIndex) != 1);
+        }
+        else{
+            return true;
+        }
+    },
 
     /**
      * Sets the default sort established the internal this.sortInfo number.
@@ -65,6 +79,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
         var selectCell = {
             name:' ',
             width:'50px;',
+            sort:false,
             formatter:function(value, rowIndex, obj) {
                 var item = obj.grid.getItem(rowIndex);
                 var id = obj.grid.store.getIdentity(item);
