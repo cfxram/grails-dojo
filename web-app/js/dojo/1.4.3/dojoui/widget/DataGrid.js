@@ -1,12 +1,16 @@
 dojo.provide("dojoui.widget.DataGrid");
 dojo.require("dojox.grid.DataGrid");
 dojo.require("dijit.form.CheckBox");
+dojo.require("dojo.data.ItemFileWriteStore");
+
 
 dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     indirectSelection:false,
     selectedRows:{},
+    selectedStore:null,
     selectionMode:'none',
-
+    templateString: dojo.cache("dojoui", "widget/templates/DataGrid.html"),
+    
     /**
      * This overrides the built in can sort routine. It will turn off sorting of the
      * selection Col if it is enabled.
@@ -45,7 +49,8 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
             sortIndex *= -1;
         }
         this.sortInfo = sortIndex;
-        this.inherited(arguments);
+        this.inherited(arguments);                
+        this.selectedStore = new dojo.data.ItemFileWriteStore({});
     },
 
 
@@ -78,7 +83,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     addIndirectSelect:function(inCellStructure) {
         var selectCell = {
             name:' ',
-            width:'50px;',
+            width:'30px;',
             sort:false,
             formatter:function(value, rowIndex, obj) {
                 var item = obj.grid.getItem(rowIndex);
@@ -86,18 +91,17 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
                 var checked = obj.grid.isSelected(id);
 
                 var checkBox = new dijit.form.CheckBox({
+                    item:item,
                     name: "checkBox",
                     value: id,
                     checked: checked,
                     onChange: dojo.hitch(obj.grid, function(checked) {
-                        var id = checkBox.value;
                         if (checked) {
-                            this.addRowToSelected(id);
+                            this.addRowToSelected(checkBox.item);
                         }
                         else {
-                            this.removeRowFromSelected(id);
+                            this.removeRowFromSelected(checkBox.item);
                         }
-
                     })
                 });
                 return checkBox;
@@ -113,8 +117,9 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * Adds an item to the selection.
      * @param id
      */
-    addRowToSelected:function(id) {
-        this.selectedRows['' + id] = true;
+    addRowToSelected:function(item) {
+      var id = this.store.getIdentity(item);
+      this.selectedRows['' + id] = true;
     },
 
 
@@ -124,7 +129,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * @param id
      */
     isSelected:function(id) {
-        return this.selectedRows['' + id];
+      return this.selectedRows['' + id];
     },
 
 
@@ -133,8 +138,9 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * Removes an item from the selected collection. 
      * @param id
      */
-    removeRowFromSelected:function(id) {
-        this.selectedRows['' + id] = false;
+    removeRowFromSelected:function(item) {
+      var id = this.store.getIdentity(item);         
+      this.selectedRows['' + id] = false;
     }
 
 });
