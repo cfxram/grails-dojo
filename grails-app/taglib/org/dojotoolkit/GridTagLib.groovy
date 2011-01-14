@@ -4,6 +4,7 @@ class GridTagLib {
   static namespace = 'dojo'
 
 
+
   private String htmlProperties(params) {
     def paramString = ""
     params.each {k, v ->
@@ -13,9 +14,11 @@ class GridTagLib {
   }
 
 
+
   private String randomId() {
     return "${Math.round(Math.random() * 100000)}"
   }
+
 
 
   /**
@@ -30,41 +33,47 @@ class GridTagLib {
     def sort = attrs.remove("sort") ?: ""
     def order = attrs.remove("order") ?: "asc" // asc or desc
     def descending = (order == "desc") ? "true" : "false"
-    def indirectSelection = attrs.remove("select") ? "true" : "false"
+    def selectable = attrs.remove("selectable") ?: "false"
     def title = attrs.remove("title")
 
-    out << dojo.require(modules:['dojoui.data.GrailsQueryWriteStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane'])    
+
+    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane'])    
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
-    out << dojo.css(file:"dojox/grid/resources/tundraGrid.css")    
+    out << dojo.css(file:"dojox/grid/resources/tundraGrid.css") 
+    out << dojo.css(file:"dojoui/widget/resources/dataGrid.css") 
+    // Data Source 
     out << """
-      <div dojoType="dojoui.data.GrailsQueryWriteStore" jsid="${storeId}" url="${href}" max="${max}"></div>
-
-      <div dojoType="dijit.layout.BorderContainer" design="headline" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px">
-          <div dojoType="dijit.layout.ContentPane" region="top" splitter="false" style="height:30px; overflow:hidden">
-            <span class="grails-dojo-grid-title">${title}</span>
-          </div>
-          <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
-          
-            <div dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}"
-              sortFields="[{attribute:'${sort}',descending:${descending}}]" indirectSelection="${indirectSelection}">
-              <script type="dojo/method">
-                  var gridStruct = [{                
-                    cells:[
-                      ${body()}
-                      {hidden:true}
-                    ]
-                  }]
-                  this.setGridStructure(gridStruct);                
-              </script>
-            </div>
-          </div>
-      </div>    
-
-
-
+      <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}"></div>
     """
-
+      
+    // Grid  
+    out << """
+      <div dojoType="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
+        <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
+          <span class="grails-dojo-grid-title">${title}</span>
+        </div>
+        <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
+      
+          <div dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
+            sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
+            <script type="dojo/method">
+                var gridStruct = [{                
+                  cells:[
+                    ${body()}
+                    {hidden:true}
+                  ]
+                }]
+                this.setGridStructure(gridStruct);                
+            </script>
+          </div>
+          
+        </div>
+      </div>    
+    """
   }
+
+
+
 
   /**
    * A child tag of <dojo:grid>, this defines a column.
@@ -100,5 +109,4 @@ class GridTagLib {
       },
     """
   }
-
 }

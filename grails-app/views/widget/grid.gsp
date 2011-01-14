@@ -13,12 +13,7 @@
   .dojoGridInGrails .dojoxGridCell {
     font-size: 12px;
   }
-	.grails-dojo-grid-title{
-		font-weight:bold;
-		font-size:16px;
-		padding:2px;
-		display:inline-block;
-	}
+
 
     /*
     .tundra .dojoxGridHeader,
@@ -38,7 +33,16 @@
 </head>
 <body class="tundra">
 
-  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="40" sort="name" style="height:400px" select="true" title="New Widgets">
+	<div class="dojoGridInGrails" style="padding:1em; background:#eee;">
+	<g:form name="gridForm">
+		Name: <input type="text" name="name"><br/>
+		Color: <input type="text" name="color"><br/>
+		<button type="button" onclick="dijit.byId('myGrid').query('gridForm')">Search</button>
+	</g:form>
+	</div>
+	
+  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="40" sort="name" 
+		style="height:300px" selectable="true" title="New Widgets">
     <dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
     <dojo:col width="25%" name="Color" field="color"/>
     <dojo:col width="25%" name="Shape" field="shape"/>

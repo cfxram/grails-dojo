@@ -5,11 +5,11 @@ dojo.require("dojo.data.ItemFileWriteStore");
 
 
 dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
-    indirectSelection:false,
+    selectable:false,
     selectedRows:{},
     selectedStore:null,
     selectionMode:'none',
-    templateString: dojo.cache("dojoui", "widget/templates/DataGrid.html"),
+    //templateString: dojo.cache("dojoui", "widget/templates/DataGrid.html"),
     
     /**
      * This overrides the built in can sort routine. It will turn off sorting of the
@@ -17,12 +17,12 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * @param col
      */
     canSort:function(sortIndex){
-        if(this.indirectSelection){
-            return (Math.abs(sortIndex) != 1);
-        }
-        else{
-            return true;
-        }
+      if(this.selectable){
+        return (Math.abs(sortIndex) != 1);
+      }
+      else{
+        return true;
+      }
     },
 
     /**
@@ -33,24 +33,33 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      *
      */
     startup:function() {
-        if (!this.sortFields[0].attribute) {
-            return;
+      if (!this.sortFields[0].attribute) {
+        return;
+      }
+      var cells = this.layout.cells;
+      var sortIndex = 0;
+      for (var i = 0; i < cells.length; i++) {
+        if (cells[i].field == this.sortFields[0].attribute) {
+          sortIndex = i;
+          break;
         }
-        var cells = this.layout.cells;
-        var sortIndex = 0;
-        for (var i = 0; i < cells.length; i++) {
-            if (cells[i].field == this.sortFields[0].attribute) {
-                sortIndex = i;
-                break;
-            }
-        }
-        sortIndex += 1;
-        if (this.sortFields[0].descending) {
-            sortIndex *= -1;
-        }
-        this.sortInfo = sortIndex;
-        this.inherited(arguments);                
-        this.selectedStore = new dojo.data.ItemFileWriteStore({});
+      }
+      sortIndex += 1;
+      if (this.sortFields[0].descending) {
+        sortIndex *= -1;
+      }
+      this.sortInfo = sortIndex;
+      this.inherited(arguments);                
+      this.selectedStore = new dojo.data.ItemFileWriteStore({});
+    },
+
+
+
+    /**
+     * Passes a form id to be serialized and then passed to the server.
+     */
+    query:function(form){
+      this.store.query(form);
     },
 
 
@@ -60,19 +69,18 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * last item is a nulled object and can be removed.
      */
     setGridStructure:function(inStructure) {
-        var cells = inStructure[0].cells;
-        var newStruct = [
-            {
-                cells:[]
-            }
-        ];
-        if (this.indirectSelection) {
-            this.addIndirectSelect(newStruct);
-        }
-        for (var i = 0; i < cells.length - 1; i++) {
-            newStruct[0].cells.push(cells[i]);
-        }
-        this.attr('structure', newStruct);
+      var cells = inStructure[0].cells;
+      var newStruct = [
+        {cells:[]}
+      ];
+      console.log(this.selectable)
+      if (this.selectable) {
+        this.addIndirectSelect(newStruct);
+      }
+      for (var i = 0; i < cells.length - 1; i++) {
+        newStruct[0].cells.push(cells[i]);
+      }
+      this.attr('structure', newStruct);
     },
 
 

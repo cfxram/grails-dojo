@@ -6,6 +6,7 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
   max: 100,
   sort: "",
   order: "asc",   // asc or desc
+  lastRequest:null,
     
   /**
    *
@@ -15,16 +16,16 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
         sort: [{attribute:"name", descending:false}], 
         start: 100, 
         count: 10
-      }
-      
+      }      
       to 
         offset:10, max:20, sort:"title", order:"asc"
         
    */
    fetch:function(request){
+     this.lastRequest = dojo.clone(request);
      var tmpOrder = "asc";
      var tmpSort = null;
-     if(request.sort[0].attribute){      
+     if(request.sort[0].attribute){        
        tmpOrder = (request.sort[0].descending) ? "desc" : "asc";
        tmpSort = [request.sort[0].attribute];
      } 
@@ -38,7 +39,12 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
        order: tmpOrder,
        max: this.max, 
        offset: request.start
-     };     
+     }; 
+
+     if(request.formData){
+       dojo.mixin(request.serverQuery, request.formData);
+     }    
+
      if(tmpSort){
        request.sort = tmpSort;
        request.serverQuery.sort = tmpSort;     
@@ -47,6 +53,32 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
    },    
   
   
+  
+  /**
+   * Will reload the last request made to the server.
+   * (Not real usefull but helpful in testin.)
+   */
+  reload:function(){
+    if(this.lastRequest){
+      this.fetch(this.lastRequest);
+    }
+  },
+
+
+
+  /**
+   * This will serialize a form and add it to the request.
+   */
+  query:function(form){
+
+    if(this.lastRequest){
+      var formData = dojo.formToObject(form);      
+      if(formData){                
+        this.lastRequest.formData = formData;           
+        this.fetch(this.lastRequest);
+      }
+    }
+  },
 
   
   /**
