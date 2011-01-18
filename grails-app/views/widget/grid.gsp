@@ -33,15 +33,17 @@
 </head>
 <body class="tundra">
 
-	<div class="dojoGridInGrails" style="padding:1em; background:#eee;">
+	<div class="dojoGridInGrails" style="padding:1em; background:#eee;">		
 	<g:form name="gridForm">
 		Name: <input type="text" name="name"><br/>
 		Color: <input type="text" name="color"><br/>
+		Shape: <input type="text" name="shape"><br/>
 		<button type="button" onclick="dijit.byId('myGrid').query('gridForm')">Search</button>
+		<button type="reset" onclick="dijit.byId('myGrid').query();">Clear</button>
 	</g:form>
 	</div>
 	
-  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="40" sort="name" 
+  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="20" sort="name" 
 		style="height:300px" selectable="true" title="New Widgets">
     <dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
     <dojo:col width="25%" name="Color" field="color"/>

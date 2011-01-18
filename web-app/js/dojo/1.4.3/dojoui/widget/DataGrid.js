@@ -59,7 +59,14 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * Passes a form id to be serialized and then passed to the server.
      */
     query:function(form){
-      this.store.query(form);
+      var elem = dojo.byId(form);
+      if(elem){
+        this.store.setQueryData(elem);
+      }
+      else{
+        this.store.clearQueryData();
+      }
+      this.render()
     },
 
 
@@ -73,7 +80,6 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
       var newStruct = [
         {cells:[]}
       ];
-      console.log(this.selectable)
       if (this.selectable) {
         this.addIndirectSelect(newStruct);
       }

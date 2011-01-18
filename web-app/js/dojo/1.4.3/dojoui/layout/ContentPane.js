@@ -37,7 +37,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
         pane._setContent(errText, true);
       }
     };
-    pane.ioArgs = pane.baseIoArgs;
+    pane.ioArgs = dojo.clone(pane.baseIoArgs);
   },
   
   
@@ -85,7 +85,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
   loadOriginalHref:function(){
     var pane = this;
     pane.ioMethod = dojo.xhrGet;
-    pane.ioArgs = pane.baseIoArgs;
+    pane.ioArgs = dojo.clone(pane.baseIoArgs);
     pane.ioArgs.content = null;
     pane.attr("href", pane.originalHref);
   },
@@ -143,7 +143,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
         }   
         else{
           pane.ioMethod = dojo.xhrGet;
-          pane.ioArgs = pane.baseIoArgs;
+          pane.ioArgs = dojo.clone(pane.baseIoArgs);
           pane.ioArgs.content = null;
           pane.attr("href", anchor.href);
         }
@@ -235,7 +235,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
             dojo.io.iframe.send(ioArgs);
           }
           else { // Send via posted xhr.
-            currentPane.ioArgs = currentPane.baseIoArgs;
+            currentPane.ioArgs = dojo.clone(currentPane.baseIoArgs);
             currentPane.ioMethod = dojo.xhrPost;
             currentPane.ioArgs.content = dojo.formToObject(thisForm);
             currentPane.attr("href", formHref);

@@ -41,10 +41,19 @@ class WidgetController {
   }
 
   def listJson = {
-    println params  
-    def widgetsTotal = Widget.list().size();      
-    def widgets = Widget.list(params)
-    
+    println params
+    def widgets,widgetsTotal   
+      
+    if(params?.shape){
+      widgets = Widget.findAllByShapeLike("%${params?.shape}%");
+      widgetsTotal = widgets.size();
+      widgets = Widget.findAllByShapeLike("%${params?.shape}%",params);
+      println widgets.size();
+    }
+    else{
+      widgetsTotal = Widget.list().size();      
+      widgets = Widget.list(params)
+    }
     render(contentType: "text/json") {
       identifier("id")
       numRows(widgetsTotal)

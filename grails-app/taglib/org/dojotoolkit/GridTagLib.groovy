@@ -31,11 +31,12 @@ class GridTagLib {
     def href = attrs.remove("href") ?: g.createLink(attrs)
     def max = attrs.remove("max") ?: 1000
     def sort = attrs.remove("sort") ?: ""
-    def order = attrs.remove("order") ?: "asc" // asc or desc
+    def order = attrs.remove("order") ?: "asc" // asc or desc    
     def descending = (order == "desc") ? "true" : "false"
     def selectable = attrs.remove("selectable") ?: "false"
-    def title = attrs.remove("title")
-
+    def selectedLabel = attrs.remove("selectedLabel") ?: "Selected"
+    def title = attrs.remove("title") ?: ""
+    
 
     out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane'])    
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
@@ -51,6 +52,9 @@ class GridTagLib {
       <div dojoType="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
         <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
           <span class="grails-dojo-grid-title">${title}</span>
+          <span class="grails-dojo-grid-selected-label">
+            ${selectedLabel} <span id="${id}_selected" class="grails-dojo-grid-selected-num">0</span>
+          </span>          
         </div>
         <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
       
