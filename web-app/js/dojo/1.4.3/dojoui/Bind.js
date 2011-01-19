@@ -10,7 +10,8 @@ dojo.declare("dojoui.Bind", dijit._Widget,{
 	postCreate:function(){
 		this._propertyArray = this.variable.split(".");
 		this._topic = this._propertyArray [0];
-		_topicQue = dojo.subscribe(this._topic,this,"displayValue");	
+		_topicQue = dojo.subscribe(this._topic,this,"displayValue");
+		
 	},	
 	
 	
@@ -19,12 +20,16 @@ dojo.declare("dojoui.Bind", dijit._Widget,{
 		
 		for(var i=1;i<this._propertyArray.length;i++){
 			val = val[this._propertyArray[i]];
-			if(!val)
-				return;	
 		}
 		
 		if (this.domNode) {
-			dojo.attr(this.domNode, "innerHTML", val);
+      if(!val){
+        dojo.attr(this.domNode, "innerHTML", '');
+      }
+      else{
+        dojo.attr(this.domNode, "innerHTML", val);
+      }
+
 		}	
 	}
 	

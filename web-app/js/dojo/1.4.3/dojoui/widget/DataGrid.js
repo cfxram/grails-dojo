@@ -6,10 +6,14 @@ dojo.require("dojo.data.ItemFileWriteStore");
 
 dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     selectable:false,
-    selectedRows:{},
-    selectedStore:null,
+    selectedRows:{},     // collection of ids from the selected rows. (just the ids)
+    selectedStore:null,  // A full data store of all the selected items.
     selectionMode:'none',
-    //templateString: dojo.cache("dojoui", "widget/templates/DataGrid.html"),
+    publishQueName:null,
+    rowCount:0,
+    selected:0,
+    
+    
     
     /**
      * This overrides the built in can sort routine. It will turn off sorting of the
@@ -24,6 +28,8 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
         return true;
       }
     },
+
+
 
     /**
      * Sets the default sort established the internal this.sortInfo number.
@@ -49,8 +55,30 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
         sortIndex *= -1;
       }
       this.sortInfo = sortIndex;
-      this.inherited(arguments);                
-      this.selectedStore = new dojo.data.ItemFileWriteStore({});
+      this.createSelectionStore();
+      this.publishQueName = this.id;
+            
+      this.inherited(arguments);                      
+    },
+
+    
+    _onFetchComplete:function(items,req){
+      this.rowCount = req.store._numRows; // Can't find another way to count this.
+      dojo.publish(this.publishQueName,[this]);
+      this.inherited(arguments);
+    },
+
+    
+
+
+    /**
+     * Helper method used to create the selection store. 
+     */
+    createSelectionStore:function(){      
+      var ident = "id";  // TODO: Remove hardcoding of the identity field.
+      var emptyData = {"identifier":ident,items:[]} 
+      this.selectedStore = new dojo.data.ItemFileWriteStore({data:emptyData});  
+       // TODO: Destroy the publish que as it may previously exist.
     },
 
 
@@ -67,6 +95,23 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
         this.store.clearQueryData();
       }
       this.render()
+    },
+
+
+
+    /**
+     * Takes a data store item and returns an object without the array elements and hidden
+     * properties.
+     * @param {Object} row - Datastore Item
+     */	
+    itemToObj:function(/*Datastore Item*/row){
+    	var obj = {};
+    	for(var i in row){
+    		if (i.charAt(0) != '_') {
+    			obj[i] = row[i];
+    		}	
+    	}	
+    	return obj;
     },
 
 
@@ -96,30 +141,30 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      */
     addIndirectSelect:function(inCellStructure) {
         var selectCell = {
-            name:' ',
-            width:'30px;',
-            sort:false,
-            formatter:function(value, rowIndex, obj) {
-                var item = obj.grid.getItem(rowIndex);
-                var id = obj.grid.store.getIdentity(item);
-                var checked = obj.grid.isSelected(id);
+          name:' ',
+          width:'30px;',
+          sort:false,
+          formatter:function(value, rowIndex, obj) {
+            var item = obj.grid.getItem(rowIndex);
+            var id = obj.grid.store.getIdentity(item);
+            var checked = obj.grid.isSelected(id);
 
-                var checkBox = new dijit.form.CheckBox({
-                    item:item,
-                    name: "checkBox",
-                    value: id,
-                    checked: checked,
-                    onChange: dojo.hitch(obj.grid, function(checked) {
-                        if (checked) {
-                            this.addRowToSelected(checkBox.item);
-                        }
-                        else {
-                            this.removeRowFromSelected(checkBox.item);
-                        }
-                    })
-                });
-                return checkBox;
-            }
+            var checkBox = new dijit.form.CheckBox({
+                item:item,
+                name: "checkBox",
+                value: id,
+                checked: checked,
+                onChange: dojo.hitch(obj.grid, function(checked) {
+                    if (checked) {
+                        this.addRowToSelected(checkBox.item);
+                    }
+                    else {
+                        this.removeRowFromSelected(checkBox.item);
+                    }
+                })
+            });
+            return checkBox;
+          }
         }
         inCellStructure[0].cells.push(selectCell);
         return true;
@@ -132,8 +177,14 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * @param id
      */
     addRowToSelected:function(item) {
+      var newObj = this.itemToObj(item.i);
       var id = this.store.getIdentity(item);
       this.selectedRows['' + id] = true;
+      this.selected += 1;
+      
+      this.selectedStore.newItem({'id':newObj.id, 'color':newObj.color});            
+      this.selectedStore.save();
+      dojo.publish(this.publishQueName,[this]);
     },
 
 
@@ -153,10 +204,20 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * @param id
      */
     removeRowFromSelected:function(item) {
-      var id = this.store.getIdentity(item);         
+      var newObj = this.itemToObj(item.i);
+      var id = this.store.getIdentity(item);                
       this.selectedRows['' + id] = false;
+      this.selected -= 1;
+      this.selectedStore.fetchItemByIdentity({
+        "identity":newObj.id,
+        onItem:dojo.hitch(this,function(item){
+          this.selectedStore.deleteItem(item)
+        })
+      });
+      
+      this.selectedStore.save();
+      dojo.publish(this.publishQueName,[this]);
     }
-
 });
 /**
  * All Grids use a factory. This just wraps the standard grid factory.

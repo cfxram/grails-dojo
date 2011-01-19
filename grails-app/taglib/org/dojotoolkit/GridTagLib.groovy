@@ -38,7 +38,7 @@ class GridTagLib {
     def title = attrs.remove("title") ?: ""
     
 
-    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane'])    
+    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane','dojoui.Bind'])    
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
     out << dojo.css(file:"dojox/grid/resources/tundraGrid.css") 
     out << dojo.css(file:"dojoui/widget/resources/dataGrid.css") 
@@ -53,7 +53,7 @@ class GridTagLib {
         <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
           <span class="grails-dojo-grid-title">${title}</span>
           <span class="grails-dojo-grid-selected-label">
-            ${selectedLabel} <span id="${id}_selected" class="grails-dojo-grid-selected-num">0</span>
+            ${selectedLabel} ${dojo.bind(variable:"${id}.selected", id:"${id}_selected", class:'grails-dojo-grid-selected-num')}
           </span>          
         </div>
         <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
@@ -113,4 +113,17 @@ class GridTagLib {
       },
     """
   }
+  
+  
+  
+  /**
+   * Binds a span tag's content to a data property.
+   */
+   def bind = {attrs, body ->
+     out << """
+       <span dojoType="dojoui.Bind" ${htmlProperties(attrs)}></span>
+     """
+   }  
+   
+   
 }

@@ -50,8 +50,7 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
        request.serverQuery.sort = tmpSort;     
      }
      return this.inherited(arguments);               
-   },    
-  
+   },
   
   
   /**

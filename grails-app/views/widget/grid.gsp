@@ -40,8 +40,13 @@
 		Shape: <input type="text" name="shape"><br/>
 		<button type="button" onclick="dijit.byId('myGrid').query('gridForm')">Search</button>
 		<button type="reset" onclick="dijit.byId('myGrid').query();">Clear</button>
+		Selected: <dojo:bind variable="myGrid.selected" id="asdasd"/>
+		Total Records <dojo:bind variable="myGrid.rowCount"/>
 	</g:form>
 	</div>
+	
+	
+	
 	
   <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="20" sort="name" 
 		style="height:300px" selectable="true" title="New Widgets">
