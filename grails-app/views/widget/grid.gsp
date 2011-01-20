@@ -2,19 +2,23 @@
 <head>
   <link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon"/>
   <dojo:header theme="tundra"/>
-
+	<script type="text/javascript">
+		function myTest(){
+			var selectStore = dijit.byId('myGrid').selectedStore;
+			console.log(selectStore);
+		}
+	</script>
+	
   <style type="text/css">
-  .dojoGridInGrails {
-    width: 700px;
-		margin:2em;
-    border: 1px solid gray;
-  }
+	  .dojoGridInGrails {
+	    width: 700px;
+			margin:2em;
+	    border: 1px solid gray;
+	  }
 
-  .dojoGridInGrails .dojoxGridCell {
-    font-size: 12px;
-  }
-
-
+	  .dojoGridInGrails .dojoxGridCell {
+	    font-size: 12px;
+	  }
     /*
     .tundra .dojoxGridHeader,
     .soria .dojoxGridHeader{
@@ -44,16 +48,41 @@
 		Total Records <dojo:bind variable="myGrid.rowCount"/>
 	</g:form>
 	</div>
+	<button onclick="myTest()">Test</button>
 	
-	
-	
-	
+	<%
+		header = {
+			return """
+				<table style="width:100%; background:#eee; height:30px">
+				<tr style="font-size:16px; font-weight:bold">
+					<td style="width:33%;">
+						<button>
+							Selected:
+							${dojo.bind(variable:'myGrid.selected')} 
+						</button>
+					</td>
+					<td style="width:33%; text-align:center;">My Widgets ( 	${dojo.bind(variable:'myGrid.rowCount')}  )</td>
+					<td style="width:33%; text-align:right">
+					</td>
+				</tr>
+				</table>
+			"""
+		}
+	%>
+
   <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="20" sort="name" 
-		style="height:300px" selectable="true" title="New Widgets">
-    <dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
-    <dojo:col width="25%" name="Color" field="color"/>
-    <dojo:col width="25%" name="Shape" field="shape"/>
+		style="height:300px" selectionMode="single" header="${header}" selectable="true">
+		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
+		<dojo:col width="25%" name="Color" field="color"/>
+		<dojo:col width="25%" name="Shape" field="shape"/>
   </dojo:grid>
+
+
+	<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
+		<dojo:nodeDefaultTemplate>
+			{node.name}, {node.color}, {node.shape}
+		</dojo:nodeDefaultTemplate>
+	</dojo:dataSourceView>
 
 
   <div class="dojoGridInGrails" style="padding:1em; background:#eee;">

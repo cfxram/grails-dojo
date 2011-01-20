@@ -265,7 +265,15 @@ dojo.declare("dojoui.widget.DataSourceView",[dijit._Widget, dijit._Templated],{
     this.defaultNodeTemplate = null;
     this.noItemTemplate = null;
     this.connects = [];    
-    var store = this.store;
+    this.inherited(arguments);
+  },
+  
+  
+  /**
+   * Starts the rendering
+   */
+  startup:function(){
+    var store = this.store    
     if(!store.getFeatures()['dojo.data.api.Identity']){
       throw new Error("dojoui.widget.DataSourceView must support dojo.data.Identity");
     }
@@ -277,14 +285,7 @@ dojo.declare("dojoui.widget.DataSourceView",[dijit._Widget, dijit._Templated],{
         dojo.connect(store, "onSet", this, "onSetItem")
       ]);
     }
-    this.inherited(arguments);
-  },
-  
-  
-  /**
-   * Starts the rendering
-   */
-  startup:function(){
+    
     this.inherited(arguments);
     this.renderAllNodes();
     this.setupChangeEvents();
@@ -327,14 +328,15 @@ dojo.declare("dojoui.widget.DataSourceView",[dijit._Widget, dijit._Templated],{
 
   onNewItem: function(/* item */ newItem, /*object?*/ parentInfo){
     this.renderNodeHTML(newItem,"first");
-	this.toggleNoItemFound();
+	  this.toggleNoItemFound();
   },
 
   onDeleteItem: function(/* item */ deletedItem){
     var node = this.convertItemToNode(deletedItem);
     var elemId = this.getListElementId(node.id);
-	this.removeDomNode(LI_elemId);
-	this.toggleNoItemFound();	
+    var LI_elemId = this.getListElementId(node.id);    
+	  this.removeDomNode(LI_elemId);
+	  this.toggleNoItemFound();	
   }
   
 }); 

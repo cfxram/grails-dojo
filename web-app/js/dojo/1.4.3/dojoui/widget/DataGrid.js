@@ -7,7 +7,10 @@ dojo.require("dojo.data.ItemFileWriteStore");
 dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     selectable:false,
     selectedRows:{},     // collection of ids from the selected rows. (just the ids)
-    selectedStore:null,  // A full data store of all the selected items.
+    
+    // A full data store of all the selected items. This will be exposed globally.
+    selectedStore:new dojo.data.ItemFileWriteStore({data:{"identifier":"id",items:[]}}),
+    
     selectionMode:'none',
     publishQueName:null,
     rowCount:0,
@@ -28,7 +31,6 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
         return true;
       }
     },
-
 
 
     /**
@@ -55,10 +57,9 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
         sortIndex *= -1;
       }
       this.sortInfo = sortIndex;
-      this.createSelectionStore();
-      this.publishQueName = this.id;
-            
-      this.inherited(arguments);                      
+      this.publishQueName = this.id; 
+      //this.createSelectionStore();           
+      this.inherited(arguments);                  
     },
 
     
@@ -75,9 +76,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * Helper method used to create the selection store. 
      */
     createSelectionStore:function(){      
-      var ident = "id";  // TODO: Remove hardcoding of the identity field.
-      var emptyData = {"identifier":ident,items:[]} 
-      this.selectedStore = new dojo.data.ItemFileWriteStore({data:emptyData});  
+      this.selectedStore = new dojo.data.ItemFileWriteStore({data:{"identifier":"id",items:[]}});  
        // TODO: Destroy the publish que as it may previously exist.
     },
 
@@ -182,7 +181,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
       this.selectedRows['' + id] = true;
       this.selected += 1;
       
-      this.selectedStore.newItem({'id':newObj.id, 'color':newObj.color});            
+      this.selectedStore.newItem(newObj);            
       this.selectedStore.save();
       dojo.publish(this.publishQueName,[this]);
     },

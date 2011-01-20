@@ -34,9 +34,7 @@ class GridTagLib {
     def order = attrs.remove("order") ?: "asc" // asc or desc    
     def descending = (order == "desc") ? "true" : "false"
     def selectable = attrs.remove("selectable") ?: "false"
-    def selectedLabel = attrs.remove("selectedLabel") ?: "Selected"
-    def title = attrs.remove("title") ?: ""
-    
+    def header = attrs.remove("header") ?: null
 
     out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane','dojoui.Bind'])    
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
@@ -50,14 +48,10 @@ class GridTagLib {
     // Grid  
     out << """
       <div dojoType="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
-        <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
-          <span class="grails-dojo-grid-title">${title}</span>
-          <span class="grails-dojo-grid-selected-label">
-            ${selectedLabel} ${dojo.bind(variable:"${id}.selected", id:"${id}_selected", class:'grails-dojo-grid-selected-num')}
-          </span>          
+        <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">        
+          ${(header && (header instanceof Closure)) ? header.call() : header}
         </div>
-        <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
-      
+        <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">      
           <div dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
             sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
             <script type="dojo/method">
@@ -113,7 +107,7 @@ class GridTagLib {
       },
     """
   }
-  
+
   
   
   /**
