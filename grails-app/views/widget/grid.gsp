@@ -70,13 +70,16 @@
 		}
 	%>
 
-  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="20" sort="name" 
-		style="height:300px" selectionMode="single" header="${header}" selectable="true">
+  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="200" sort="name" 
+		style="height:300px" header="${header}" selectable="true">
 		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
-		<dojo:col width="25%" name="Color" field="color"/>
-		<dojo:col width="25%" name="Shape" field="shape"/>
+		<dojo:col width="15%" name="Color" field="color"/>
+		<dojo:col width="15%" name="Shape" field="shape"/>
   </dojo:grid>
-
+	
+	<div>
+		Selected: <dojo:bind variable="myGrid.selectedRow.name"/>
+	</div>	
 
 	<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
 		<dojo:nodeDefaultTemplate>

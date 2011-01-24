@@ -5,15 +5,25 @@ dojo.require("dojo.data.ItemFileWriteStore");
 
 
 dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
+    // Used to turn on the indirect selection checkboxes
     selectable:false,
-    selectedRows:{},     // collection of ids from the selected rows. (just the ids)
+    
+    // A simple collection of ids from the selected ids. This is used internally to maintain selections.
+    selectedRows:{},     
     
     // A full data store of all the selected items. This will be exposed globally.
-    selectedStore:new dojo.data.ItemFileWriteStore({data:{"identifier":"id",items:[]}}),
+    selectedStore:new dojo.data.ItemFileWriteStore({data:{"identifier":"id",items:[]}}),   
     
+    // Turn of the native grid selectionMode. 
     selectionMode:'none',
+    
+    // This is the name of the queue that events are published to. Defaults to this.id.
     publishQueName:null,
+    
+    // This contains the number of rows that were returned by the dataStore. (numRows in the JSON)
     rowCount:0,
+    
+    // Total number of items selected (Used when this.selectable is turned on.)
     selected:0,
     
     
@@ -62,7 +72,12 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
       this.inherited(arguments);                  
     },
 
-    
+
+
+    /**
+     * Fires after the dataStore returns. This will get the total Rows in the data set 
+     * and set this.rowCount(); 
+     */
     _onFetchComplete:function(items,req){
       this.rowCount = req.store._numRows; // Can't find another way to count this.
       dojo.publish(this.publishQueName,[this]);
@@ -70,7 +85,6 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     },
 
     
-
 
     /**
      * Helper method used to create the selection store. 
@@ -103,7 +117,8 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * properties.
      * @param {Object} row - Datastore Item
      */	
-    itemToObj:function(/*Datastore Item*/row){
+    itemToObj:function(/*Datastore Item*/item){
+      var row = item.i;
     	var obj = {};
     	for(var i in row){
     		if (i.charAt(0) != '_') {
@@ -176,13 +191,20 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * @param id
      */
     addRowToSelected:function(item) {
-      var newObj = this.itemToObj(item.i);
+      var newObj = this.itemToObj(item);
       var id = this.store.getIdentity(item);
+      
+      // 1. Add to index of selected items
       this.selectedRows['' + id] = true;
+      
+      // 2. Increment selected count
       this.selected += 1;
       
+      // 3. Add item to selection store      
       this.selectedStore.newItem(newObj);            
-      this.selectedStore.save();
+      this.selectedStore.save();    
+      
+      // Publish grid object to the publish Queue.
       dojo.publish(this.publishQueName,[this]);
     },
 
@@ -199,11 +221,20 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
 
 
     /**
+     * 
+     */
+    onRowClick:function(e){
+      this.inherited(arguments);  
+    },
+  
+
+
+    /**
      * Removes an item from the selected collection. 
      * @param id
      */
     removeRowFromSelected:function(item) {
-      var newObj = this.itemToObj(item.i);
+      var newObj = this.itemToObj(item);
       var id = this.store.getIdentity(item);                
       this.selectedRows['' + id] = false;
       this.selected -= 1;

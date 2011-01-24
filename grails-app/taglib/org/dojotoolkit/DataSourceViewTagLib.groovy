@@ -43,8 +43,6 @@ class DataSourceViewTagLib {
       <div dojoType="dojoui.widget.DataSourceView" id="${id}" ${htmlProperties(attrs)}>
         <script type="dojo/connect" method="postCreate" args="args">
           this.store = ${store}
-          console.log(${store});
-          console.log(this.store);
         </script>
         ${body()}
       </div>
