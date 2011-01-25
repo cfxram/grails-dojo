@@ -22,6 +22,18 @@ class GridTagLib {
 
 
   /**
+   * Outputs the css and javascript files required for the grid.
+   */
+  def gridResources = {attrs,body ->
+    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane','dojoui.Bind'])    
+    out << dojo.css(file:"dojox/grid/resources/Grid.css")
+    out << dojo.css(file:"dojox/grid/resources/tundraGrid.css") 
+    out << dojo.css(file:"dojoui/widget/resources/dataGrid.css")
+  }
+
+
+
+  /**
    * Creates a dataGrid on the page. The data for the data grid can come from
    * a remote dataset defined in json.
    */
@@ -36,10 +48,6 @@ class GridTagLib {
     def selectable = attrs.remove("selectable") ?: "false"
     def header = attrs.remove("header") ?: null
 
-    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane','dojoui.Bind'])    
-    out << dojo.css(file:"dojox/grid/resources/Grid.css")
-    out << dojo.css(file:"dojox/grid/resources/tundraGrid.css") 
-    out << dojo.css(file:"dojoui/widget/resources/dataGrid.css") 
     // Data Source 
     out << """
       <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}"></div>

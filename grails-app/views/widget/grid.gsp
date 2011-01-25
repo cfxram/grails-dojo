@@ -81,6 +81,9 @@
 		Selected: <dojo:bind variable="myGrid.selectedRow.name"/>
 	</div>	
 
+	<dojo:gridResources/>
+	<dojo:dataSourceViewResources/>
+
 	<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
 		<dojo:nodeDefaultTemplate>
 			{node.name}, {node.color}, {node.shape}
