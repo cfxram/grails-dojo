@@ -1,25 +1,9 @@
 package org.dojotoolkit
+import org.dojotoolkit.TagLibUtil as Util
 
 class GridTagLib {
   static namespace = 'dojo'
-
-
-
-  private String htmlProperties(params) {
-    def paramString = ""
-    params.each {k, v ->
-      paramString += " ${k}=\"${v}\""
-    }
-    return paramString
-  }
-
-
-
-  private String randomId() {
-    return "${Math.round(Math.random() * 100000)}"
-  }
-
-
+  
 
   /**
    * Outputs the css and javascript files required for the grid.
@@ -38,7 +22,7 @@ class GridTagLib {
    * a remote dataset defined in json.
    */
   def grid = {attrs, body ->
-    def id = attrs.remove("id") ?: "dojo_ui_grid${randomId()}"
+    def id = attrs.remove("id") ?: "dojo_ui_grid${Util.randomId()}"
     def storeId = attrs.remove("storeId") ?: "${id}_store"
     def href = attrs.remove("href") ?: g.createLink(attrs)
     def max = attrs.remove("max") ?: 1000
@@ -60,7 +44,7 @@ class GridTagLib {
           ${(header && (header instanceof Closure)) ? header.call() : header}
         </div>
         <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">      
-          <div dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
+          <div dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
             sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
             <script type="dojo/method">
                 var gridStruct = [{                
@@ -123,7 +107,7 @@ class GridTagLib {
    */
    def bind = {attrs, body ->
      out << """
-       <span dojoType="dojoui.Bind" ${htmlProperties(attrs)}></span>
+       <span dojoType="dojoui.Bind" ${Util.htmlProperties(attrs)}></span>
      """
    }  
 
@@ -147,7 +131,7 @@ class GridTagLib {
      
      attrs?.onclick = btnClick + "; " + attrs.onclick;     
      out << """
-      <button ${htmlProperties(attrs)}>${label}</button>
+      <button ${Util.htmlProperties(attrs)}>${label}</button>
      """
    }
    

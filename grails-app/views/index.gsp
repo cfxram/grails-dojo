@@ -20,5 +20,9 @@ Welcome to the Dojo Plugin Home
 <h2>
   <g:link controller="widget" action="grid">Check out the grid</g:link>
 </h2>
+
+<h2>
+  <g:link controller="widget" action="popOver">Demo of a popOver</g:link>
+</h2>
 </body>
 </html>

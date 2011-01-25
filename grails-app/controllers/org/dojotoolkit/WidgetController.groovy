@@ -32,13 +32,10 @@ class WidgetController {
     render(template: "list", model: [widgetList: Widget.list(params), total: Widget.count()])
   }
 
-  def dijits = {
+  def dijits = {}
+  def grid = {}
+  def popOver = {}
 
-  }
-
-  def grid = {
-
-  }
 
   def listJson = {
     println params
