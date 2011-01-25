@@ -126,6 +126,31 @@ class GridTagLib {
        <span dojoType="dojoui.Bind" ${htmlProperties(attrs)}></span>
      """
    }  
+
+
+
+   /**
+    * Creates a button with the correct javascript to reload the grid
+    * data. Good for reseting a grid after a form has been run.
+    */
+   def gridLoadDataButton = {attrs,body ->
+     attrs.onclick = attrs?.onclick ?: ''
+     def grid = attrs.remove('grid')
+     def code = attrs.remove('code')
+     def label = attrs.remove('label')
+     def form = attrs.remove('form') ?: ''     
+     def btnClick = "dijit.byId('${grid}').query('${form}')"
+          
+     if(code?.length()){
+       label = message(code:code)
+     }     
+     
+     attrs?.onclick = btnClick + "; " + attrs.onclick;     
+     out << """
+      <button ${htmlProperties(attrs)}>${label}</button>
+     """
+   }
+   
    
    
 }

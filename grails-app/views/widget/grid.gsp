@@ -42,8 +42,11 @@
 		Name: <input type="text" name="name"><br/>
 		Color: <input type="text" name="color"><br/>
 		Shape: <input type="text" name="shape"><br/>
-		<button type="button" onclick="dijit.byId('myGrid').query('gridForm')">Search</button>
-		<button type="reset" onclick="dijit.byId('myGrid').query();">Clear</button>
+
+		<dojo:gridLoadDataButton label="Search" type="button" grid="myGrid" form="gridForm"/>
+		<dojo:gridLoadDataButton label="Clear" type="reset" grid="myGrid"/>
+		
+		
 		Selected: <dojo:bind variable="myGrid.selected" id="asdasd"/>
 		Total Records <dojo:bind variable="myGrid.rowCount"/>
 	</g:form>
