@@ -33,14 +33,14 @@
 			</dojo:popOver>
 		</li>	
 		<li>	
-			<dojo:popOver label="Click to see content." type="link" contentDomId="myContent" id="myCustomWindow">
+			<dojo:popOver label="Click to see content." type="link" contentDomId="popOverContentRegion" id="myCustomWindow">
 				asdf
 			</dojo:popOver>
 		</li>	
 	</ul>
 	
 	<dojo:popOverContent>
-		<div id="myContent">
+		<div id="popOverContentRegion">
 			<div style="background:#eee; padding:2em; border:1px solid #ccc">
 				This is some external content
 			</div>	

@@ -73,7 +73,7 @@
 		}
 	%>
 
-  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="200" sort="name" 
+  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="20" sort="name" 
 		style="height:300px" header="${header}" selectable="true">
 		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 		<dojo:col width="15%" name="Color" field="color"/>

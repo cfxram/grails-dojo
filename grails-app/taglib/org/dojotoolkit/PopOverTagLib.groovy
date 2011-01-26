@@ -22,9 +22,7 @@ class PopOverTagLib {
       <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
           <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
           <span>${label}</span>
-          <div dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false">
-              ${body()}
-          </div>
+          <div dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false">${body()}</div>
       </div>
     """    
   }
@@ -36,7 +34,8 @@ class PopOverTagLib {
 
 
   def popOverContent = {attrs, body ->
-    attrs.style = "${attrs?.style}; display:none;"
+    def style = attrs?.style ?: ''
+    attrs.style = "display:none; ${style}"
     out << """
       <div ${Util.htmlProperties(attrs)}>${body()}</div>      
     """

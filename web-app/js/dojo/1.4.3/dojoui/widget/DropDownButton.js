@@ -8,7 +8,7 @@ dojo.require("dijit.form.DropDownButton");
  */
 dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
   activate:"click",
-  contentDomId:null,        // put the content from this dom id into the tooltip.
+  contentDomId:'',        // put the content from this dom id into the tooltip.
   templateString: dojo.cache("dojoui", "widget/templates/DropDownButton.html"),
   btnClass:"",
   
@@ -37,6 +37,8 @@ dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
   
   openDropDown:function(){
     if(this.contentDomId && !this._replacedContent){
+      console.log('openDropDown');
+      
       var elem = dojo.byId(this.contentDomId)
       var container = this.dropDown.containerNode;
       dojo.empty(container);
