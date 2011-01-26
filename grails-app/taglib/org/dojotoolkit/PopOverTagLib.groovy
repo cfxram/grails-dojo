@@ -29,6 +29,11 @@ class PopOverTagLib {
     """    
   }
 
+  def closePopOverScript = {attrs, body ->
+    def onclick = attrs?.onclick ?: ''
+    out << "dijit.byId('${attrs?.popOver}').closeDropDown(); ${onclick}"
+  }
+
 
   def popOverContent = {attrs, body ->
     attrs.style = "${attrs?.style}; display:none;"
@@ -38,9 +43,8 @@ class PopOverTagLib {
   }
   
   def closePopOver = {attrs, body ->
-    attrs.onclick = "dijit.byId('${attrs?.popOver}').closeDropDown(); ${attrs?.onclick}"
     out << """
-      <a href="#" ${Util.htmlProperties(attrs)}>${body()}</a>
+      <a href="#" onclick="${closePopOverScript(attrs)}" ${Util.htmlProperties(attrs)}>${body()}</a>
     """
   }
   

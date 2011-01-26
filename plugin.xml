@@ -24,6 +24,7 @@
     <resource>org.dojotoolkit.DojoTagLib</resource>
     <resource>org.dojotoolkit.GridTagLib</resource>
     <resource>org.dojotoolkit.PaginateTagLib</resource>
+    <resource>org.dojotoolkit.PopOverTagLib</resource>
     <resource>org.dojotoolkit.SortableColumnTagLib</resource>
   </resources>
   <dependencies />

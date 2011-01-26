@@ -45,6 +45,7 @@
 				This is some external content
 			</div>	
 			<dojo:closePopOver popOver="myCustomWindow">Close</dojo:closePopOver>
+			<button onclick="${dojo.closePopOverScript(popOver:'myCustomWindow')}">Reset</button>
 		</div>
 	</dojo:popOverContent>
 	
