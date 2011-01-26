@@ -21,7 +21,7 @@ class PopOverTagLib {
     out << """
       <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
           <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
-          <span>${label}...</span>
+          <span>${label}</span>
           <div dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false">
               ${body()}
           </div>
