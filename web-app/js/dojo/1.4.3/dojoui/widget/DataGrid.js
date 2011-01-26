@@ -221,6 +221,21 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
 
 
     /**
+     * Returns a list of ids that have been selected.
+     */
+    getSelectedIds:function(){
+      var idArray = []      
+      for(i in this.selectedRows){
+        if(this.selectedRows[i]){
+          idArray.push(i);
+        }
+      }
+      return idArray.join(",");
+    },
+    
+
+
+    /**
      * 
      */
     onRowClick:function(e){

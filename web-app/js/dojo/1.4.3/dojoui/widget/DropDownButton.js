@@ -37,8 +37,6 @@ dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
   
   openDropDown:function(){
     if(this.contentDomId && !this._replacedContent){
-      console.log('openDropDown');
-      
       var elem = dojo.byId(this.contentDomId)
       var container = this.dropDown.containerNode;
       dojo.empty(container);

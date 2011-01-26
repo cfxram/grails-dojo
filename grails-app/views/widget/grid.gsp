@@ -4,8 +4,7 @@
   <dojo:header theme="tundra"/>
 	<script type="text/javascript">
 		function myTest(){
-			var selectStore = dijit.byId('myGrid').selectedStore;
-			console.log(selectStore);
+			console.log(dijit.byId('myGrid').getSelectedIds());
 		}
 	</script>
 	
