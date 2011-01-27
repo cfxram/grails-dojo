@@ -12,7 +12,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     selectedRows:{},     
     
     // A full data store of all the selected items. This will be exposed globally.
-    selectedStore:new dojo.data.ItemFileWriteStore({data:{"identifier":"id",items:[]}}),   
+    selectedStore:null,   
     
     // Turn of the native grid selectionMode. 
     selectionMode:'none',
@@ -44,6 +44,17 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
 
 
     /**
+     * Will establish the local store to manage what is selected.
+     * This runs before startup();
+     */
+    postCreate:function(){
+      this.createSelectionStore(); 
+      this.inherited(arguments);  
+    },
+
+
+
+    /**
      * Sets the default sort established the internal this.sortInfo number.
      * sortInfo is a numeric index that is 1 based (Not zero). If the number
      * is positive then the sort is ascending. If the number is negative, then
@@ -54,6 +65,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
       if (!this.sortFields[0].attribute) {
         return;
       }
+
       var cells = this.layout.cells;
       var sortIndex = 0;
       for (var i = 0; i < cells.length; i++) {
@@ -66,9 +78,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
       if (this.sortFields[0].descending) {
         sortIndex *= -1;
       }
-      this.sortInfo = sortIndex;
-      this.publishQueName = this.id; 
-      //this.createSelectionStore();           
+      this.sortInfo = sortIndex;                
       this.inherited(arguments);                  
     },
 
@@ -79,7 +89,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * and set this.rowCount(); 
      */
     _onFetchComplete:function(items,req){
-      this.rowCount = req.store._numRows; // Can't find another way to count this.
+      this.rowCount = req.store._numRows; // TODO: find another way to count this.
       dojo.publish(this.publishQueName,[this]);
       this.inherited(arguments);
     },
@@ -89,9 +99,9 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     /**
      * Helper method used to create the selection store. 
      */
-    createSelectionStore:function(){      
+    createSelectionStore:function(){    
+      this.publishQueName = this.id; 
       this.selectedStore = new dojo.data.ItemFileWriteStore({data:{"identifier":"id",items:[]}});  
-       // TODO: Destroy the publish que as it may previously exist.
     },
 
 
@@ -191,6 +201,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * @param id
      */
     addRowToSelected:function(item) {
+      console.log(this.id);
       var newObj = this.itemToObj(item);
       var id = this.store.getIdentity(item);
       
