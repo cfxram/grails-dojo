@@ -6,6 +6,7 @@ class PopOverTagLib {
 
   def popOverResources = {attrs, body ->
     out << dojo.require(modules:['dojoui.widget.DropDownButton','dijit.TooltipDialog'])
+    //out << dojo.css(file:"dojoui/widget/resources/dropDownButton.css")
   }
 
 
@@ -22,7 +23,7 @@ class PopOverTagLib {
       <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
           <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
           <span>${label}</span>
-          <div dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false">${body()}</div>
+          <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false">${body()}</div>
       </div>
     """    
   }
