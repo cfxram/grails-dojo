@@ -4,7 +4,13 @@
   <dojo:header theme="tundra"/>
 	<script type="text/javascript">
 		function myTest(){
-			console.log(dijit.byId('myGrid').getSelectedIds());
+	    var allGrid = dijit.byId('myGrid');
+	    console.log('All Users Grid');
+	    console.log(allGrid.selectedRows);
+
+	    var progGrid = dijit.byId('myGrid2');
+	    console.log('Program Users Grid');
+	    console.log(progGrid.selectedRows);
 		}
 	</script>
 	

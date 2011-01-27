@@ -9,7 +9,7 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     selectable:false,
     
     // A simple collection of ids from the selected ids. This is used internally to maintain selections.
-    selectedRows:{},     
+    selectedRows:null,     
     
     // A full data store of all the selected items. This will be exposed globally.
     selectedStore:null,   
@@ -99,7 +99,8 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
     /**
      * Helper method used to create the selection store. 
      */
-    createSelectionStore:function(){    
+    createSelectionStore:function(){
+      this.selectedRows = {};  
       this.publishQueName = this.id; 
       this.selectedStore = new dojo.data.ItemFileWriteStore({data:{"identifier":"id",items:[]}});  
     },
@@ -201,7 +202,6 @@ dojo.declare("dojoui.widget.DataGrid", dojox.grid.DataGrid, {
      * @param id
      */
     addRowToSelected:function(item) {
-      console.log(this.id);
       var newObj = this.itemToObj(item);
       var id = this.store.getIdentity(item);
       
