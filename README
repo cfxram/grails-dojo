@@ -7,7 +7,20 @@ that the grails versions of the tags but will do them via ajax calls.
 The dojo toolkit is bundled with the library so to add more dojo resources to your app, use
 the tags: <dojo:header> and <dojo:require>.
 
-The dojo plugin also allows you to create a custom dojo release tailored for your application.
+The Dojo Plugin adds some simple tags for interacting with dojo:
+
+<dojo:header>
+<dojo:require>
+<dojo:css>
+<dojo:paginate>
+<dojo:sortableColumn>
+<dojo:grid> (And Child tags: <dojo:col>)
+<dojo:gridResources>
+<dojo:bind>
+<dojo:dataSourceView>(And Child tags: <dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
+<dojo:dataSourceViewResources>
+
+The Dojo Plugin also allows you to create a custom dojo release tailored for your application.
 This can be done during war creation or manually using the "install-custom-dojo" grails script.
 Then add these settings to your Config.groovy file:
 dojo.optimize.during.build = true;
