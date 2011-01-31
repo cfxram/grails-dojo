@@ -71,14 +71,14 @@ class GridTagLib {
   def col = {attrs, body ->
     def field = attrs.field ?: 'id'
     def width = attrs.width ?: '100'
-    def name = attrs.name ?: ''
+    def label = attrs.label ?: ''
     def code = attrs.code ?: ''
     def renderType = attrs.renderType ?: ''    // can be checkBox, textInput, or select
     def cleanedString = body().encodeAsJavaScript()
     def formatter = "null"
 
     if (code.length()) {
-      name = message(code: code);
+      label = message(code: code);
     }
     // Custom Formatting Found so create a formatter.
     if (cleanedString.length()) {
@@ -92,7 +92,7 @@ class GridTagLib {
     }
     out << """
       {
-          name:"${name}",
+          name:"${label}",
           field:"${field}",
           width:"${width}",
           formatter:${formatter}
