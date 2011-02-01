@@ -19,6 +19,7 @@ The Dojo Plugin adds some simple tags for interacting with dojo:
 <dojo:bind>
 <dojo:dataSourceView>(And Child tags: <dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
 <dojo:dataSourceViewResources>
+<dojo:popOver>
 
 The Dojo Plugin also allows you to create a custom dojo release tailored for your application.
 This can be done during war creation or manually using the "install-custom-dojo" grails script.
