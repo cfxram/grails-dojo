@@ -129,23 +129,28 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
    */
   _onClick:function(e){
     if (!this.containLinks) 
-      return;     
-    if((e.target.tagName == "A") || (e.target.parentNode.tagName == "A")){
+      return;  
+    if(!e.target){
+      return;
+    } 
+    var elem = e.target;
+    var parent = elem.parentNode; 
+
+    if((elem.tagName == "A") || ((parent) && (parent.tagName == "A")) ){
       var pane = this;
-      var anchor = e.target;
-      if(e.target.parentNode.tagName == "A"){
-        anchor = e.target.parentNode;
+      if((parent) && (parent.tagName == "A")){
+        elem = parent;
       }
-      var ignore = (dojo.hasAttr(anchor,"target") || dojo.hasAttr(anchor,"onclick") || dojo.hasClass(anchor,"dialogPopUpLink"));
+      var ignore = (dojo.hasAttr(elem,"target") || dojo.hasAttr(elem,"onclick") || dojo.hasClass(elem,"dialogPopUpLink"));
       if (!ignore) {
         if(e.altKey){
-          window.open(anchor.href);
+          window.open(elem.href);
         }   
         else{
           pane.ioMethod = dojo.xhrGet;
           pane.ioArgs = dojo.clone(pane.baseIoArgs);
           pane.ioArgs.content = null;
-          pane.attr("href", anchor.href);
+          pane.attr("href", elem.href);
         }
         dojo.stopEvent(e);
       }

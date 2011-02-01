@@ -2,6 +2,11 @@
 <head>
   <link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon"/>
   <dojo:header theme="tundra"/>
+  <dojo:require modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
+  <dojo:require modules="['dojoui.layout.TabContainer','dojoui.layout.ContentPane']"/>
+	<dojo:gridResources/>
+	<dojo:dataSourceViewResources/>
+
 	<script type="text/javascript">
 		function myTest(){
 	    var allGrid = dijit.byId('myGrid');
@@ -15,13 +20,8 @@
 	</script>
 	
   <style type="text/css">
-	  .dojoGridInGrails {
-	    width: 700px;
-			margin:2em;
-	    border: 1px solid gray;
-	  }
 
-	  .dojoGridInGrails .dojoxGridCell {
+	  .tundra .dojoxGridCell {
 	    font-size: 12px;
 	  }
     /*
@@ -78,35 +78,38 @@
 		}
 	%>
 
-  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid" max="20" sort="name" 
-		style="height:200px" header="${header}" selectable="true">
-		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
-		<dojo:col width="15%" name="Color" field="color"/>
-		<dojo:col width="15%" name="Shape" field="shape"/>
-  </dojo:grid>
+  <div dojoType="dojoui.layout.TabContainer" style="width:750px; height:400px; margin:2em">
+    <div dojoType="dojoui.layout.ContentPane" title="First Grid" containLinks="true">	
+		  <dojo:grid controller="widget" action="listJson" id="myGrid" max="20" sort="name" 
+				style="height:200px" header="${header}" selectable="true">
+				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
+				<dojo:col width="15%" name="Color" field="color"/>
+				<dojo:col width="15%" name="Shape" field="shape"/>
+		  </dojo:grid>		
+    </div>
+    <div dojoType="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">	
+		  <dojo:grid controller="widget" action="listJson" id="myGrid2" max="20" sort="name" 
+				style="height:200px" header="This is the second grid." selectable="true">
+				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
+				<dojo:col width="15%" name="Color" field="color"/>
+				<dojo:col width="15%" name="Shape" field="shape"/>
+		  </dojo:grid>
+    </div>
+  </div>
 	
-  <dojo:grid class="dojoGridInGrails" controller="widget" action="listJson" id="myGrid2" max="20" sort="name" 
-		style="height:200px" header="This is the second grid." selectable="true">
-		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
-		<dojo:col width="15%" name="Color" field="color"/>
-		<dojo:col width="15%" name="Shape" field="shape"/>
-  </dojo:grid>	
 	
-	<div>
+	
+	<div  style="margin:2em; background:#eee; border:1px solid #ccc; width:750px">
 		Selected: <dojo:bind variable="myGrid.selectedRow.name"/>
+		<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
+			<dojo:nodeDefaultTemplate>
+				{node.name}, {node.color}, {node.shape}
+			</dojo:nodeDefaultTemplate>
+		</dojo:dataSourceView>		
 	</div>	
 
-	<dojo:gridResources/>
-	<dojo:dataSourceViewResources/>
 
-	<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
-		<dojo:nodeDefaultTemplate>
-			{node.name}, {node.color}, {node.shape}
-		</dojo:nodeDefaultTemplate>
-	</dojo:dataSourceView>
-
-
-  <div class="dojoGridInGrails" style="padding:1em; background:#eee;">
+  <div style="margin:2em; background:#eee; border:1px solid #ccc; width:750px">
     <h2 style="margin-top:0">Notes</h2>
     <ul>
       <li>You may combine fields in one cell but you must specify the field if you wish to sort correctly.</li>
