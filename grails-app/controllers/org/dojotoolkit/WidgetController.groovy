@@ -57,22 +57,26 @@ class WidgetController {
 
   def remoteFormSubmit = {
     render {
-      div(style:"border:3px solid green; background:#eee; padding:5em;", "${params} Remote Form Submit - Passed.")
+      div(style:"border:3px solid green; background:#eee; padding:1em;", "${params} Remote Form Submit - Passed.")
     }
   }
 
   def remoteFormSubmitAsGet = {
     render {
-      div(style:"border:3px solid red; background:#eee; padding:5em;", "${params} Remote Form Get - Passed.")
+      div(style:"border:3px solid red; background:#eee; padding:1em;", "${params} Remote Form Get - Passed.")
     }
   }
 
   def submitToRemoteButton = {
     render {
-      div(style:"border:3px solid blue; background:#eee; padding:5em;", "${params} Submit To Remote Button - Passed.")
+      div(style:"border:3px solid blue; background:#eee; padding:1em;", "${params} Submit To Remote Button - Passed.")
     }
   }
 
+
+  def remoteDijitContent = {
+    
+  }
 
 
 

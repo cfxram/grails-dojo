@@ -2,6 +2,7 @@
 <head>
   <title>Widget Tester Page</title>
   <meta name="layout" content="main"/>
+	
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
@@ -195,6 +196,16 @@
 
 	<div id="formUpdateRegion" style="width:370px; border:1px solid gray; margin-top:2em; padding:1em"></div>
 </div>
+
+<fieldset style="clear:both; margin:2em; padding:1em; border:1px solid #ccc; width:80%"> 
+	<legend><h2>Test Dijit Destruction</h2></legend>
+  <g:remoteLink action="remoteDijitContent" update="dojoContent" method="post">
+    Load Content With Dijits
+  </g:remoteLink>
+
+	<dojo:gridResources/>
+	<div id="dojoContent" style="border:1px solid blue; margin-top:1em"></div>	
+</fieldset>	
 
 
 

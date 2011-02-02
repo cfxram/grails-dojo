@@ -81,6 +81,7 @@ class DojoProvider implements JavascriptProvider {
         "preventCache:${preventCache}, " +
         "url:'${url}', " +
         "load:function(response){" +
+            "dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});" +
             "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
             "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} " +
             "${onLoaded} " +
