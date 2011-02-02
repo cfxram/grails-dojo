@@ -5,7 +5,7 @@
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
-	  dojoui.showSpinner();
+	  	dojoui.showSpinner();
     }
 
     function after() {
@@ -48,7 +48,7 @@
 
     function renameForDojo(name, myId){
       var renamedString= prompt ("Enter new name:", name);
-      ${remoteFunction(action:'remoteFunctionAction', update:'myUpdateRegion',params:"'name':renamedString,'myId':myId")}
+      ${remoteFunction(action:'remoteJsFunction', update:'myUpdateRegion',params:"'name':renamedString,'myId':myId")}
     }    
   </g:javascript>
 
@@ -56,96 +56,103 @@
 
 </head>
 <body>
+<div style="float:left">
+	<ul>
+	  <li>
+	    <g:remoteLink name="robsLink" action="testRemoteLink" update="[success:'myUpdateRegion',failure:'myUpdateRegion2']"
+	            before="beforeEvent()"
+	            after="after()"
+	            onSuccess="onSuccess()"
+	            onFailure="onFailure()"
+	            onLoading="onLoading()"
+	            onLoaded="onLoaded()"
+	            onComplete="onComplete()"
+	            on404="onFailure404()"
+	            on200="onFailure200()" params="[userid:1, myName:'Rob']">
+	      Click Here to Test
+	    </g:remoteLink>
+	  </li>
 
-<ul>
-  <li>
-    <g:remoteLink name="robsLink" action="remotePage" update="[success:'myUpdateRegion',failure:'myUpdateRegion2']"
-            before="beforeEvent()"
-            after="after()"
-            onSuccess="onSuccess()"
-            onFailure="onFailure()"
-            onLoading="onLoading()"
-            onLoaded="onLoaded()"
-            onComplete="onComplete()"
-            on404="onFailure404()"
-            on200="onFailure200()" params="[userid:1, myName:'Rob']">
-      Click Here to Test
-    </g:remoteLink>
-  </li>
+	  <li>
+	    <g:remoteLink action="unknownAction" update="[success:'myUpdateRegion',failure:'myUpdateRegion2']"
+	            before="beforeEvent()"
+	            after="after()"
+	            onSuccess="onSuccess()"
+	            onFailure="onFailure()"
+	            onLoading="onLoading()"
+	            onLoaded="onLoaded()"
+	            onComplete="onComplete()"
+	            on404="onFailure404()">
+	      Click to Fail 
+	    </g:remoteLink>(fails in lower region)
+	  </li>
 
-  <li>
-    <g:remoteLink action="remotePage2" update="[success:'myUpdateRegion',failure:'myUpdateRegion2']"
-            before="beforeEvent()"
-            after="after()"
-            onSuccess="onSuccess()"
-            onFailure="onFailure()"
-            onLoading="onLoading()"
-            onLoaded="onLoaded()"
-            onComplete="onComplete()"
-            on404="onFailure404()">
-      Click to Fail
-    </g:remoteLink>
-  </li>
+	  <li>
+	    <g:remoteLink action="unknownAction" update="myUpdateRegion" >
+	      Fail without Handlers
+	    </g:remoteLink> (fails in upper region)
+	  </li>
+	  <li>
+	    <g:remoteLink action="remotePostFromLink" update="myUpdateRegion" method="post">
+	      Do Post Request
+	    </g:remoteLink> (from a remoteLink)
+	  </li>
+	  <li>
+	    %{-- Only works in dojo. not prototype.
+	    <g:remoteLink url="remotePage.gsp" update="myUpdateRegion" method="post">
+	      Do Request with url as string
+	    </g:remoteLink>
+	    --}%
+			<span style="color:silver"> This test was made for Prototype Lib</span>
+	  </li>
+	  <li>
+	    <g:remoteLink url="[action:'remoteRequestWithUrlMap']" update="myUpdateRegion" method="post">
+	      Do Request with url as map
+	    </g:remoteLink> (instead of being defined in controller and action)
+	  </li>
+	  <li>
+	    <g:remoteLink  action="synchronizedRemoteLink" update="myUpdateRegion" asynchronous="false">
+	      Synchronized Link
+	    </g:remoteLink> (async set to false)
+	  </li>
+	  <li>
+	    Remote Function
+	    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color':this.value")}">
+	      <option value="">Choose a Color:</option>
+	      <option value="red">Red</option>
+	      <option value="green">Green</option>
+	      <option value="blue">Blue</option>
+	      <option value="transparent">No Color</option>
+	    </select>
+	  </li>
+	  <li>
+	    Remote Function with Map Params
+	    <select onchange="${remoteFunction(action:'remoteFunctionWithParams',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color':this.value,'pluginName':'Dojo Plugin'")}">
+	      <option value="">Choose a Color:</option>
+	      <option value="red">Red</option>
+	      <option value="green">Green</option>
+	      <option value="blue">Blue</option>
+	      <option value="transparent">No Color</option>
+	    </select>
+	  </li>  
+	  <li>
+	    Remote Field:
+	    <g:remoteField action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
+	  </li>
+	  <li>
+			Remote Function: 
+			<button onclick="renameForDojo('DojoPlugin',34)">Click Me to Activate</button>
+		</li>
+	</ul>
+	<div id="myUpdateRegion" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
+	<div id="myUpdateRegion2" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
+</div>
 
-  <li>
-    <g:remoteLink action="remotePage2" update="myUpdateRegion" >
-      Fail without Handlers
-    </g:remoteLink>
-  </li>
-  <li>
-    <g:remoteLink action="remotePage" update="myUpdateRegion" method="post">
-      Do Post Request
-    </g:remoteLink>
-  </li>
-  <li>
-    %{-- Only works in dojo. not prototype.
-    <g:remoteLink url="remotePage.gsp" update="myUpdateRegion" method="post">
-      Do Request with url as string
-    </g:remoteLink>
-    --}%
-  </li>
-  <li>
-    <g:remoteLink url="[action:'remotePage']" update="myUpdateRegion" method="post">
-      Do Request with url as map
-    </g:remoteLink>
-  </li>
-  <li>
-    <g:remoteLink  action="remotePage" update="myUpdateRegion" asynchronous="false">
-      Synchronized
-    </g:remoteLink>
-  </li>
-  <li>
-    Remote Function
-    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color':this.value")}">
-      <option value="">Choose a Color:</option>
-      <option value="red">Red</option>
-      <option value="green">Green</option>
-      <option value="blue">Blue</option>
-      <option value="transparent">No Color</option>
-    </select>
-  </li>
-  <li>
-    Remote Function with Map Params
-    <select onchange="${remoteFunction(action:'remoteFunctionAction',update:[success:'myUpdateRegion', failure:'myUpdateRegion2'], params:"'color':this.value,'myName':'Rob'")}">
-      <option value="">Choose a Color:</option>
-      <option value="red">Red</option>
-      <option value="green">Green</option>
-      <option value="blue">Blue</option>
-      <option value="transparent">No Color</option>
-    </select>
-  </li>  
-  <li>
-    Remote Field:
-    <g:remoteField action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
-  </li>
-  <li>Remote Function: <button onclick="renameForDojo('Rob',34)">Click Me</button></li>
-</ul>
 
-<div style="width:400px; height:400px; float:right; margin-right:2em; border:1px solid gray; background:#eee; padding:1em"> 
-  <g:formRemote name="myForm" action="remoteFormSubmit" update="myUpdateRegion" url="[action:'remoteFormSubmit']">
-    <div>
-      FormRemote
-    </div>
+
+<div style="width:480px; height:400px; float:right; "> 
+  <g:formRemote name="myForm" update="formUpdateRegion" url="[action:'remoteFormSubmit']">
+    <h3>FormRemote:</h3>
     <div>
       <label for="firstName">First Name:</label>
       <g:textField name="firstName"/>
@@ -154,15 +161,12 @@
       <label for="lastName">Last Name:</label>
       <g:textField name="lastName"/>
     </div>
-    <g:submitButton name="save" value="Save Data"/>
+    <g:submitButton name="save" value="Send Form"/>
   </g:formRemote>
-  <br/>
 
   
-  <g:formRemote name="myForm2" action="remoteFormSubmit" update="myUpdateRegion" url="[action:'remoteFormSubmit']" method="Get" on200="onFailure200()">
-    <div>
-      FormRemote with Get
-    </div>
+  <g:formRemote name="myForm2" update="formUpdateRegion" url="[action:'remoteFormSubmitAsGet']" method="Get" on200="onFailure200()">
+    <h3>FormRemote with Get:</h3>
     <div>
       <label for="firstName">First Name:</label>
       <g:textField name="firstName"/>
@@ -171,15 +175,13 @@
       <label for="lastName">Last Name:</label>
       <g:textField name="lastName"/>
     </div>
-    <g:submitButton name="save" value="Save Data"/>
+    <g:submitButton name="save" value="Save Form"/>
   </g:formRemote>
    <br/>
 
 
   <g:form>
-    <div>
-      Submit To Remote
-    </div>
+    <h3>Submit To Remote Button</h3>
     <div>
       <label for="state">State:</label>
       <g:textField name="state"/>
@@ -188,15 +190,13 @@
       <label for="zipCode">Zip Code:</label>
       <g:textField name="zipCode"/>
     </div>
-    <g:submitToRemote action="remoteFormSubmit" value="Save Data" update="myUpdateRegion2"/>
+    <g:submitToRemote action="submitToRemoteButton" value="Save Data" update="formUpdateRegion"/>
   </g:form>
 
-
+	<div id="formUpdateRegion" style="width:370px; border:1px solid gray; margin-top:2em; padding:1em"></div>
 </div>
 
 
-<div id="myUpdateRegion" style="width:600px; height:200px; border:1px solid gray; margin:2em"></div>
-<div id="myUpdateRegion2" style="width:600px; height:200px; border:1px solid gray; margin:2em"></div>
 
 </body>
 </html>
