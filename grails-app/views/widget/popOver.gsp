@@ -37,6 +37,10 @@
 				asdf
 			</dojo:popOver>
 		</li>	
+		
+		<li>
+			<dojo:popOver label="Load the action" type="button" controller="widget" action="popOverForm" containLinks="true"/>
+		</li>
 	</ul>
 	
 	<dojo:popOverContent>

@@ -78,6 +78,9 @@ class WidgetController {
     
   }
 
+  def popOverForm = {
+    
+  }
 
 
   def list = {

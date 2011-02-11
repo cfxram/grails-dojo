@@ -111,7 +111,6 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
    * @param {Object} e
    */
   onDownloadEnd:function(e){
-    OmTimerInstance.resetTimer();  
     this._constrainFormSubmissions();   
   },
   
