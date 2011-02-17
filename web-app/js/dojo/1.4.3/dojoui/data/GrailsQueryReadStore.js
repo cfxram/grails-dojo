@@ -38,7 +38,7 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
      request.serverQuery = {
        order: tmpOrder,
        max: this.max, 
-       offset: request.start
+       offset: request.start       
      }; 
   
      if(this.queryData){
@@ -89,7 +89,7 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
   
   
   /**
-   * Copied from dojox.data.QueryReadStore. 
+   * Defines the xhr request.
    */
   _fetchItems: function(request, fetchHandler, errorHandler){
     var serverQuery = request.serverQuery || request.query || {};
@@ -113,8 +113,14 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
       fetchHandler(this._items, request, this._numRows);
     }
     else{
+      var xhrArgs = {
+        url:this.url, 
+        handleAs:"json-comment-optional", 
+        content:serverQuery, 
+        preventCache:this.urlPreventCache
+      };
       var xhrFunc = this.requestMethod.toLowerCase() == "post" ? dojo.xhrPost : dojo.xhrGet;
-      var xhrHandler = xhrFunc({url:this.url, handleAs:"json-comment-optional", content:serverQuery});
+      var xhrHandler = xhrFunc(xhrArgs);
       xhrHandler.addCallback(dojo.hitch(this, function(data){
         this._xhrFetchHandler(data, request, fetchHandler, errorHandler);
         }));
