@@ -20,6 +20,7 @@ class PopOverTagLib {
     def dojoWidget = (type == 'link') ? "dojoui.widget.DropDownButtonLink" : "dojoui.widget.DropDownButton"
     def label = (attrs?.code?.length()) ? message(code:attrs.remove('code')) : attrs.remove('label')    
     def containLinks = attrs.remove("containLinks") ?: 'false'
+    //def contentDomId = attrs.remove('contentDomId') ?: '' // specify content defined in a <dojo:popOverContent> tag.
     def bodyContent = body()
     
     if(attrs?.controller || attrs?.action){
@@ -29,20 +30,33 @@ class PopOverTagLib {
       attrs.remove('params')
     }
     
-    out << """
-      <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
-          <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
-          <span>${label}</span>
-          <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${id}_TooltipDialog">
-            <div dojoType="dojoui.layout.ContentPane" id="${id}_content" containLinks="${containLinks}" preventCache="true" href="${href}">
-              <script type="dojo/connect" event="onDownloadEnd">
-                dijit.byId('${id}').openDropDown();                
-              </script>
+    if(containLinks == 'true'){
+      out << """
+        <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
+            <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
+            <span>${label}</span>
+            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${id}_TooltipDialog">
+              <div dojoType="dojoui.layout.ContentPane" id="${id}_content" containLinks="${containLinks}" preventCache="true" href="${href}">
+                <script type="dojo/connect" event="onDownloadEnd">
+                  dijit.byId('${id}').openDropDown();                
+                </script>
+                ${body()}
+              </div>
+            </div>
+        </div>
+      """    
+    }
+    else{
+      out << """
+        <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
+            <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
+            <span>${label}</span>
+            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${id}_TooltipDialog">
               ${body()}
             </div>
-          </div>
-      </div>
-    """    
+        </div>
+      """
+    }
   }
 
   def closePopOverScript = {attrs, body ->
@@ -52,16 +66,19 @@ class PopOverTagLib {
 
 
   def popOverContent = {attrs, body ->
-    def style = attrs?.style ?: ''
-    attrs.style = "display:none; ${style}"
     out << """
-      <div ${Util.htmlProperties(attrs)}>${body()}</div>      
+      <div style="display:none">
+        <div ${Util.htmlProperties(attrs)}>${body()}</div>      
+      </div>
     """
   }
   
+  
   def closePopOver = {attrs, body ->
+    def onclick = closePopOverScript(attrs)
+    attrs.remove('popOver');    
     out << """
-      <a href="#" onclick="${closePopOverScript(attrs)}" ${Util.htmlProperties(attrs)}>${body()}</a>
+      <a href="#" onclick="${onclick}" ${Util.htmlProperties(attrs)}>${body()}</a>
     """
   }
   
