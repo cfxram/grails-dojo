@@ -42,8 +42,9 @@
 </head>
 <body class="tundra">
 
-	<div class="dojoGridInGrails" style="padding:1em; background:#eee;">		
+	<div class="dojoGridInGrails" style="padding:1em; background:#eee; float:right; margin:2em; border:1px solid gray">		
 	<g:form name="gridForm">
+		<h2 style="margin-top:0; color:gray">Search Test</h2>
 		Name: <input type="text" name="name"><br/>
 		Color: <input type="text" name="color"><br/>
 		Shape: <input type="text" name="shape"><br/>
@@ -51,12 +52,14 @@
 		<dojo:gridLoadDataButton label="Search" type="button" grid="myGrid" form="gridForm"/>
 		<dojo:gridLoadDataButton label="Clear" type="reset" grid="myGrid"/>
 		
-		
-		Selected: <dojo:bind variable="myGrid.selected" id="asdasd"/>
+		<p>
+		Selected: <dojo:bind variable="myGrid.selected" id="asdasd"/><br/>
 		Total Records <dojo:bind variable="myGrid.rowCount"/>
+		</p>
 	</g:form>
-	</div>
 	<button onclick="myTest()">Test</button>
+	</div>
+	
 	
 	<%
 		header = {
@@ -97,9 +100,9 @@
   </div>
 	
 	
-	
 	<div  style="margin:2em; background:#eee; border:1px solid #ccc; width:750px">
-		Selected: <dojo:bind variable="myGrid.selectedRow.name"/>
+		<h2 style="margin-top:0">Selected Items (using dojo:bind):</h2>
+		<dojo:bind variable="myGrid.selectedRow.name"/>
 		<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
 			<dojo:nodeDefaultTemplate>
 				{node.name}, {node.color}, {node.shape}
@@ -107,6 +110,14 @@
 		</dojo:dataSourceView>		
 	</div>	
 
+  <dojo:grid controller="widget" action="listJson" id="myGrid3" max="20" sort="color" 
+		style="height:200px; width:750px; margin:2em; border:1px solid silver" 
+		header="Third Grid: Make sure to specify a height style." selectable="true">
+		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
+		<dojo:col width="15%" name="Color" field="color"/>
+		<dojo:col width="15%" name="Shape" field="shape"/>
+  </dojo:grid>
+	
 
   <div style="margin:2em; background:#eee; border:1px solid #ccc; width:750px">
     <h2 style="margin-top:0">Notes</h2>
@@ -117,12 +128,12 @@
       <li>Sort property is optional. No Default</li>
       <li>Order property is optional. Defaults to asc.</li>
       <li>ColumnReordering is optional. Defaults to true.</li>
-      <li>It's a good idea to specify a rowHeight. Suggestions: rowHeight="30". ( IE 6 behaves better when this is not set.)</li>
+			<li>You must specify a height style or the grid will disappear. Specifying the height in a css class doesn't work though.</li>
+      <li>IE 6 behaves weirdly if you specify the rowHeight property.</li>
       <li>
 				Use .tundra .dojoxGridCell{height:30px} to style the cells. 
 				(there is a weird scrolling issue that puts spaces when fetching from db.)
 				</li>
-      <li>To control the height, specify it in the style property of the dom element. (css class doesn't work.)</li>
     </ul>
   </div>
 
