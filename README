@@ -14,12 +14,14 @@ The Dojo Plugin adds some simple tags for interacting with dojo:
 <dojo:css>
 <dojo:paginate>
 <dojo:sortableColumn>
-<dojo:grid> (And Child tags: <dojo:col>)
-<dojo:gridResources>
-<dojo:bind>
-<dojo:dataSourceView>(And Child tags: <dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
-<dojo:dataSourceViewResources>
-<dojo:popOver>
+<dojo:grid> (<dojo:col>, <dojo:bind>)
+<dojo:dataSourceView>(<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
+<dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
+
+Contributed Tags:
+<dojo:dialog> (<dojo:closeDialogButton>, <dojo:openDialog>)
+<dojo:menu> (<dojo:menuSeparator>, <dojo:menuItem>)
+<dojo:tabContainer> (<dojo:contentPane>)
 
 The Dojo Plugin also allows you to create a custom dojo release tailored for your application.
 This can be done during war creation or manually using the "install-custom-dojo" grails script.

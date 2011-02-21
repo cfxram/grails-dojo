@@ -1,7 +1,7 @@
 <html>
 <head>
-  <link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon"/>
-  <dojo:header theme="tundra"/>
+	<title>Grid Component</title>
+  <meta name="layout" content="main"/>
   <dojo:require modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
   <dojo:require modules="['dojoui.layout.TabContainer','dojoui.layout.ContentPane']"/>
 	<dojo:gridResources/>
@@ -112,7 +112,7 @@
 
   <dojo:grid controller="widget" action="listJson" id="myGrid3" max="20" sort="color" 
 		style="height:200px; width:750px; margin:2em; border:1px solid silver" 
-		header="Third Grid: Make sure to specify a height style." selectable="true">
+		header="Third Grid: Make sure to specify a height style.">
 		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 		<dojo:col width="15%" name="Color" field="color"/>
 		<dojo:col width="15%" name="Shape" field="shape"/>

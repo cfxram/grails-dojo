@@ -4,12 +4,20 @@ import org.dojotoolkit.TagLibUtil as Util
 class PopOverTagLib {
   static namespace = 'dojo'
 
+  /**
+   * Outputs the required dojo modules needed for the popOver. This is not required.
+   */
   def popOverResources = {attrs, body ->
     out << dojo.require(modules:['dojoui.widget.DropDownButton','dijit.TooltipDialog', 'dojoui.layout.ContentPane'])
     //out << dojo.css(file:"dojoui/widget/resources/dropDownButton.css")
   }
 
-
+  /**
+   * Creates will create a link or button that when clicked will show a pop over. 
+   * The content of the popover can be defined inline or loaded from a controller action.
+   * If you specify containLinks="true", then a <dojo:pane> will be loaded inside of the popOver.
+   * This will give you the ability to have links that stay inside the popOver.
+   */
   def popOver = {attrs, body ->
     def id = attrs.remove("id") ?: "dojo_ui_popover${Util.randomId()}"
     def href = attrs.remove("href") ?: ''

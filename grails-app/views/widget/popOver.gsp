@@ -12,22 +12,31 @@
 </head>
 <body class="tundra">
 	
-	<div dojoType="dojoui.layout.ContentPane" containLinks="true" style="border:1px solid gray; float:right; margin-right:10em">
-		<div style="width:400px; height:250px;">
-			<ul>
-				<li>		
-					<dojo:popOver label="Click to Activate PopOver" type="button">
-						<div style="padding:2em">This is a popover that was activated by a click from a button.</div>
-					</dojo:popOver>
-				</li>
-				<li>
-					<dojo:popOver label="Load the action" type="button" controller="widget" action="popOverForm" containLinks="true"/>
-				</li>
-				<li>
-					<g:link action="list">Load some content.</g:link>
-				</li>	
-			</ul>
-		</div>
+	
+	<div style="float:right; margin-right:10em">
+		<dojo:pane id="popOverExamples" style="border:1px solid gray">
+			<div style="width:400px; height:250px;">
+				<ul>
+					<li>		
+						<dojo:popOver label="Click to Activate PopOver" type="button">
+							<div style="padding:2em">This is a popover that was activated by a click from a button.</div>
+						</dojo:popOver>
+					</li>
+					<li>
+						<dojo:popOver label="Load the action" type="button" controller="widget" action="popOverForm" containLinks="true"/>
+					</li>
+					<li>
+						<g:link action="list">Ajax Call (without using a grails tag)</g:link>
+					</li>	
+					<li>		
+						<dojo:popOver label="Open" type="button">
+							<dojo:link action="list" pane="popOverExamples">Ajax Call (without using a grails tag)</dojo:link>
+						</dojo:popOver>
+					</li>				
+				</ul>
+			</div>
+		</dojo:pane>
+		<dojo:link action="list" pane="popOverExamples">Reload the Pane</dojo:link>
 	</div>
 	
 	<ul>
