@@ -17,6 +17,7 @@ The Dojo Plugin adds some simple tags for interacting with dojo:
 <dojo:grid> (<dojo:col>, <dojo:bind>)
 <dojo:dataSourceView>(<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
 <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
+<dojo:frame> (<dojo:frameLink>)
 
 Contributed Tags:
 <dojo:dialog> (<dojo:closeDialogButton>, <dojo:openDialog>)
