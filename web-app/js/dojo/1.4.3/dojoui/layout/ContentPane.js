@@ -111,7 +111,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
    * @param {Object} e
    */
   onDownloadEnd:function(e){
-    this._constrainFormSubmissions();   
+    this._constrainFormSubmissions();
   },
   
   

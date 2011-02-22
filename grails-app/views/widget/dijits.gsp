@@ -3,7 +3,7 @@
   <title>Tab and Pane Components</title>
   <meta name="layout" content="main"/>
 	<dojo:tabResources/>
-	<dojo:paneResources/>
+	<dojo:frameResources/>
 </head>
 <body class="tundra">
 	
@@ -19,15 +19,15 @@
     </dojo:contentPane>    
   </dojo:tabContainer>
 
-	<h2>Tab Container with &lt;dojo:pane&gt; (links stay in the tabs)</h2>
+	<h2>Tab Container with &lt;dojo:frame&gt; (links stay in the tabs)</h2>
   <dojo:tabContainer style="width:650px; height:200px; margin-top:1em">
-    <dojo:pane title="My First Tab" style="padding:1em">
+    <dojo:frame title="My First Tab" style="padding:1em">
       This is content in my first tab.<br/>
 			<g:link action="list">This will stay in the tab.</g:link> 
-    </dojo:pane>
-    <dojo:pane title="My second tab">
+    </dojo:frame>
+    <dojo:frame title="My second tab">
 			<g:link action="list">This will stay in the tab.</g:link> 
-    </dojo:pane>
+    </dojo:frame>
   </dojo:tabContainer>
 	
 	</div>

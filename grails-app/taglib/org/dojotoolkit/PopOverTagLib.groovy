@@ -15,7 +15,7 @@ class PopOverTagLib {
   /**
    * Creates will create a link or button that when clicked will show a pop over. 
    * The content of the popover can be defined inline or loaded from a controller action.
-   * If you specify containLinks="true", then a <dojo:pane> will be loaded inside of the popOver.
+   * If you specify containLinks="true", then a <dojo:frame> will be loaded inside of the popOver.
    * This will give you the ability to have links that stay inside the popOver.
    */
   def popOver = {attrs, body ->

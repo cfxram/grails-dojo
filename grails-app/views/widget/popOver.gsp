@@ -14,7 +14,7 @@
 	
 	
 	<div style="float:right; margin-right:10em">
-		<dojo:pane id="popOverExamples" style="border:1px solid gray">
+		<dojo:frame id="popOverExamples" style="border:1px solid gray">
 			<div style="width:400px; height:250px;">
 				<ul>
 					<li>		
@@ -30,13 +30,13 @@
 					</li>	
 					<li>		
 						<dojo:popOver label="Open" type="button">
-							<dojo:paneLink action="list" pane="popOverExamples">Ajax Call (without using a grails tag)</dojo:paneLink>
+							<dojo:frameLink action="list" frame="popOverExamples">Ajax Call (without using a grails tag)</dojo:frameLink>
 						</dojo:popOver>
 					</li>				
 				</ul>
 			</div>
-		</dojo:pane>
-		<dojo:paneLink action="list" pane="popOverExamples">Reload the Pane</dojo:paneLink>
+		</dojo:frame>
+		<dojo:frameLink action="list" frame="popOverExamples">Reload the Pane</dojo:frameLink>
 	</div>
 	
 	<ul>

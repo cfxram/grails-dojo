@@ -20,12 +20,18 @@
     <resource>UrlMappings</resource>
     <resource>org.dojotoolkit.WidgetController</resource>
     <resource>org.dojotoolkit.Widget</resource>
+    <resource>org.dojotoolkit.ContentPaneTagLib</resource>
     <resource>org.dojotoolkit.DataSourceViewTagLib</resource>
+    <resource>org.dojotoolkit.DialogTagLib</resource>
     <resource>org.dojotoolkit.DojoTagLib</resource>
+    <resource>org.dojotoolkit.FrameTagLib</resource>
     <resource>org.dojotoolkit.GridTagLib</resource>
+    <resource>org.dojotoolkit.MenuTagLib</resource>
     <resource>org.dojotoolkit.PaginateTagLib</resource>
     <resource>org.dojotoolkit.PopOverTagLib</resource>
+    <resource>org.dojotoolkit.ProgressBarTagLib</resource>
     <resource>org.dojotoolkit.SortableColumnTagLib</resource>
+    <resource>org.dojotoolkit.TabTagLib</resource>
   </resources>
   <dependencies />
   <behavior />
