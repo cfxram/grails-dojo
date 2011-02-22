@@ -25,7 +25,7 @@
       This is content in my first tab.<br/>
 			<g:link action="list">This will stay in the tab.</g:link> 
     </dojo:pane>
-    <dojo:pane title="My second tab." style="padding:1em">
+    <dojo:pane title="My second tab">
 			<g:link action="list">This will stay in the tab.</g:link> 
     </dojo:pane>
   </dojo:tabContainer>

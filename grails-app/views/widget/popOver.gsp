@@ -10,7 +10,7 @@
 
 	<dojo:popOverResources/>
 </head>
-<body class="tundra">
+<body class="soria">
 	
 	
 	<div style="float:right; margin-right:10em">
@@ -30,13 +30,13 @@
 					</li>	
 					<li>		
 						<dojo:popOver label="Open" type="button">
-							<dojo:link action="list" pane="popOverExamples">Ajax Call (without using a grails tag)</dojo:link>
+							<dojo:paneLink action="list" pane="popOverExamples">Ajax Call (without using a grails tag)</dojo:paneLink>
 						</dojo:popOver>
 					</li>				
 				</ul>
 			</div>
 		</dojo:pane>
-		<dojo:link action="list" pane="popOverExamples">Reload the Pane</dojo:link>
+		<dojo:paneLink action="list" pane="popOverExamples">Reload the Pane</dojo:paneLink>
 	</div>
 	
 	<ul>
@@ -73,7 +73,7 @@
 			</dojo:popOverContent>			
 		</li>			
 		<li>
-			<dojo:popOver label="Load the action" type="button" controller="widget" action="popOverForm" containLinks="true"/>
+			<dojo:popOver label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="true"/>
 		</li>
 	</ul>
 	

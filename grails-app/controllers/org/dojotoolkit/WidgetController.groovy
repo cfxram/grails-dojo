@@ -4,6 +4,8 @@ package org.dojotoolkit
 class WidgetController {
 
   def index = { }
+  
+  def plainRemote = {}
 
   def testRemoteLink = {
     render {

@@ -200,7 +200,7 @@
 <fieldset style="clear:both; margin:2em; padding:1em; border:1px solid #ccc; width:80%"> 
 	<legend><h2>Test Dijit Destruction</h2></legend>
   <g:remoteLink action="remoteDijitContent" update="dojoContent" method="post">
-    Load Content With Dijits
+    Load Remote Content that has Dojo Components
   </g:remoteLink>
 
 	<dojo:gridResources/>

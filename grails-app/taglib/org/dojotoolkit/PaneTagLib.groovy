@@ -48,7 +48,7 @@ class PaneTagLib {
    * Creates a link that when clicked will load the content in a <dojo:pane>. 
    * @params pane - The id of the <dojo:pane> (required)
    */ 
-  def link = {attrs, body ->
+  def paneLink = {attrs, body ->
     def pane = attrs.remove("pane");
     def href = attrs.remove("href") ?: ""    
     if(pane){      
