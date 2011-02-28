@@ -17,7 +17,7 @@ class TagLibUtil {
   }
   
   
-  static String jsSafeString(String inText) {
+  static String jsSafeString(inText) {
     def cleanedString = inText.replaceAll(/\s+/, " ")  //replace all internal whitespace
     cleanedString = cleanedString.replaceAll(/(^\s)|(\s$)/, "") // trim whitespace
     cleanedString = cleanedString.replaceAll(/\'/, /\\\'/)  // escape single quotes

@@ -105,6 +105,7 @@
 		<dojo:bind variable="myGrid.selectedRow.name"/>
 		<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
 			<dojo:nodeDefaultTemplate>
+				${message(code:'HI')}<br/>
 				{node.name}, {node.color}, {node.shape}
 			</dojo:nodeDefaultTemplate>
 		</dojo:dataSourceView>		
