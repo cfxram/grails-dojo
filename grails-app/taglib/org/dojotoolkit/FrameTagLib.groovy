@@ -27,9 +27,10 @@ class FrameTagLib {
     def id = attrs.remove("id") ?: "dojo_ui_frame${Util.randomId()}"
     def href = attrs.remove("href") ?: ""
     def containLinks = attrs.remove("containLinks") ?: 'true'
-    attrs.title = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs?.title
     attrs.preventCache = "true"
-    
+    if(attrs?.code?.length()){
+      attrs.title = message(code: attrs.remove('code')) 
+    }        
     if(attrs?.controller || attrs?.action){
       href = createLink(attrs)
       attrs.remove('controller')
