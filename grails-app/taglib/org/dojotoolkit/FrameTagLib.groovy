@@ -54,16 +54,23 @@ class FrameTagLib {
    */ 
   def frameLink = {attrs, body ->
     def frame = attrs.remove("frame");
-    def href = attrs.remove("href") ?: ""    
+    def href = attrs.remove("href") ?: ""
+          
     if(frame){      
       if(attrs?.controller || attrs?.action){
         href = createLink(attrs)
         attrs.remove('controller')
         attrs.remove('action')
-        attrs.remove('params')
-      }
-      attrs.onclick="dijit.byId('${frame}').ioArgs.content=null; dijit.byId('${frame}').attr('href','${href}')"      
+        attrs.remove('params')        
+      }      
+      attrs.onclick="dijit.byId('${frame}').ioArgs.content=null; dijit.byId('${frame}').attr('href','${href}')"            
     }
+    
+    // If using a g:link elementId.. then make it the id.
+    if( attrs?.elementId?.length() ){
+      attrs.id=attrs.remove("elementId")
+    }    
+    
     out << """ <a href="#" ${Util.htmlProperties(attrs)}>${body()}</a> """
   }
  
