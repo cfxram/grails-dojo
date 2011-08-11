@@ -71,7 +71,7 @@ class MenuTagLib {
      * This will create an item within another menu structure.  This must be contained inside an existing menu structure
      * as defined in the menu tag but this helps you nest items within the base menu item.  This item can be a menu item
      * or another bar within the menu tag.  This item supports all the documented dojo parameters as well as the following:
-     * @param type - The type of item to create either item or bar
+     * @param type - The type of item to create either item, bar, popup or popupBar
      * @patam controller - The controller to reference from this menu item  (The controller action params will replace any href passed in)
      * @param action - The action within the controller to reference from this menuItem
      * @param params - Any parameters that go with the controller and action.
@@ -81,7 +81,7 @@ class MenuTagLib {
      */
     def menuItem = {attrs, body ->
         def id = attrs.remove("id") ?: "dojo_menuItem_${Util.randomId()}"
-        def type = attrs.type ?: 'item'  // bar || item
+        def type = attrs.remove("type") ?: 'item'  // bar || item
         def label = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs.remove('label')
         def href = attrs.remove("href") ?: ''
         // If there is an action or controller replace the href with this
@@ -92,16 +92,23 @@ class MenuTagLib {
             attrs.remove('params')
         }
         // If onClicks were passed in the prepend them to the href action
-        def onClick = attrs.remove("onClick") ?: ''
-        // Now build up the menu action based on the href passed in or the one built from controller etc.
-        onClick = """${onClick} window.location.href='${href}'; """
+        def onClick = attrs.onClick ? "onclick=\"${attrs.remove('onClick')}\"" : ''
         if (type == 'bar') {
-            out << """ <div dojoType="dijit.MenuBarItem" id="${id}" onClick="${onClick}" label="${label}" ${Util.htmlProperties(attrs)}></div> """
-        }
-        else if (type == 'item') {
-            out << """
-                <div dojoType="dijit.MenuItem" id="${id}" onClick="${onClick}" label="${label}" ${Util.htmlProperties(attrs)}></div>
-            """
-        }
+            out << """ <div dojoType="dijit.MenuBarItem" id="${id}" ${onClick} label="${label}" ${Util.htmlProperties(attrs)}></div> """
+        } else if (type == 'item') {
+            out << """<div dojoType="dijit.MenuItem" id="${id}" ${onClick} label="${label}" ${Util.htmlProperties(attrs)}>
+${body()}
+</div>"""
+        } else if (type == 'popup') {
+            out << """<div dojoType="dijit.PopupMenuItem" label="${label}" ${onClick} ${Util.htmlProperties(attrs)}>
+<div dojoType="dijit.Menu" id="${id}_submenu">
+${body()}
+</div></div>"""
+	} else if (type =='popupBar') {
+            out << """<div dojoType="dijit.PopupMenuBarItem" label="${label}" ${onClick} ${Util.htmlProperties(attrs)}>
+<div dojoType="dijit.Menu" id="${id}_submenu">
+${body()}
+</div></div>"""
+	}
     }
 }
