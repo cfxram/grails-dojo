@@ -94,7 +94,7 @@ class MenuTagLib {
         // If onClicks were passed in the prepend them to the href action
         def onClick = attrs.onClick ? "onclick=\"${attrs.remove('onClick')}\"" : ''
         if (!onClick && href) {
-            onClick = "onclick=\"window.location.href = \"${href}\";\""
+            onClick = "onclick=\"window.location.href = '${href}';\""
         }
         if (type == 'bar') {
             out << """ <div dojoType="dijit.MenuBarItem" id="${id}" ${onClick} label="${label}" ${Util.htmlProperties(attrs)}></div> """
