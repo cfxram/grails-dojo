@@ -49,6 +49,9 @@ dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
   
   onClick:function(){},
   
+  _onMouse:function(){
+    this.inherited(arguments);
+  },
   
   onMouseOver:function(){
     this.openDropDown();
