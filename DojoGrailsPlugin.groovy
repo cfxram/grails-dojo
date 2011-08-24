@@ -2,7 +2,7 @@ import org.dojotoolkit.*
 import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptTagLib
 // Uncompressed 
 class DojoGrailsPlugin {
-  def version = "1.4.3.9"
+  def version = "1.6.1"
   def grailsVersion = "1.3.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
@@ -15,7 +15,7 @@ class DojoGrailsPlugin {
   ]
   def author = "Rob Meidal"
   def authorEmail = "cfxram@codehaus.org"
-  def title = "Dojo 1.4.3 for Grails"
+  def title = "Dojo 1.6.1 for Grails"
   def description = """
     Adds Dojo Base as a Javascript Provider for Grails. This provides full support for
     <g:formRemote>, <g:remoteField>, <g:remoteFunction>, <g:remoteLink> and <g:submitToRemote>.
