@@ -1,8 +1,8 @@
 import grails.converters.deep.JSON
 import grails.util.GrailsUtil
 
-def version = "1.4.3"
-def srcHref = "http://download.dojotoolkit.org/release-1.4.3/dojo-release-1.4.3-src.zip"
+def version = "1.6.1"
+def srcHref = "http://download.dojotoolkit.org/release-${version}/dojo-release-${version}-src.zip"
 def dojoProfile = "${basedir}/grails-app/conf/dojo.profile.js"
 def downloadDir = "${grailsWorkDir}/download"
 def tmpWorkingDir = "${basedir}/web-app/js/dojoTmp"

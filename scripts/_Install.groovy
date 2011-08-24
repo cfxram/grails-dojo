@@ -11,7 +11,7 @@
 
 Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
-def dojoDir = "/web-app/js/dojo/1.4.3/dojo"
+def dojoDir = "/web-app/js/dojo/1.6.1/dojo"
 
 Ant.sequential {
   event("StatusUpdate", ["Copying dojo.js file into the application"])
