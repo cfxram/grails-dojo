@@ -74,11 +74,10 @@
 <body>
 
 
-<div id="myUpdateRegion" style="width:600px; border:1px solid gray; margin:2em">
+<div id="myUpdateRegion" style="width:800px; border:1px solid #ccc; margin:2em">
   <g:render template="list"/>
 </div>
 
-<div id="myUpdateRegion2" style="width:600px; height:200px; border:1px solid gray; margin:2em"></div>
 
 
 </body>
