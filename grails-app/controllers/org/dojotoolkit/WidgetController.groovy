@@ -52,6 +52,7 @@ class WidgetController {
   }  
   
   def remoteJsFunction = {
+    println "This was passed from the browser: ${params.name}"
     render {
       div(style:"border:3px solid pink; background:#eee; padding:5em;", "${params.name} Remote Function (from JS) - Passed.")
     }

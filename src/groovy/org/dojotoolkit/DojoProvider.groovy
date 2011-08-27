@@ -69,9 +69,22 @@ class DojoProvider implements JavascriptProvider {
     def statusCodeHandlers  = props?.statusCodeHandlers ?: ""
     def formName            = props?.formName ?: ""
     def preventCache        = props?.preventCache ?: false
-    
-    // TODO: check for updateDomElem and if null then don't do an innerHTML. <g:remoteFunction> has update as optional.
-    
+    def updateDomElemScript = ""
+    def errorDomElemScript  = "" 
+      
+    // Update property for <g:remoteFunction> is optional so don't run js code if empty    
+    if(updateDomElem?.length()){
+      updateDomElemScript = 
+      "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});} " +
+      "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
+      "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "          
+    }
+
+    // Error dom element is optional so don't run js code if empty    
+    if(errorDomElem?.length()){
+      errorDomElemScript = "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); "
+    }
+
     def dojoString =
     "${onLoading}" +
     "dojo.xhr('${method}',{" +
@@ -81,9 +94,7 @@ class DojoProvider implements JavascriptProvider {
         "preventCache:${preventCache}, " +
         "url:'${url}', " +
         "load:function(response){" +
-            "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});}" +
-            "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
-            "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} " +
+            "${updateDomElemScript} " + 
             "${onLoaded} " +
             "${onSuccess} " +
         "}, " +
@@ -92,7 +103,7 @@ class DojoProvider implements JavascriptProvider {
           "${onComplete} " +          
         "}, " +
         "error:function(error,ioargs){" +
-          "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " +
+          "${errorDomElemScript}" + 
           "${onLoaded} " +
           "${onFailure} " +
         "} " +
