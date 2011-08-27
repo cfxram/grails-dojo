@@ -105,9 +105,14 @@
 		<dojo:bind variable="myGrid.selectedRow.name"/>
 		<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
 			<dojo:nodeDefaultTemplate>
-				${message(code:'HI')}<br/>
-				{node.name}, {node.color}, {node.shape}
+			
+				<span style="padding:1em; font-weight:bold">*{node.name}</span> 
+				Color: <span style="color:{node.color}">{node.color}</span>
+				Shape: {node.shape}
 			</dojo:nodeDefaultTemplate>
+			<dojo:noItemTemplate>
+			  <h3 style="color:gray; padding:1em">Click on one of the checkboxes in the grid above.<h3>
+			</dojo:noItemTemplate>
 		</dojo:dataSourceView>		
 	</div>	
 

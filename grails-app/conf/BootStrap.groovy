@@ -35,10 +35,10 @@ class BootStrap {
     
     
     10.upto(99){
-      new Widget(name: "Prototype Widget ${it}", color: "", shape: "Square").save();
+      new Widget(name: "Prototype Widget ${it}", color: "Blue", shape: "Square").save();
     }
     100.upto(199){
-      new Widget(name: "Mass Widget ${it}", color: "Transparent", shape: "Circle").save();
+      new Widget(name: "Mass Widget ${it}", color: "Green", shape: "Circle").save();
     }    
   }
 
