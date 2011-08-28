@@ -20,8 +20,15 @@ class DojoGrailsPlugin {
     Adds Dojo Base as a Javascript Provider for Grails. This provides full support for
     <g:formRemote>, <g:remoteField>, <g:remoteFunction>, <g:remoteLink> and <g:submitToRemote>.
 
-    Also adds several tags: <dojo:paginate> and <dojo:sortableColumn>. These do the same thing
+    Adds these two tags: <dojo:paginate> and <dojo:sortableColumn>. These do the same thing
     that the grails versions of the tags but will do them via ajax calls. 
+
+    Also adds these convenient widget tags: 
+      <dojo:header>, <dojo:require>, <dojo:css>
+      <dojo:grid> (<dojo:col>, <dojo:bind>)
+      <dojo:dataSourceView>(<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
+      <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
+      <dojo:frame> (<dojo:frameLink>)    
 
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
   """  
