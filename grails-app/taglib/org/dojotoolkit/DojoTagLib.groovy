@@ -4,9 +4,7 @@ import grails.converters.deep.JSON
 
 
 class DojoTagLib {
-  static namespace = 'dojo'
-  def DOJO_HOME = "${g.resource(dir: pluginContextPath)}/js/dojo/${Dojo.version}"
-  def CUSTOM_DOJO = "${g.resource()}/js/dojo/${Dojo.version}-custom"
+  static namespace = "dojo"
 
   /**
    * Returns the dojo.customBuild value from Config.groovy
@@ -42,11 +40,14 @@ class DojoTagLib {
    * @return String
    */
   def dojoHome() {
+    def dojoHome = "${g.resource(dir: pluginContextPath)}/js/dojo/${Dojo.version}"
+    def customDojo = "${g.resource()}/js/dojo/${Dojo.version}-custom"    
+    
     if (useCustomDojoJsBuild()) {
-      return CUSTOM_DOJO
+      return customDojo
     }
     else {
-      return DOJO_HOME
+      return dojoHome
     }
   }
 
