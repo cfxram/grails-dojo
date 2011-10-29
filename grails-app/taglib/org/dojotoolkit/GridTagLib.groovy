@@ -9,9 +9,10 @@ class GridTagLib {
    * Outputs the css and javascript files required for the grid.
    */
   def gridResources = {attrs,body ->
+	def theme = attrs?.remove("theme") ?: "tundra"
     out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane','dojoui.Bind'])    
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
-    out << dojo.css(file:"dojox/grid/resources/tundraGrid.css") 
+    out << dojo.css(file:"dojox/grid/resources/${theme}Grid.css") 
     out << dojo.css(file:"dojoui/widget/resources/dataGrid.css")
   }
 
@@ -22,8 +23,8 @@ class GridTagLib {
    * a remote dataset defined in json.
    */
   def grid = {attrs, body ->
-    def id = attrs.remove("id") ?: "dojo_ui_grid${Util.randomId()}"
-    def storeId = attrs.remove("storeId") ?: "${id}_store"
+    def name = attrs.remove("name") ?: "dojo_ui_grid${Util.randomId()}"
+    def storeId = attrs.remove("storeId") ?: "${name}_store"
     def href = attrs.remove("href") ?: g.createLink(attrs)
     def max = attrs.remove("max") ?: 1000
     def sort = attrs.remove("sort") ?: ""
@@ -31,6 +32,13 @@ class GridTagLib {
     def descending = (order == "desc") ? "true" : "false"
     def selectable = attrs.remove("selectable") ?: "false"
     def header = attrs.remove("header") ?: null
+
+    // Clean up the properties added.
+    attrs.remove("action")
+    attrs.remove("controller")
+    attrs.remove("params")
+    attrs.remove("id")
+
 
     // Data Source 
     out << """
@@ -44,7 +52,7 @@ class GridTagLib {
           ${(header && (header instanceof Closure)) ? header.call() : header}
         </div>
         <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">      
-          <div dojoType="dojoui.widget.DataGrid" id="${id}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
+          <div dojoType="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
             sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
             <script type="dojo/method">
                 var gridStruct = [{                
@@ -73,7 +81,6 @@ class GridTagLib {
     def width = attrs.width ?: '100'
     def label = attrs.label ?: ''
     def code = attrs.code ?: ''
-    def renderType = attrs.renderType ?: ''    // can be checkBox, textInput, or select
     def cleanedString = body().encodeAsJavaScript()
     def formatter = "null"
 

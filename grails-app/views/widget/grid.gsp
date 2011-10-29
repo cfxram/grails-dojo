@@ -4,7 +4,7 @@
   <meta name="layout" content="main"/>
   <dojo:require modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
   <dojo:require modules="['dojoui.layout.TabContainer','dojoui.layout.ContentPane']"/>
-	<dojo:gridResources/>
+	<dojo:gridResources theme="soria"/>
 	<dojo:dataSourceViewResources/>
 
 	<script type="text/javascript">
@@ -21,26 +21,13 @@
 	
   <style type="text/css">
 
-	  .tundra .dojoxGridCell {
+	  .tundra .dojoxGridCell,
+	  .soria .dojoxGridCell {
 	    font-size: 12px;
 	  }
-    /*
-    .tundra .dojoxGridHeader,
-    .soria .dojoxGridHeader{
-      height:30px;
-    }
-
-    .tundra .dojoxGridRowOver .dojoxGridCell {
-      background:transparent;
-      color:black;
-    }
-    .tundra .dojoxGridCellFocus {
-
-    }
-    */
   </style>
 </head>
-<body class="tundra">
+<body>
 
 	<div class="dojoGridInGrails" style="padding:1em; background:#eee; float:right; margin:2em; border:1px solid gray">		
 	<g:form name="gridForm">
@@ -83,14 +70,14 @@
 
   <div dojoType="dojoui.layout.TabContainer" style="width:750px; height:300px; margin:2em">
     <div dojoType="dojoui.layout.ContentPane" title="First Grid" containLinks="true">	
-		  <dojo:grid controller="widget" action="listJson" id="myGrid" max="20" sort="name" header="${header}" selectable="true">
+		  <dojo:grid controller="widget" action="listJson" name="myGrid" max="20" sort="name" header="${header}" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 				<dojo:col width="15%" name="Color" field="color"/>
 				<dojo:col width="15%" name="Shape" field="shape"/>
 		  </dojo:grid>		
     </div>
     <div dojoType="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">	
-		  <dojo:grid controller="widget" action="listJson" id="myGrid2" max="20" sort="color" 
+		  <dojo:grid controller="widget" action="listJson" name="myGrid2" max="20" sort="color"
 				style="height:200px" header="This is the second grid." selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 				<dojo:col width="15%" name="Color" field="color"/>
@@ -116,7 +103,7 @@
 		</dojo:dataSourceView>		
 	</div>	
 
-  <dojo:grid controller="widget" action="listJson" id="myGrid3" max="20" sort="color" 
+  <dojo:grid controller="widget" action="listJson" name="myGrid3" max="20" sort="color" 
 		style="height:200px; width:750px; margin:2em; border:1px solid silver" 
 		header="Third Grid: Make sure to specify a height style.">
 		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
