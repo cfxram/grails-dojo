@@ -30,13 +30,14 @@
 					</li>	
 					<li>		
 						<dojo:popOver label="Open" type="button">
-							<dojo:frameLink action="list" frame="popOverExamples">Ajax Call (without using a grails tag)</dojo:frameLink>
+							<dojo:frameLink name="myButton" action="list" frame="popOverExamples">Ajax Call (without using a grails tag)</dojo:frameLink>
 						</dojo:popOver>
 					</li>				
 				</ul>
 			</div>
 		</dojo:frame>
-		<dojo:frameLink action="list" frame="popOverExamples">Reload the Pane</dojo:frameLink>
+		<dojo:frameLink elementId="reloadButton" action="list" frame="popOverExamples">Reload the Pane</dojo:frameLink><br/>
+        <dojo:frameLink action="list" frame="popOverExamples" onclick="alert(1)">Reload the Pane (with onclick)</dojo:frameLink>
 	</div>
 	
 	<ul>
