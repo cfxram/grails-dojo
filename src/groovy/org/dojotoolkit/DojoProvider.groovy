@@ -135,8 +135,8 @@ class DojoProvider implements JavascriptProvider {
     def onLoaded      = attrs?.onLoaded
     def onComplete    = attrs?.onComplete
     def formName      = attrs?.formName
-    def preventCache  = attrs?.preventCache
-    ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache'].each{attrs.remove(it)}
+    def preventCache  = attrs?.preventCache ?: 'true'
+    ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','formName', 'preventCache'].each{attrs.remove(it)}
 
     // Http Status Code Handlers
     def statusCodes = attrs.findAll { k,v ->
@@ -176,7 +176,7 @@ class DojoProvider implements JavascriptProvider {
 
     if(attrs?.forSubmitTag){
       // This is for <g:submitToRemote>
-      attrs.formName = "this.form"
+      attrs.formName = attrs?.formName ?: "this.form"
     }
     else{
       // This is for <g:remoteForm>

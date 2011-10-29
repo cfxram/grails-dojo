@@ -160,7 +160,20 @@
 
 
 
-<div style="width:480px; height:400px; float:right; "> 
+<div style="width:480px; height:500px; float:right; ">
+
+  <g:form name="searchWidgets">
+    <h3>Search Form (for the last submit to remote button):</h3>
+    <div>
+      <label for="keyword">Keyword</label>
+      <g:textField name="keyword"/>
+    </div>
+    <div>
+      <label for="widgetName">Widget Name:</label>
+      <g:textField name="widgetName"/>
+    </div>
+  </g:form>
+
   <g:formRemote name="myForm" update="formUpdateRegion" url="[action:'remoteFormSubmit']">
     <h3>FormRemote:</h3>
     <div>
@@ -190,7 +203,7 @@
    <br/>
 
 
-  <g:form>
+  <g:form name="submitToRemoteFrom">
     <h3>Submit To Remote Button</h3>
     <div>
       <label for="state">State:</label>
@@ -203,10 +216,14 @@
     <g:submitToRemote action="submitToRemoteButton" value="Save Data" update="formUpdateRegion"/>
   </g:form>
 
-	<div id="formUpdateRegion" style="width:370px; border:1px solid gray; margin-top:2em; padding:1em"></div>
+
+  <h3>Submit To Remote Button (with a different form)</h3>
+  <g:submitToRemote action="submitToRemoteButton" value="Save Data From Sarch Form" update="formUpdateRegion" formName="searchWidgets"/>
+
+  <div id="formUpdateRegion" style="width:370px; border:1px solid gray; margin-top:2em; padding:1em"></div>
 </div>
 
-<fieldset style="clear:both; margin:2em; padding:1em; border:1px solid #ccc; width:80%"> 
+<fieldset style="clear:both; margin:2em; padding:1em; border:1px solid #ccc; width:80%">
 	<legend><h2>Test Dijit Destruction</h2></legend>
   <g:remoteLink action="remoteDijitContent" update="dojoContent" method="post">
     Load Remote Content that has Dojo Components
