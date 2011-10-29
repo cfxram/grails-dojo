@@ -41,7 +41,7 @@ class PopOverTagLib {
       out << """
         <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
             <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
-            <span>${label}</span>
+            <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
             <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
               <div dojoType="dojoui.layout.ContentPane" id="${name}_content" containLinks="${containLinks}" preventCache="true" href="${href}">
                 <script type="dojo/connect" event="onDownloadEnd">
@@ -57,7 +57,7 @@ class PopOverTagLib {
       out << """
         <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
             <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
-            <span>${label}</span>
+            <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
             <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
               ${body()}
             </div>

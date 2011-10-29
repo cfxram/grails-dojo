@@ -17,8 +17,14 @@
 		<dojo:frame id="popOverExamples" style="border:1px solid gray">
 			<div style="width:400px; height:250px;">
 				<ul>
-					<li>		
-						<dojo:popOver label="Click to Activate PopOver" type="button">
+					<li>
+                      <%
+                        def myVar = "popOver (label is closure)"
+                        def labelClosure = {
+                          return "Click to Activate ${myVar}"
+                        }
+                      %>
+						<dojo:popOver label="${labelClosure}" type="button">
 							<div style="padding:2em">This is a popover that was activated by a click from a button.</div>
 						</dojo:popOver>
 					</li>
