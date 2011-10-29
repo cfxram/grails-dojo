@@ -111,10 +111,13 @@ class GridTagLib {
   
   /**
    * Binds a span tag's content to a data property.
+   * @param attrs.variable
+   * @param attrs.default
    */
    def bind = {attrs, body ->
+     attrs.defaultValue = attrs.remove("default") ?: ""
      out << """
-       <span dojoType="dojoui.Bind" ${Util.htmlProperties(attrs)}></span>
+       <span dojoType="dojoui.Bind" ${Util.htmlProperties(attrs)}>${attrs.defaultValue}</span>
      """
    }  
 

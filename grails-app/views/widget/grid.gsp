@@ -4,7 +4,7 @@
   <meta name="layout" content="main"/>
   <dojo:require modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
   <dojo:require modules="['dojoui.layout.TabContainer','dojoui.layout.ContentPane']"/>
-	<dojo:gridResources theme="soria"/>
+	<dojo:gridResources theme="tundra"/>
 	<dojo:dataSourceViewResources/>
 
 	<script type="text/javascript">
@@ -40,7 +40,7 @@
 		<dojo:gridLoadDataButton label="Clear" type="reset" grid="myGrid"/>
 		
 		<p>
-		Selected: <dojo:bind variable="myGrid.selected" id="asdasd"/><br/>
+		Selected: <dojo:bind variable="myGrid.selected" id="asdasd" default="None"/>Selected<br/>
 		Total Records <dojo:bind variable="myGrid.rowCount"/>
 		</p>
 	</g:form>
@@ -56,7 +56,7 @@
 					<td style="width:33%;">
 						<button>
 							Selected:
-							${dojo.bind(variable:'myGrid.selected')} 
+							${dojo.bind(variable:'myGrid.selected', default:'0')}
 						</button>
 					</td>
 					<td style="width:33%; text-align:center;">My Widgets ( 	${dojo.bind(variable:'myGrid.rowCount')}  )</td>
