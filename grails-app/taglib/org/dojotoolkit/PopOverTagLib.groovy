@@ -19,7 +19,7 @@ class PopOverTagLib {
    * This will give you the ability to have links that stay inside the popOver.
    */
   def popOver = {attrs, body ->
-    def id = attrs.remove("id") ?: "dojo_ui_popover${Util.randomId()}"
+    def name = attrs.remove("name") ?: "dojo_ui_popover${Util.randomId()}"
     def href = attrs.remove("href") ?: ''
     def onOpen = attrs.remove("onOpen") ?: ''
     def activate = attrs.remove("activate") ?: 'click'   // can be click or hover
@@ -28,25 +28,24 @@ class PopOverTagLib {
     def dojoWidget = (type == 'link') ? "dojoui.widget.DropDownButtonLink" : "dojoui.widget.DropDownButton"
     def label = (attrs?.code?.length()) ? message(code:attrs.remove('code')) : attrs.remove('label')    
     def containLinks = attrs.remove("containLinks") ?: 'false'
-    //def contentDomId = attrs.remove('contentDomId') ?: '' // specify content defined in a <dojo:popOverContent> tag.
-    def bodyContent = body()
     
     if(attrs?.controller || attrs?.action){
       href = createLink(attrs)
       attrs.remove('controller')
       attrs.remove('action')
       attrs.remove('params')
+      attrs.remove('id')
     }
     
-    if(containLinks == 'true'){
+    if(containLinks == 'true' || href?.size()  > 0){
       out << """
-        <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
+        <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
             <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
             <span>${label}</span>
-            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${id}_TooltipDialog">
-              <div dojoType="dojoui.layout.ContentPane" id="${id}_content" containLinks="${containLinks}" preventCache="true" href="${href}">
+            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
+              <div dojoType="dojoui.layout.ContentPane" id="${name}_content" containLinks="${containLinks}" preventCache="true" href="${href}">
                 <script type="dojo/connect" event="onDownloadEnd">
-                  dijit.byId('${id}').openDropDown();                
+                  dijit.byId('${name}').openDropDown();
                 </script>
                 ${body()}
               </div>
@@ -56,10 +55,10 @@ class PopOverTagLib {
     }
     else{
       out << """
-        <div dojoType="${dojoWidget}" id="${id}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
+        <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
             <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
             <span>${label}</span>
-            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${id}_TooltipDialog">
+            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
               ${body()}
             </div>
         </div>
@@ -86,7 +85,7 @@ class PopOverTagLib {
     def onclick = closePopOverScript(attrs)
     attrs.remove('popOver');    
     out << """
-      <a href="#" onclick="${onclick}" ${Util.htmlProperties(attrs)}>${body()}</a>
+      <a href="#" onclick="${onclick}; return false;" ${Util.htmlProperties(attrs)}>${body()}</a>
     """
   }
   

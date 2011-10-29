@@ -62,7 +62,7 @@
 			</dojo:popOver>
 		</li>	
 		<li>	
-			<dojo:popOver label="Click to see content." type="link" contentDomId="popOverContentRegion" id="myCustomWindow">
+			<dojo:popOver label="Click to see content." type="link" contentDomId="popOverContentRegion" name="myCustomWindow">
 				This content should be replaced with the content inside the dojo:popOverContent tag.
 			</dojo:popOver>
 			<dojo:popOverContent id="popOverContentRegion">
@@ -74,7 +74,7 @@
 			</dojo:popOverContent>			
 		</li>			
 		<li>
-			<dojo:popOver label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="true"/>
+			<dojo:popOver label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="false"/>
 		</li>
 	</ul>
 	
