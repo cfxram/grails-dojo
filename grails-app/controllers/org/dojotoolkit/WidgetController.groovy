@@ -76,14 +76,17 @@ class WidgetController {
     }
   }
 
-
-  def remoteDijitContent = {
-    
+  def getRemoteDialogContent = {
+     render(view:'remoteDialogContent')
   }
 
-  def popOverForm = {
-    
+  def getRemoteDialogContentWithLinks = {
+    render(view:'remoteDialogContentWithLinks')
   }
+
+  def remoteDijitContent = {}
+
+  def popOverForm = {}
 
 
   def list = {
@@ -99,6 +102,7 @@ class WidgetController {
   def dijits = {}
   def grid = {}
   def popOver = {}
+  def dialog = {}
 
 
   def listJson = {

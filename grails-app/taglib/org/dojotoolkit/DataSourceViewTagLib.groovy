@@ -14,13 +14,10 @@ class DataSourceViewTagLib {
 
   /**
    * Will render content based on data defined in a dojo data source like dojo.data.ItemFileWriteStore.
-   * Will create the datastore if you specify the href or controller/action params.
    */
   def dataSourceView = {attrs, body ->
     def id = attrs.remove("id") ?: "dojo_ui_dataSourceView${Util.randomId()}"
     def store = attrs.remove("store") ?: "${id}_store"
-    def href = attrs.remove("href") ?: g.createLink(attrs)
-    
 
     out << """
       <div dojoType="dojoui.widget.DataSourceView" id="${id}" ${Util.htmlProperties(attrs)}>

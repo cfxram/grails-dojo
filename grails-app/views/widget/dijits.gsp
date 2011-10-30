@@ -6,30 +6,30 @@
 	<dojo:frameResources/>
 </head>
 <body class="tundra">
-	
-	<div style="padding:2em">
-	<h2 style="margin-top:0">Tab Container with &lt;dojo:contentPane&gt;</h2>
+
+<div style="padding:2em">
+  <h2 style="margin-top:0">Tab Container with &lt;dojo:contentPane&gt;</h2>
   <dojo:tabContainer style="width:650px; height:200px">
     <dojo:contentPane title="My First Tab">
       This is content in my first tab.<br/>
-			<g:link action="list">This will open in the parent.</g:link> 
+      <g:link action="list">This will open in the parent.</g:link>
     </dojo:contentPane>
     <dojo:contentPane title="My second tab.">
-			<g:link action="list">This will open in the parent.</g:link> 
-    </dojo:contentPane>    
+      <g:link action="list">This will open in the parent.</g:link>
+    </dojo:contentPane>
   </dojo:tabContainer>
 
-	<h2>Tab Container with &lt;dojo:frame&gt; (links stay in the tabs)</h2>
+  <h2>Tab Container with &lt;dojo:frame&gt; (links stay in the tabs)</h2>
   <dojo:tabContainer style="width:650px; height:200px; margin-top:1em">
     <dojo:frame title="My First Tab" style="padding:1em">
       This is content in my first tab.<br/>
-			<g:link action="list">This will stay in the tab.</g:link> 
+      <g:link action="list">This will stay in the tab.</g:link>
     </dojo:frame>
     <dojo:frame title="My second tab">
-			<g:link action="list">This will stay in the tab.</g:link> 
+      <g:link action="list">This will stay in the tab.</g:link>
     </dojo:frame>
   </dojo:tabContainer>
-	
-	</div>
+
+</div>
 </body>
 </html>

@@ -28,7 +28,10 @@
 		<h3>
 		  <g:link controller="widget" action="popOver">Demo the PopOver</g:link>
 		</h3>
-		
+
+		<h3>
+		  <g:link controller="widget" action="dialog">Demo the Dialog</g:link>
+		</h3>
 		<div style="text-align:center; margin-top:3em">			
 			<img src="${resource()}/images/dojo.png"/><br/>
 			<img src="${resource()}/images/grails.png">

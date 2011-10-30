@@ -10,8 +10,13 @@
     <g:layoutHead/>
 </head>
 <body class="tundra">
-  <div style="height:30px; border:1px solid #ccc; background:#eee; font-weight:bold">
-    Dojo Widget Tester
+  <div style="height:30px; border:1px solid #ccc; background:#eee; color:gray">
+    <div style="float:left; border-right: 1px solid #ccc; height:30px;">
+      <a href="${resource()}" style="color:gray; text-decoration: none"><h2 style="margin:4px 1em 0 1em;">Home</h2></a>
+    </div>
+    <div style="float:right; border-left: 1px solid #ccc; height:30px;">
+      <h2 style="margin:4px 1em 0 1em;">Dojo Widget Tester</h2>
+    </div>
   </div>
   <g:layoutBody/>
 </body>
