@@ -28,7 +28,7 @@ class DojoGrailsPlugin {
       <dojo:grid> (<dojo:col>, <dojo:bind>)
       <dojo:dataSourceView>(<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
       <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
-      <dojo:frame> (<dojo:frameLink>)    
+      <dojo:frame> (<dojo:frameLink> <dojo:onload>)
 
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
   """  

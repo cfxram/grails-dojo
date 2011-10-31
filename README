@@ -17,10 +17,10 @@ The Dojo Plugin adds some simple tags for interacting with dojo:
 <dojo:grid> (<dojo:col>, <dojo:bind>)
 <dojo:dataSourceView>(<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
 <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
-<dojo:frame> (<dojo:frameLink>)
+<dojo:frame> (<dojo:frameLink> <dojo:onload>)
+<dojo:dialog> (<dojo:closeDialog>, <dojo:openDialog>)
 
 Contributed Tags:
-<dojo:dialog> (<dojo:closeDialogButton>, <dojo:openDialog>)
 <dojo:menu> (<dojo:menuSeparator>, <dojo:menuItem>)
 <dojo:tabContainer> (<dojo:contentPane>)
 
