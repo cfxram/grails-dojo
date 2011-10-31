@@ -125,6 +125,7 @@ class WidgetController {
 
 
     // Use this for grails 2.0.0.RC1
+    /*
     render(contentType: "text/json") {
       identifier = "id"
       numRows = widgetsTotal
@@ -139,9 +140,9 @@ class WidgetController {
         }
       }
     }
+    */
 
     // Use this for grails 1.3.7 and less
-    /*
     render(contentType: "text/json") {
       identifier("id")
       numRows(widgetsTotal)
@@ -156,8 +157,6 @@ class WidgetController {
         }
       }
     }
-    */
-    
   }
 
 }
