@@ -3,8 +3,10 @@ package org.dojotoolkit
 
 class WidgetController {
 
-  def index = { }
-  
+  def index = {
+    render(view:"index")
+  }
+
   def plainRemote = {}
 
   def testRemoteLink = {
@@ -12,7 +14,7 @@ class WidgetController {
       div(style:"border:3px solid orange; background:#eee; padding:5em;", "Remote Link - Passed.")
     }
   }
-  
+
   def remotePostFromLink = {
     render {
       div(style:"border:3px solid blue; background:#eee; padding:5em;", "Remote Link with URL Map -  Passed.")
@@ -50,7 +52,7 @@ class WidgetController {
       div(style:"border:3px solid ${params?.color}; background:#eee; padding:5em;", "Remote Field - Passed.")
     }
   }  
-  
+
   def remoteJsFunction = {
     println "This was passed from the browser: ${params.name}"
     render {
@@ -76,11 +78,12 @@ class WidgetController {
     }
   }
 
-  def getRemoteDialogContent = {
-     render(view:'remoteDialogContent')
+  def remoteDialogContent = {
+     render(view:"remoteDialogContent")
   }
 
-  def getRemoteDialogContentWithLinks = {
+
+  def remoteDialogContentWithLinks = {
     render(view:'remoteDialogContentWithLinks')
   }
 
@@ -119,6 +122,26 @@ class WidgetController {
       widgetsTotal = Widget.list().size();      
       widgets = Widget.list(params)
     }
+
+
+    // Use this for grails 2.0.0.RC1
+    render(contentType: "text/json") {
+      identifier = "id"
+      numRows = widgetsTotal
+      items = array{
+        widgets.each {w ->
+          item(
+            id:w.id,
+            name:w.name,
+            color:w.color,
+            shape:w.shape
+          )
+        }
+      }
+    }
+
+    // Use this for grails 1.3.7 and less
+    /*
     render(contentType: "text/json") {
       identifier("id")
       numRows(widgetsTotal)
@@ -133,6 +156,8 @@ class WidgetController {
         }
       }
     }
+    */
     
   }
+
 }

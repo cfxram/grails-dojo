@@ -1,9 +1,10 @@
 <html>
 <head>
-	<link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
   <title>Welcome to the Dojo Plugin</title>
+  <dojo:header theme="tundra"/>
 </head>
-<body style="background:#ccc;">
+<body style="background:#ccc;" class="tundra">
 	
 	<div style="background:#fff; width:40%;margin:3em auto 0 auto; border:1px solid gray; padding:2em">
 		<h2 style="margin-top:0">Welcome to the Dojo Plugin</h2>

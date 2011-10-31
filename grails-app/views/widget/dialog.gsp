@@ -44,10 +44,10 @@
   </dojo:dialog>
 
   <%-- Dialog Two --%>
-  <dojo:dialog title="Dialog Two" name="DialogTwo" action="getRemoteDialogContent"/>
+  <dojo:dialog title="Dialog Two" name="DialogTwo" action="remoteDialogContent"/>
 
   <%-- Dialog Three --%>
-  <dojo:dialog title="Dialog Three" name="DialogThree" action="getRemoteDialogContentWithLinks" containLinks="true"/>
+  <dojo:dialog title="Dialog Three" name="DialogThree" action="remoteDialogContentWithLinks" containLinks="true"/>
 
   <%-- Dialog Four --%>
   <dojo:dialog name="DialogFour" title="Complex grid in a dialog">
