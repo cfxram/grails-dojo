@@ -106,6 +106,21 @@ class WidgetController {
   def grid = {}
   def popOver = {}
   def dialog = {}
+  def tree = {}
+
+
+  def treeJson = {
+
+
+    render(contentType: "text/json") {
+      identifier("id")
+      label("name")
+      items {
+
+      }
+    }
+
+  }
 
 
   def listJson = {

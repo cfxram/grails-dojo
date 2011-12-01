@@ -1,23 +1,23 @@
 <html>
 <head>
-	<title>Grid Component</title>
+  <title>Grid Component</title>
   <meta name="layout" content="main"/>
   <dojo:require modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
   <dojo:require modules="['dojoui.layout.TabContainer','dojoui.layout.ContentPane']"/>
-	<dojo:gridResources theme="tundra"/>
-	<dojo:dataSourceViewResources/>
+  <dojo:gridResources theme="tundra"/>
+  <dojo:dataSourceViewResources/>
 
-	<script type="text/javascript">
-		function myTest(){
-	    var allGrid = dijit.byId('myGrid');
-	    console.log('All Users Grid');
-	    console.log(allGrid.selectedRows);
+  <script type="text/javascript">
+      function myTest(){
+      var allGrid = dijit.byId('myGrid');
+      console.log('All Users Grid');
+      console.log(allGrid.selectedRows);
 
-	    var progGrid = dijit.byId('myGrid2');
-	    console.log('Program Users Grid');
-	    console.log(progGrid.selectedRows);
-		}
-	</script>
+      var progGrid = dijit.byId('myGrid2');
+      console.log('Program Users Grid');
+      console.log(progGrid.selectedRows);
+      }
+  </script>
 	
   <style type="text/css">
 

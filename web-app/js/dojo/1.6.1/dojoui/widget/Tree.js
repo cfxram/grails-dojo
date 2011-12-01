@@ -5,6 +5,43 @@ dojo.require("dijit.Tree");
 
 /**
  * Tree with Custom Render Nodes depending on State
+ *
+  Expects:
+    var test = {
+      identifier: "id",
+      label:"name",
+      items:[
+        {
+          "id":1,
+          "name":"Released",
+          "widgets":[
+            {
+              "id":5,
+              "name":"Music",
+              "widgets":[
+                {"id":6, name: "iPod", color: "black", shape: "rectangle", category:"Music", discounted: false},
+                {"id":7, name: "Zune 2", color: "brown", shape: "square", category:"Music", discounted: true}
+              ]
+            }
+          ]
+        },
+
+        {
+          "id":2,
+          "name":"Prototypes",
+          "widgets":[
+            {
+              "id":100,
+              "name":"Square Prototype",
+              "widgets":[
+                {"id":106, name: "Prototype Widget 1", color: "Blue", shape: "Square", category:"Square Prototype", discounted: false},
+                {"id":107, name: "Prototype Widget3", color: "Blue", shape: "Square", category:"Square Prototype", discounted: false}
+              ]
+            }
+          ]
+        },
+      ]
+    }
  */
 dojo.declare("dojoui.widget.Tree",dijit.Tree,{
   
