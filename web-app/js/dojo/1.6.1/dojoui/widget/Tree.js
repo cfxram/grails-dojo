@@ -154,12 +154,15 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
     var nodeTemplate  = null;
 
     if(hasChildren){
+      console.log('has children');
       nodeTemplate = this.defaultNodeTemplate;
     }
     else if(isRoot){
+      console.log('is root');
       nodeTemplate = this.defautlRootTemplate;
     }    
     else{
+      console.log('is leaf');
       nodeTemplate = this.defaultLeafTemplate;
       // See if any of the field values matches a specific template.
       for(i in this.templateForFields){

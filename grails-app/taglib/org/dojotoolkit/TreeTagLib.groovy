@@ -18,7 +18,7 @@ class TreeTagLib {
    * output.
    */
   def tree = {attrs, body ->
-    attrs.children = attrs?.children ?: ''
+    attrs.childField = attrs?.childField ?: ''
     attrs.showRoot = attrs.showRoot ?: 'false'
     attrs.rootLabel = attrs.rootLabel ?: 'TreeRoot'
     attrs.autoExpand = attrs.autoExpand ?: 'false'
@@ -39,7 +39,7 @@ class TreeTagLib {
     out << """
       <div dojoType="dojo.data.ItemFileWriteStore" jsid="${id}_store" url="${url}" urlPreventCache="yes"></div>
       <div dojoType="dojoui.widget.ForestStoreModel" rootLabel="${attrs.rootLabel}" rootId="treeRoot"
-          store="${id}_store" jsid="${id}_forestStore" childrenAttrs="${attrs.children}"></div>
+          store="${id}_store" jsid="${id}_forestStore" childrenAttrs="${attrs.childField}"></div>
       <div dojoType="dojoui.widget.Tree" model="${id}_forestStore" id="${id}" ${Util.htmlProperties(attrs)}>
         <script type="dojo/method">${body()}</script>
       </div>

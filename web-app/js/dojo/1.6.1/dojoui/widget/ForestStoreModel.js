@@ -28,7 +28,6 @@ dojo.declare("dojoui.widget.ForestStoreModel", [dijit.tree.ForestStoreModel], {
       this.store.fetch({
         query: {parent: this.store.getIdentity(parentItem)},
         onComplete: dojo.hitch(this, function(items) {
-          console.log('fetched also');
           callback(items);
         }),
         onError: this.onError

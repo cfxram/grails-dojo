@@ -128,21 +128,21 @@ class WidgetController {
       parent:"",
       id:999998,
       name:"Released Widgets",
-      hasChilrend:true
+      hasChildNodes:true
     ]
     def unreleased = [
       parent:"",
       id:999999,
       name:"Protottypes",
-      hasChilrend:true
+      hasChildNodes:true
     ]
     jsonMap.items.add(releasedWidgetMap)
     jsonMap.items.add(unreleased)
     releasedWidgets.each{w->
-      jsonMap.items.add([parent:999998, id:w?.id, name:w?.name])
+      jsonMap.items.add([parent:999998, id:w?.id, name:w?.name, category:w?.category, discounted:w?.discounted.toString() ])
     }
     protoTypeWidgets.each{w->
-      jsonMap.items.add([parent:999999, id:w?.id, name:w?.name])
+      jsonMap.items.add([parent:999999, id:w?.id, name:w?.name, category:w?.category, discounted:w?.discounted.toString()])
     }
     render jsonMap as JSON
   }
