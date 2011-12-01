@@ -20,11 +20,11 @@ class TreeTagLib {
   def tree = {attrs, body ->
     attrs.children = attrs?.children ?: ''
     attrs.showRoot = attrs.showRoot ?: 'false'
-    attrs.rootLabel = attrs.rootLabel ?: 'Tree Root'
+    attrs.rootLabel = attrs.rootLabel ?: 'TreeRoot'
     attrs.autoExpand = attrs.autoExpand ?: 'false'
     attrs.style = attrs.style ?: ''
     attrs.searchAble = attrs.searchAble ?: 'false'
-    attrs.expandFirstChild = attrs.expandFirstChild ?: 'true'
+    attrs.expandFirstChild = attrs.expandFirstChild ?: 'false'
 
     if (attrs?.controller || attrs?.action) {
       attrs.href = createLink(attrs)

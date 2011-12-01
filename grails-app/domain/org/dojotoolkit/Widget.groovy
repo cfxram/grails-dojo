@@ -6,4 +6,5 @@ class Widget {
   String shape
   String category
   Boolean discounted
+  Boolean released
 }

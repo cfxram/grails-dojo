@@ -12,7 +12,8 @@ dojo.declare("dojoui.widget.ForestStoreModel", [dijit.tree.ForestStoreModel], {
     if (parentItem === this.root) {
       if (this.root.children) {
         callback(this.root.children);
-      } else {
+      }
+      else {
         this.store.fetch({
           query: {parent: ''},
           onComplete: dojo.hitch(this, function(items) {
@@ -22,10 +23,12 @@ dojo.declare("dojoui.widget.ForestStoreModel", [dijit.tree.ForestStoreModel], {
           onError: this.onError
         });
       }
-    } else {
+    }
+    else {
       this.store.fetch({
         query: {parent: this.store.getIdentity(parentItem)},
         onComplete: dojo.hitch(this, function(items) {
+          console.log('fetched also');
           callback(items);
         }),
         onError: this.onError

@@ -225,6 +225,7 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
    * @param {Object} template
    */
   registerNodeStateTemplate:function(field,value,template){
+    console.log('registering template for ' + field)
     this.templateForFields[field] = {"value":value,"template":template};  
   },
   
@@ -366,6 +367,7 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
 
 
   postCreate:function(){
+    console.log('post create')
     this.inherited(arguments);
     if(this.searchAble){
       this.enableSearch();

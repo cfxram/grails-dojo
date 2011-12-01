@@ -1,5 +1,7 @@
 package org.dojotoolkit
 
+import grails.converters.JSON
+
 
 class WidgetController {
 
@@ -109,20 +111,46 @@ class WidgetController {
   def tree = {}
 
 
+  /**
+   * Will get the widgets nested as a tree structure to demo the tree component
+   */
   def treeJson = {
+    List releasedWidgets = Widget.findAllByReleased(true);
+    List protoTypeWidgets = Widget.findAllByReleased(false);
 
+    def jsonMap = [
+      identifier: "id",
+      label:"name",
+      items:[]
+    ]
 
-    render(contentType: "text/json") {
-      identifier("id")
-      label("name")
-      items {
-
-      }
+    def releasedWidgetMap = [
+      parent:"",
+      id:999998,
+      name:"Released Widgets",
+      hasChilrend:true
+    ]
+    def unreleased = [
+      parent:"",
+      id:999999,
+      name:"Protottypes",
+      hasChilrend:true
+    ]
+    jsonMap.items.add(releasedWidgetMap)
+    jsonMap.items.add(unreleased)
+    releasedWidgets.each{w->
+      jsonMap.items.add([parent:999998, id:w?.id, name:w?.name])
     }
-
+    protoTypeWidgets.each{w->
+      jsonMap.items.add([parent:999999, id:w?.id, name:w?.name])
+    }
+    render jsonMap as JSON
   }
 
 
+  /**
+   * Will display widgets as JSON to be consumed by the dojo grid component
+   */
   def listJson = {
     println params
     def widgets,widgetsTotal   
