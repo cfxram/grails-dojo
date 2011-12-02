@@ -51,7 +51,7 @@ class TreeTagLib {
    * Child tag of tree. Allows customization of how the node elements
    * will display.
    */
-  def node = {attrs, body ->
+  def treeNode = {attrs, body ->
     out << """
       this.defaultNodeTemplate = '${Util.jsSafeString(body()) }';
     """
@@ -65,7 +65,7 @@ class TreeTagLib {
    * @param field (Optional) if defined, then value must be present.
    * @param value (Optional) if present will define a template view for an item that has the field with a specific value.
    */
-  def leaf = {attrs, body ->
+  def treeLeaf = {attrs, body ->
     def field = attrs.field ?: ''
     def value = attrs.value ?: ''
     if (field.length() && value.length()) {

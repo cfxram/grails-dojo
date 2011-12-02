@@ -35,20 +35,19 @@
 
 <div style="width:300px;margin: 3em;">
   <h2 style="text-align: center; margin:.5em 0 3px 0;">Mark Widgets to be discounted</h2>
+
   <dojo:tree action="treeJson" name="widgetTree" class="widgetBrowser" childField="hasChildNodes">
-    <dojo:node>
+    <dojo:treeNode>
       <div class="category">{node.name}</div>
-    </dojo:node>
-
-    <dojo:leaf>
+    </dojo:treeNode>
+    <dojo:treeLeaf>
       <div class="regularWidget" onclick="{this}.setNodeValue({node.id},'discounted','true')">{node.name}</div>
-    </dojo:leaf>
-
-    <dojo:leaf field="discounted" value="true">
+    </dojo:treeLeaf>
+    <dojo:treeLeaf field="discounted" value="true">
       <div class="discountWidget" onclick="{this}.setNodeValue({node.id},'discounted','false')">{node.name} (discounted)</div>
-    </dojo:leaf>
-
+    </dojo:treeLeaf>
   </dojo:tree>
+
 </div>
 
 </body>

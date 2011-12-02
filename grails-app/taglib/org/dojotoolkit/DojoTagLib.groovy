@@ -86,7 +86,6 @@ class DojoTagLib {
 
     out << """
       <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js' djConfig='isDebug:${debug}, parseOnLoad:${parseOnLoad}'></script>
-      <script type='text/javascript' src='${dojoHome()}/dojoui/dojoui.js'></script>
       <script type="text/javascript">dojo.registerModulePath("dojoui", "../dojoui")</script>
     """
 
