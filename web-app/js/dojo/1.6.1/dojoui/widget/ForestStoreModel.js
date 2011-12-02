@@ -33,6 +33,32 @@ dojo.declare("dojoui.widget.ForestStoreModel", [dijit.tree.ForestStoreModel], {
         onError: this.onError
       });
     }
+  },
+
+
+  /**
+   * Overriding the ForestStoreModel to not do the ._requeryTop() method call.
+   * @param item
+   * @param attribute
+   * @param oldValue
+   * @param newValue
+   */
+  onSetItem: function(/* item */ item,
+                  /* attribute-name-string */ attribute,
+                  /* object | array */ oldValue,
+                  /* object | array */ newValue){
+
+    // Copied from TreeStoreModel
+    if(dojo.indexOf(this.childrenAttrs, attribute) != -1){
+        // item's children list changed
+        this.getChildren(item, dojo.hitch(this, function(children){
+            // See comments in onNewItem() about calling getChildren()
+            this.onChildrenChange(item, children);
+        }));
+    }else{
+        // item's label/icon/etc. changed.
+        this.onChange(item);
+    }
   }
 
 });

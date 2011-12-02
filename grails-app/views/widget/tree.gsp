@@ -41,12 +41,13 @@
     </dojo:node>
 
     <dojo:leaf>
-      <div class="regularWidget"onclick="{this}.setNodeValue({node.id},'discounted','true')">{node.name}</div>
+      <div class="regularWidget" onclick="{this}.setNodeValue({node.id},'discounted','true')">{node.name}</div>
     </dojo:leaf>
 
     <dojo:leaf field="discounted" value="true">
       <div class="discountWidget" onclick="{this}.setNodeValue({node.id},'discounted','false')">{node.name} (discounted)</div>
     </dojo:leaf>
+
   </dojo:tree>
 </div>
 

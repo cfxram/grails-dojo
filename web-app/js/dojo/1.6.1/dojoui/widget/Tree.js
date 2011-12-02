@@ -154,15 +154,12 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
     var nodeTemplate  = null;
 
     if(hasChildren){
-      console.log('has children');
       nodeTemplate = this.defaultNodeTemplate;
     }
     else if(isRoot){
-      console.log('is root');
       nodeTemplate = this.defautlRootTemplate;
     }    
     else{
-      console.log('is leaf');
       nodeTemplate = this.defaultLeafTemplate;
       // See if any of the field values matches a specific template.
       for(i in this.templateForFields){
@@ -201,6 +198,7 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
     var model = this.model;
     var identity = model.getIdentity(item);
     var tnode = this._itemNodesMap[identity];
+
     if (tnode) {
       tnode = tnode[0]
       tnode.labelNode.innerHTML = this.renderNodeHTML(item);
@@ -228,7 +226,6 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
    * @param {Object} template
    */
   registerNodeStateTemplate:function(field,value,template){
-    console.log('registering template for ' + field)
     this.templateForFields[field] = {"value":value,"template":template};  
   },
   
@@ -370,7 +367,6 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
 
 
   postCreate:function(){
-    console.log('post create')
     this.inherited(arguments);
     if(this.searchAble){
       this.enableSearch();
