@@ -78,15 +78,21 @@ class DojoTagLib {
   def header = {attrs ->
     def debug = attrs.remove("debug") ?: "false"
     def parseOnLoad = attrs.remove("parseOnLoad") ?: "true"
+    Map modulePaths = attrs.remove("modulePaths") ?: [:]
     def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
-    
+    def moduleList = []
+    modulePaths += ["dojoui": "../dojoui"]
+
+    modulePaths?.each{k,v->
+      moduleList.add("'${k}':'${v}'")
+    }
     if (attrs?.theme) {
       out << stylesheets(attrs)
     }
 
     out << """
-      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js' djConfig='isDebug:${debug}, parseOnLoad:${parseOnLoad}'></script>
-      <script type="text/javascript">dojo.registerModulePath("dojoui", "../dojoui")</script>
+      <script>dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };</script>
+      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
     """
 
     // if custom build then include released js files
