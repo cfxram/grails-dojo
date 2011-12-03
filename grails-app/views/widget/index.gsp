@@ -6,7 +6,6 @@
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
-	  	dojoui.showSpinner();
     }
 
     function after() {
@@ -31,7 +30,6 @@
 
     function onComplete() {
       console.log("Complete");
-	  dojoui.hideSpinner();
     }
     function onFailure404() {
       console.log("Had a 404 failure.")
@@ -224,16 +222,14 @@
 </div>
 
 <fieldset style="clear:both; margin:2em; padding:1em; border:1px solid #ccc; width:80%">
-	<legend><h2>Test Dijit Destruction</h2></legend>
+  <legend><h2>Test Dijit Destruction</h2></legend>
   <g:remoteLink action="remoteDijitContent" update="dojoContent" method="post">
     Load Remote Content that has Dojo Components
   </g:remoteLink>
 
-	<dojo:gridResources/>
-	<div id="dojoContent" style="border:1px solid blue; margin-top:1em"></div>	
-</fieldset>	
-
-
+  <dojo:gridResources/>
+  <div id="dojoContent" style="border:1px solid blue; margin-top:1em"></div>
+</fieldset>
 
 </body>
 </html>
