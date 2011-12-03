@@ -166,40 +166,21 @@ class WidgetController {
       widgets = Widget.list(params)
     }
 
-
-    // Use this for grails 2.0.0.RC1
-    /*
-    render(contentType: "text/json") {
-      identifier = "id"
-      numRows = widgetsTotal
-      items = array{
-        widgets.each {w ->
-          item(
-            id:w.id,
-            name:w.name,
-            color:w.color,
-            shape:w.shape
-          )
-        }
-      }
+    def jsonMap = [
+      identifier: "id",
+      numRows:widgetsTotal,
+      items:[]
+    ]
+    widgets.each {w ->
+      jsonMap.items.add([
+        id:w.id,
+        name:w.name,
+        color:w.color,
+        shape:w.shape
+      ])
     }
-     */
 
-    // Use this for grails 1.3.7 and less
-    render(contentType: "text/json") {
-      identifier("id")
-      numRows(widgetsTotal)
-      items {
-        widgets.each {w ->
-          item(
-            id:w.id,  
-            name:w.name,
-            color:w.color,
-            shape:w.shape
-          )  
-        }
-      }
-    }
+    render jsonMap as JSON
 
   }
 
