@@ -1,15 +1,18 @@
 import grails.converters.deep.JSON
 import grails.util.GrailsUtil
 
-def version = "1.6.1"
-def srcHref = "http://download.dojotoolkit.org/release-${version}/dojo-release-${version}-src.zip"
+// Load Dojo static class
+GroovyClassLoader classLoader = new GroovyClassLoader();
+Class Dojo = classLoader.parseClass(new File("${dojoPluginDir}/src/groovy/org/dojotoolkit/Dojo.groovy"));
+
+def srcHref = "http://download.dojotoolkit.org/release-${Dojo.version}/dojo-release-${Dojo.version}-src.zip"
 def dojoProfile = "${basedir}/grails-app/conf/dojo.profile.js"
 def downloadDir = "${grailsWorkDir}/download"
 def tmpWorkingDir = "${basedir}/web-app/js/dojoTmp"
 def dojoUtilDir = "${tmpWorkingDir}/util/"
 def dojoReleaseDir = "${tmpWorkingDir}/release/dojo"
 def dojoCssBuildFile = "${tmpWorkingDir}/css/custom-dojo.css"
-def dojoUiDir = "${dojoPluginDir}/web-app/js/dojo/${version}/dojoui"
+def dojoUiDir = "${dojoPluginDir}/web-app/js/dojo/${Dojo.version}/dojoui"
 def config = new ConfigSlurper(GrailsUtil.environment).parse(new File("${basedir}/grails-app/conf/Config.groovy").toURL())
 
 /**
@@ -21,14 +24,14 @@ def config = new ConfigSlurper(GrailsUtil.environment).parse(new File("${basedir
  * extensions to our custom release.
  */
 target(downloadDojoSource: "This will download the source version of Dojo.") {
-  event("StatusUpdate", ["\nDownloading Dojo ${version} source files.\n"])
+  event("StatusUpdate", ["\nDownloading Dojo ${Dojo.version} source files.\n"])
   Ant.sequential {
     mkdir(dir: downloadDir)
     mkdir(dir: tmpWorkingDir)
-    get(dest: "${downloadDir}/dojo-src-${version}.zip", src: "${srcHref}", verbose: true, usetimestamp: true)
-    unzip(dest: downloadDir, src: "${downloadDir}/dojo-src-${version}.zip")
+    get(dest: "${downloadDir}/dojo-src-${Dojo.version}.zip", src: "${srcHref}", verbose: true, usetimestamp: true)
+    unzip(dest: downloadDir, src: "${downloadDir}/dojo-src-${Dojo.version}.zip")
     move(todir: tmpWorkingDir) {
-      fileset(dir: "${downloadDir}/dojo-release-${version}-src", includes: "**/**")
+      fileset(dir: "${downloadDir}/dojo-release-${Dojo.version}-src", includes: "**/**")
     }
     copy(todir: "${tmpWorkingDir}/dojoui/") {
       fileset(dir: dojoUiDir, includes: "**/**")
@@ -103,7 +106,7 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
  */
 target(copyDojoToStage: "This will copy the optimized dojo release to stage.") {
   event("StatusUpdate", ["Copying optimized dojo release to the staging area."])
-  def destinationDir = "${stagingDir}/js/dojo/${version}"
+  def destinationDir = "${stagingDir}/js/dojo/${Dojo.pluginVersion}"
   copy(todir: "${destinationDir}-custom") {
     fileset(dir: dojoReleaseDir, includes: "**/**")
   }
@@ -115,7 +118,7 @@ target(copyDojoToStage: "This will copy the optimized dojo release to stage.") {
  */
 target(copyDojoToApp: "Copies the optimized dojo release to application.") {
   event("StatusUpdate", ["Copying custom dojo build to the application."])
-  def destinationDir = "${basedir}/web-app/js/dojo/${version}"
+  def destinationDir = "${basedir}/web-app/js/dojo/${Dojo.pluginVersion}"
   copy(todir: "${destinationDir}-custom") {
     fileset(dir: dojoReleaseDir, includes: "**/**")
   }

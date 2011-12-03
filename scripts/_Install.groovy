@@ -9,13 +9,17 @@
 //    ant.mkdir(dir:"${basedir}/grails-app/jobs")
 //
 
+
 Ant.property(environment: "env")
 grailsHome = Ant.antProject.properties."env.GRAILS_HOME"
-def dojoDir = "/web-app/js/dojo/1.6.1/dojo"
+
+// Load Dojo static class
+GroovyClassLoader classLoader = new GroovyClassLoader();
+Class Dojo = classLoader.parseClass(new File("${dojoPluginDir}/src/groovy/org/dojotoolkit/Dojo.groovy"));
+def dojoDir = "/web-app/js/dojo/${Dojo.version}/dojo"
 
 Ant.sequential {
   event("StatusUpdate", ["Copying dojo.js file into the application"])
-
   mkdir(dir: "${basedir}${dojoDir}")
   copy(todir: "${basedir}${dojoDir}") {
     fileset(dir: "${pluginBasedir}${dojoDir}") {

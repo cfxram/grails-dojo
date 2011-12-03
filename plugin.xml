@@ -1,4 +1,4 @@
-<plugin name='dojo' version='1.6.1.0' grailsVersion='1.3.0 &gt; *'>
+<plugin name='dojo' version='1.6.1.3-DEV-e' grailsVersion='1.3.0 &gt; *'>
   <author>Rob Meidal</author>
   <authorEmail>cfxram@codehaus.org</authorEmail>
   <title>Dojo 1.6.1 for Grails</title>
@@ -6,8 +6,16 @@
     Adds Dojo Base as a Javascript Provider for Grails. This provides full support for
     &lt;g:formRemote&gt;, &lt;g:remoteField&gt;, &lt;g:remoteFunction&gt;, &lt;g:remoteLink&gt; and &lt;g:submitToRemote&gt;.
 
-    Also adds several tags: &lt;dojo:paginate&gt; and &lt;dojo:sortableColumn&gt;. These do the same thing
+    Adds these two tags: &lt;dojo:paginate&gt; and &lt;dojo:sortableColumn&gt;. These do the same thing
     that the grails versions of the tags but will do them via ajax calls. 
+
+    Also adds these convenient widget tags: 
+      &lt;dojo:header&gt;, &lt;dojo:require&gt;, &lt;dojo:css&gt;
+      &lt;dojo:grid&gt; (&lt;dojo:col&gt;, &lt;dojo:bind&gt;)
+      &lt;dojo:dataSourceView&gt;(&lt;dojo:nodeTemplate&gt;, &lt;dojo:nodeDefaultTemplate&gt;)
+      &lt;dojo:popOver&gt; (&lt;dojo:popOverContent&gt;, &lt;dojo:closePopOver&gt;)
+      &lt;dojo:frame&gt; (&lt;dojo:frameLink&gt; &lt;dojo:onload&gt;)
+      &lt;dojo:tree&gt; (&lt;dojo:treeNode&gt;, &lt;dojo:treeLeaf&gt;)
 
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
   </description>
@@ -32,6 +40,7 @@
     <resource>org.dojotoolkit.ProgressBarTagLib</resource>
     <resource>org.dojotoolkit.SortableColumnTagLib</resource>
     <resource>org.dojotoolkit.TabTagLib</resource>
+    <resource>org.dojotoolkit.TreeTagLib</resource>
   </resources>
   <dependencies />
   <behavior />

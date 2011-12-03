@@ -2,7 +2,7 @@ import org.dojotoolkit.*
 import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptTagLib
 // Uncompressed 
 class DojoGrailsPlugin {
-  def version = "1.6.1.3-DEV"
+  def version = "1.6.1.3-DEV-e"
   def grailsVersion = "1.3.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
@@ -29,6 +29,7 @@ class DojoGrailsPlugin {
       <dojo:dataSourceView>(<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
       <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
       <dojo:frame> (<dojo:frameLink> <dojo:onload>)
+      <dojo:tree> (<dojo:treeNode>, <dojo:treeLeaf>)
 
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
   """  

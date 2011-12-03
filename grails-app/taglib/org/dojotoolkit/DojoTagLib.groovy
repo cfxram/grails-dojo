@@ -41,7 +41,7 @@ class DojoTagLib {
    */
   def dojoHome() {
     def dojoHome = "${g.resource(dir: pluginContextPath)}/js/dojo/${Dojo.version}"
-    def customDojo = "${g.resource(dir:'')}/js/dojo/${Dojo.version}-custom"
+    def customDojo = "${g.resource(dir:'')}/js/dojo/${Dojo.pluginVersion}-custom"
     
     if (useCustomDojoJsBuild()) {
       return customDojo
