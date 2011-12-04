@@ -9,12 +9,11 @@ eventCreateWarStart = { name, stagingDir ->
   def createCustomBuild = config.optimize.during.build ?: false
 
   if (createCustomBuild) {
-    println "\nCreating an Optimized Dojo build.\n"
-    buildDojo()
-    copyDojoToStage()
-    cleanup()
+    createOptimizedDojoBuild()
+    event("StatusUpdate", ["Done creating an optimized dojo build."])
   }
 }
+
 
 
 
