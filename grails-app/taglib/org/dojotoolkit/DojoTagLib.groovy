@@ -79,10 +79,13 @@ class DojoTagLib {
     def debug = attrs.remove("debug") ?: "false"
     def parseOnLoad = attrs.remove("parseOnLoad") ?: "true"
     Map modulePaths = attrs.remove("modulePaths") ?: [:]
+    attrs.modules = attrs.modules ?: []
     def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
+    def showSpinner = attrs.remove("showSpinner") ?: "true"
+
+    // Add custom tags space to modulePath
     def moduleList = []
     modulePaths += ["dojoui": "../dojoui"]
-
     modulePaths?.each{k,v->
       moduleList.add("'${k}':'${v}'")
     }
@@ -91,16 +94,22 @@ class DojoTagLib {
     }
 
     out << """
-      <script>dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };</script>
+      <script>
+        dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };
+        dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+      </script>
       <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
+      <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
     """
+
+
 
     // if custom build then include released js files
     if(includeCustomBuild == "true"){
       out << customDojoScripts()
     }
-    
-    if (attrs?.modules) {
+
+    if (attrs.modules?.size()) {
       out << require(attrs)
     }
   }

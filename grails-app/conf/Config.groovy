@@ -75,13 +75,11 @@ dependencies = {
 """
 
 environments {
-  /*
   development {
     dojo.optimize.during.build = false;
     dojo.use.customBuild.js = false;
     dojo.use.customBuild.css = false;
   }
-  */
 }
 
 grails.views.default.codec="none" // none, html, base64

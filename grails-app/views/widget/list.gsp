@@ -1,7 +1,7 @@
 <html>
 <head>
   <title>Widget Tester Page</title>
-  <g:javascript library="dojo"/>
+  <dojo:header theme="tundra"/>
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
@@ -66,6 +66,10 @@
         line-height: 38px;
         color: black;
         outline: none;
+    }
+
+    body div.grailsdojospinner{
+      background-image:url(${resource(dir:'images')}/my_custom_spinner.gif);
     }
   </style>
 </head>

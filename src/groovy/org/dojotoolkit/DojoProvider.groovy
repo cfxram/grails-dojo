@@ -87,6 +87,7 @@ class DojoProvider implements JavascriptProvider {
 
     def dojoString =
     "${onLoading}" +
+    "try{DojoGrailsSpinner.show();}catch(e){} " +
     "dojo.xhr('${method}',{" +
         (!async ? "sync:${async}, ": "") +
         (parameters?.length() ? "content:${parameters}, " : "") +
@@ -100,9 +101,11 @@ class DojoProvider implements JavascriptProvider {
         "}, " +
         "handle:function(response,ioargs){" +
           "${statusCodeHandlers}" +
+          "try{DojoGrailsSpinner.hide();}catch(e){}" +
           "${onComplete} " +          
         "}, " +
         "error:function(error,ioargs){" +
+          "try{DojoGrailsSpinner.hide();}catch(e){}" +
           "${errorDomElemScript}" + 
           "${onLoaded} " +
           "${onFailure} " +

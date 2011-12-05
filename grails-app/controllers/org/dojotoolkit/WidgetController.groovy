@@ -12,6 +12,7 @@ class WidgetController {
   def plainRemote = {}
 
   def testRemoteLink = {
+    Thread.currentThread().sleep(1000);
     render {
       div(style:"border:3px solid orange; background:#eee; padding:5em;", "Remote Link - Passed.")
     }

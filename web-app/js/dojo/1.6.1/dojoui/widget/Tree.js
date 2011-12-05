@@ -52,7 +52,7 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
   fieldToSearch:'name',
   searchAble:true,
   treeNodeLabel:'root',
-  templateForFields:{},
+  templateForFields:null,
   defaultNodeTemplate:'{node.label}',
   defaultLeafTemplate:'{node.label}',
   defautlRootTemplate:'{node.label}',
@@ -162,8 +162,7 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
     else{
       nodeTemplate = this.defaultLeafTemplate;
       // See if any of the field values matches a specific template.
-      for(i in this.templateForFields){
-        var field = i;
+      for(var i in this.templateForFields){
         var value = this.templateForFields[i].value;
         if (value == node[i]) {
           nodeTemplate = this.templateForFields[i].template;
@@ -226,7 +225,10 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
    * @param {Object} template
    */
   registerNodeStateTemplate:function(field,value,template){
-    this.templateForFields[field] = {"value":value,"template":template};  
+    if(!this.templateForFields){
+      this.templateForFields = [];
+    }
+    this.templateForFields[field] = {"value":value,"template":template};
   },
   
   
@@ -378,7 +380,7 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
    * Called when tree is finished loading and expanding.
    */
   onLoad:function(){
-    
+
     // Expand First Child;
     if (this.expandFirstChild) {
       var firstNode = this.getNodesByItem(this.model.root.children[0]);

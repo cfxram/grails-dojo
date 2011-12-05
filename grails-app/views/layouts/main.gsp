@@ -5,7 +5,7 @@
 		<link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
     <title><g:layoutTitle/></title>
   
-    <dojo:header theme="tundra" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
+    <dojo:header theme="tundra" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']" showSpinner="true"/>
     
     <g:layoutHead/>
 </head>
