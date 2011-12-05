@@ -23,7 +23,7 @@
 		</h3>
 
 		<h3>
-		  <g:link controller="widget" action="grid">Check out the Grid</g:link>
+		  <g:link controller="widget" action="grid">Check out the Grid and Data Source View</g:link>
 		</h3>
 
 		<h3>

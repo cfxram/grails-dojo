@@ -130,6 +130,16 @@
     </ul>
   </div>
 
+
+  <dojo:dataSourceView name="shoppingCart" data="{identifier:'id',items:[]}" style="height:100px; overflow:auto; position:relative; margin-top:1em;">
+    <dojo:nodeDefaultTemplate>
+        {node.id}
+    </dojo:nodeDefaultTemplate>
+    <dojo:noItemTemplate>
+      <h3 style="color:gray; padding:1em">Example of an empty data source view.<h3>
+    </dojo:noItemTemplate>
+  </dojo:dataSourceView>
+
 </body>
 </html>
 

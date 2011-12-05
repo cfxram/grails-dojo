@@ -7,20 +7,35 @@ class DataSourceViewTagLib {
 
 
   def dataSourceViewResources = {attrs,body ->
-        out << dojo.require(modules:['dojoui.widget.DataSourceView'])    
+        out << dojo.require(modules:['dojoui.widget.DataSourceView', 'dojo.data.ItemFileWriteStore'])
   }
   
   
 
   /**
    * Will render content based on data defined in a dojo data source like dojo.data.ItemFileWriteStore.
+   * @param name - The id of the dataSourceView
+   * @param store - The data store name to watch. This can be a store from a dojo:tree or a dojo:grid.
+   * @param data - This is Json formatted data that will be used as the store instead of the params.store.
    */
   def dataSourceView = {attrs, body ->
-    def id = attrs.remove("id") ?: "dojo_ui_dataSourceView${Util.randomId()}"
-    def store = attrs.remove("store") ?: "${id}_store"
+    def name = attrs.remove("name") ?: "dojo_ui_dataSourceView${Util.randomId()}"
+    def store = attrs.remove("store") ?: "${name}_store"
+
+    // Define empty data store json string is attached
+    if(attrs?.data){
+      out << """
+        <div dojoType="dojo.data.ItemFileWriteStore" jsid="${name}_store" urlPreventCache="yes">
+          <script type="dojo/method">
+            var myData = ${attrs?.data};
+            this.data = myData;
+          </script>
+        </div>
+      """
+    }
 
     out << """
-      <div dojoType="dojoui.widget.DataSourceView" id="${id}" ${Util.htmlProperties(attrs)}>
+      <div dojoType="dojoui.widget.DataSourceView" id="${name}" ${Util.htmlProperties(attrs)}>
         <script type="dojo/connect" method="postCreate" args="args">
           this.store = ${store}
         </script>
@@ -64,6 +79,7 @@ class DataSourceViewTagLib {
    *
    * @param field (Optional) if defined, then value must be present.
    * @param value (Optional) if present will define a template view for an item that has the field with a specific value.
+   * @param django (Optional) If true then this template will be rendered via the dojox.dtl package. You can use limited django syntax.
    */
   def nodeTemplate = {attrs, body ->
     def field = attrs.field ?: ''
