@@ -19,6 +19,7 @@ The Dojo Plugin adds some simple tags for interacting with dojo:
 <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
 <dojo:frame> (<dojo:frameLink> <dojo:onload>)
 <dojo:dialog> (<dojo:closeDialog>, <dojo:openDialog>)
+<dojo:tree> (<dojo:treeNode>, <dojo:treeLeaf>)
 
 Contributed Tags:
 <dojo:menu> (<dojo:menuSeparator>, <dojo:menuItem>)
