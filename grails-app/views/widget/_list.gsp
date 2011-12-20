@@ -1,3 +1,5 @@
+<dojo:frameResources/>
+
 <dojo:onload>
   console.log('An example of < dojo:onload > Loading when the list is shown');
 </dojo:onload>
