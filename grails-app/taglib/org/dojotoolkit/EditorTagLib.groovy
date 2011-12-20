@@ -25,11 +25,18 @@ class EditorTagLib {
     attrs?.id = attrs?.elementId ?: attrs?.id ?: attrs?.name
     def value = attrs.remove("value") ?: body()
 
+
+    /*
+      HACK - RM (12-20-2011)
+      Removing the 'dijit._editor.plugins.EnterKeyHandling' plugin because of these bugs:
+      http://bugs.dojotoolkit.org/ticket/13399
+      http://bugs.dojotoolkit.org/ticket/13744
+     */
     def defaultPlugins = """
       ['bold','italic','underline','|',
       'insertOrderedList','insertUnorderedList','indent','outdent','|',
       'justifyLeft','justifyCenter', '|',
-      'createLink', 'dijit._editor.plugins.EnterKeyHandling','|', {name:'fontSize', plainText: true}]
+      'createLink', '|', {name:'fontSize', plainText: true}]
     """
     attrs.plugins = attrs?.plugins ?: defaultPlugins
 
