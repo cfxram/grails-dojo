@@ -20,7 +20,7 @@ class DateAndTimeTagLib {
    * Creates a grails compatible date picker. This date picker can be used
    * like the <g:datePicker> in the controller.
    */
-  def dateField = {attrs, body ->
+  def datePicker = {attrs, body ->
     def style = attrs.style ?: ''
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_date${Util.randomId()}"
@@ -100,7 +100,7 @@ class DateAndTimeTagLib {
    * Creates a grails compatible time picker. This time picker can be used
    * like the <g:datePicker> in the controller.
    */
-  def timeField = {attrs, body ->
+  def timerPicker = {attrs, body ->
     def style = attrs.style ?: ''
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_time${Util.randomId()}"
@@ -158,7 +158,7 @@ class DateAndTimeTagLib {
    * Creates a grails compatible time picker. This date and time picker can be
    * used like the <g:datePicker> in the controller.
    */
-  def dateTimeField = {attrs, body ->
+  def dateTimePicker = {attrs, body ->
     def style = attrs.style ?: ''
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_dateTime${Util.randomId()}"
@@ -245,7 +245,7 @@ class DateAndTimeTagLib {
   /**
    * Creates a number spinner that is also a text field.
    */
-  def numberField = {attrs, body ->
+  def numberPicker = {attrs, body ->
     def style = attrs.style ?: ''
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_date${Util.randomId()}"

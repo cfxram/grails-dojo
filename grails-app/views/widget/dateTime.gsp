@@ -17,26 +17,26 @@
 <fieldset>
   <legend>Date Field:</legend>
   <label for="startDate">Start Date:</label>
-  <dojo:dateField name="startDate"/>
+  <dojo:datePicker name="startDate"/>
 </fieldset>
 
 <fieldset>
   <legend>Date & Time Field:</legend>
   <label for="closeDate">Close Date:</label>
-  <dojo:dateTimeField name="closeDate"/>
+  <dojo:dateTimePicker name="closeDate"/>
 </fieldset>
 
 <fieldset>
   <legend>Time Field:</legend>
   <label for="closeTime">Closing Time:</label>
-  <dojo:timeField name="closeTime"/>
+  <dojo:timerPicker name="closeTime"/>
 </fieldset>
 
 
 <fieldset>
   <legend>Number Field:</legend>
   <label for="totalDays">How many days?:</label>
-  <dojo:numberField name="totalDays"/>
+  <dojo:numberPicker name="totalDays"/>
 </fieldset>
 
 </body>
