@@ -111,6 +111,7 @@ class WidgetController {
   def dialog = {}
   def tree = {}
   def editor = {}
+  def dateTime = {}
 
 
   /**

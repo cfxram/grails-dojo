@@ -40,6 +40,10 @@
 		</h3>
 
 		<h3>
+		  <g:link controller="widget" action="dateTime">Examples of the Date Time Fields</g:link>
+		</h3>
+
+		<h3>
 		  <g:link controller="widget" action="tree">Try out the Tree Component</g:link>
 		</h3>
 		<div style="text-align:center; margin-top:3em">			
