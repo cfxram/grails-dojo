@@ -25,3 +25,23 @@ body div.grailsdojospinner{
 }
 /* Tabs */
 /******************************************/
+
+
+
+
+
+/******************************************/
+/* dijit.Editor */
+.dojo-ui-editor {
+    display:inline-block;
+    padding:0;
+}
+.dojo-ui-editor .dijitComboBox {
+    width: 70px;
+}
+
+.dojo-ui-editor .DojoUiEditor {
+    border-top: 1px solid #ccc;
+}
+/* dijit.Editor */
+/******************************************/

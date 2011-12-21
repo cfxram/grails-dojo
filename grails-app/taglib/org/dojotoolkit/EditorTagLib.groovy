@@ -18,13 +18,10 @@ class EditorTagLib {
    * Creates a dojo rich text editor with default values chosen.
    */
   def editor = {attrs, body ->
-    attrs.name = attrs?.name ?: "dojo_editor_${Util.randomId()}"
     attrs.height = attrs?.height ?: "150px"
-    attrs.dojoType = "dijit.Editor"
-    attrs.class = attrs?.class + " DojoUiEditor"
-    attrs?.id = attrs?.elementId ?: attrs?.id ?: attrs?.name
+    attrs.class =  (attrs?.class) ? "${attrs?.class} DojoUiEditor" : "DojoUiEditor"
+    attrs.id = attrs.remove("elementId") ?: attrs?.id ?: attrs.remove("name") ?: "dojo_editor_${Util.randomId()}"
     def value = attrs.remove("value") ?: body()
-
 
     /*
       HACK - RM (12-20-2011)
@@ -33,18 +30,16 @@ class EditorTagLib {
       http://bugs.dojotoolkit.org/ticket/13744
      */
     def defaultPlugins = """
-      ['bold','italic','underline','|',
-      'insertOrderedList','insertUnorderedList','indent','outdent','|',
-      'justifyLeft','justifyCenter', '|',
-      'createLink', '|', {name:'fontSize', plainText: true}]
+      ['bold','italic','underline','|', 'insertOrderedList','insertUnorderedList','indent','outdent','|',
+      'justifyLeft','justifyCenter', '|', 'createLink', '|', {name:'fontSize', plainText: true}]
     """
     attrs.plugins = attrs?.plugins ?: defaultPlugins
 
     out << """
       <fieldset class="dojo-ui-editor">
-        <div ${Util.htmlProperties(attrs)}>
+        <div dojoType="dijit.Editor" ${Util.htmlProperties(attrs)}>
           <script type="dojo/connect" event="onDisplayChanged">
-            dojo.byId('${attrs?.name}').value = this.attr('value')
+            dojo.byId('${attrs?.id}').value = this.attr('value')
           </script>
           ${value}
         </div>

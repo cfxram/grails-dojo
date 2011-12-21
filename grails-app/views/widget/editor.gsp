@@ -8,7 +8,7 @@
 
 
 
-<dojo:editor style="width:600px; margin: 3em; border: 1px solid gray">
+<dojo:editor style="width:600px; margin: 3em;">
   <div>
     Test
   </div>
