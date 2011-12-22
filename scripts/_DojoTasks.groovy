@@ -19,7 +19,7 @@ def config = new ConfigSlurper(GrailsUtil.environment).parse(new File("${basedir
 
 target(createOptimizedDojoBuild: "This is the main target for this script."){
   event("StatusUpdate", ["Creating an Optimized Dojo build."])
-  depends(buildDojo, copyDojoToStage, cleanup)
+  depends(buildDojo, copyDojoToStage)
 }
 
 
@@ -78,22 +78,31 @@ target(createDojoProfile: "This will create the dojo profile js file") {
  * Build Dojo - This will do the same as call the shell script to create the optimized
  *              version of dojo. Thanks to Kevin Haverlock's article:
  *              http://www.ibm.com/developerworks/websphere/techjournal/1003_col_haverlock/1003_col_haverlock.html
+ *
+ * java -Xms256m -Xmx256m -cp ./../shrinksafe/js.jar:./../closureCompiler/compiler.jar
+ * :./../shrinksafe/shrinksafe.jar org.mozilla.javascript.tools.shell.Main
+ * ./../../dojo/dojo.js baseUrl=./../../dojo load=build  action=release profile=../../../../../grails-app/conf/dojo.profile.js
  */
 target(buildDojo: "This will run shrinksafe to create an optimized version of dojo") {
   depends(downloadDojoSource, createDojoCssBuild, createDojoProfile)
   event("StatusUpdate", ["Runnning shrinksafe to create an optimized dojo."])
-  def shrinksafe_classpath = Ant.path {
+  def build_classpath = Ant.path {
     pathelement(location: "${dojoUtilDir}/shrinksafe/js.jar")
     pathelement(location: "${dojoUtilDir}/shrinksafe/shrinksafe.jar")
+    pathelement(location: "${dojoUtilDir}/closureCompiler/compiler.jar")
   }
   java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true,
-          dir: "${dojoUtilDir}/buildscripts", classpath: shrinksafe_classpath) {
-    arg(value: "${dojoUtilDir}/buildscripts/build.js")
-    arg(value: "profileFile=${dojoProfile}")
+          dir: "${dojoUtilDir}/buildscripts", classpath: build_classpath) {
+    arg(value: "${tmpWorkingDir}/dojo/dojo.js")
+    arg(value: "baseUrl=${tmpWorkingDir}/dojo")
+    arg(value: "load=build")
     arg(value: "action=release")
+    arg(value: "profile=${dojoProfile}")
+    /*
     arg(value: "optimize=shrinksafe,comments")
     arg(value: "copyTests=off")
     arg(value: "cssOptimize=comments,keepLines")
+    */
   }
   delete(includeemptydirs: true) {
     fileset(dir: dojoReleaseDir, includes: "**/tests/**/")
