@@ -58,14 +58,6 @@ dojo.profile = """
           "dojoui/widget/DropDownButton",
           "dojoui/widget/DataSourceView",
           "dojoui/widget/Tree"
-      ]},
-
-      "dojo/custom-dojo-css": {include:[
-            "dojo/resources/dojo",
-            "dijit/themes/dijit",
-            "dijit/themes/tundra/tundra",
-            "dojox/grid/resources/tundraGrid",
-            "dojoui/resources/css/dojo-ui"
       ]}
     }
   };
