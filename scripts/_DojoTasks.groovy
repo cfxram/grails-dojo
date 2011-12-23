@@ -10,7 +10,7 @@ def dojoProfile = "${basedir}/grails-app/conf/dojo.profile.js"
 def downloadDir = "${grailsWorkDir}/download"
 def tmpWorkingDir = "${basedir}/web-app/js/dojoTmp"
 def dojoUtilDir = "${tmpWorkingDir}/util/"
-def dojoReleaseDir = "${tmpWorkingDir}/release/dojo"
+def dojoReleaseDir = "${tmpWorkingDir}/release"
 def dojoCssBuildFile = "${tmpWorkingDir}/css/custom-dojo.css"
 def dojoUiDir = "${dojoPluginDir}/web-app/js/dojo/${Dojo.version}/dojoui"
 def config = new ConfigSlurper(GrailsUtil.environment).parse(new File("${basedir}/grails-app/conf/Config.groovy").toURL())
@@ -19,7 +19,7 @@ def config = new ConfigSlurper(GrailsUtil.environment).parse(new File("${basedir
 
 target(createOptimizedDojoBuild: "This is the main target for this script."){
   event("StatusUpdate", ["Creating an Optimized Dojo build."])
-  depends(buildDojo, copyDojoToStage)
+  depends(buildDojo, copyDojoToStage /*,cleanup*/)
 }
 
 
@@ -47,6 +47,8 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
   }
 }
 
+
+
 /**
  * This will create a css file and add @import statements that the build process can use.
  */
@@ -64,6 +66,8 @@ target(createDojoCssBuild: "This will create a css build file.") {
 
 }
 
+
+
 /**
  * This will create the dojo profile script file. Reading the Config.groovy statically since
  * it hasn't been compiled. Then it will create the dojo.profile.js file.
@@ -74,11 +78,13 @@ target(createDojoProfile: "This will create the dojo profile js file") {
   echo(file: dojoProfile, append: true, message: config.dojo.profile)
 }
 
+
+
 /**
  * Build Dojo - This will do the same as call the shell script to create the optimized
- *              version of dojo. Thanks to Kevin Haverlock's article:
- *              http://www.ibm.com/developerworks/websphere/techjournal/1003_col_haverlock/1003_col_haverlock.html
+ *              version of dojo. This will use the Rhino version to create the build.
  *
+ * Example of original build. (Assumes that it's being called from the buildscripts directory) :
  * java -Xms256m -Xmx256m -cp ./../shrinksafe/js.jar:./../closureCompiler/compiler.jar
  * :./../shrinksafe/shrinksafe.jar org.mozilla.javascript.tools.shell.Main
  * ./../../dojo/dojo.js baseUrl=./../../dojo load=build  action=release profile=../../../../../grails-app/conf/dojo.profile.js
@@ -117,6 +123,8 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
   }
 }
 
+
+
 /**
  * Will copy the customized dojo release to the staging directory during war
  * creation. This is called from _Events.groovy.
@@ -129,6 +137,8 @@ target(copyDojoToStage: "This will copy the optimized dojo release to stage.") {
   }
 }
 
+
+
 /**
  * Will copy the customized dojo release to the application. This is called
  * from InstallDojo.groovy.
@@ -140,6 +150,8 @@ target(copyDojoToApp: "Copies the optimized dojo release to application.") {
     fileset(dir: dojoReleaseDir, includes: "**/**")
   }
 }
+
+
 
 /**
  * This will delete the tmp Directory.

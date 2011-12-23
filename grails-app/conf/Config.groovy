@@ -31,6 +31,49 @@ dojo.optimize.during.build = true;
 dojo.use.customBuild.js = true;
 dojo.use.customBuild.css = true;
 dojo.profile = """
+
+  var profile = {
+    basePath: "../../web-app/js/dojoTmp",  //relative to grails-app/conf/
+    releaseDir:"release",
+    layerOptimize: "shrinksafe.keepLines",
+
+    packages: [
+      {name: "dojo", location: "dojo"},
+      {name: "dijit", location: "dijit"},
+      {name: "dojox", location: "dojox"},
+      {name: "dojoui", location: "dojoui"}
+    ],
+
+    layers: {
+      "dojo/custom-dojo": {include: [
+          "dijit/layout/TabContainer",
+          "dijit/layout/ContentPane",
+          "dojo/io/iframe",
+          "dijit/Tooltip",
+          "dijit/Dialog",
+          "dijit/TooltipDialog",
+          "dojoui/layout/ContentPane",
+          "dojoui/layout/TabContainer",
+          "dojoui/Bind",
+          "dojoui/widget/DropDownButton",
+          "dojoui/widget/DataSourceView",
+          "dojoui/widget/Tree"
+      ]},
+
+      "dojo/custom-dojo-css": {include:[
+            "dojo/resources/dojo",
+            "dijit/themes/dijit",
+            "dijit/themes/tundra/tundra",
+            "dojox/grid/resources/tundraGrid",
+            "dojoui/resources/css/dojo-ui"
+      ]}
+    }
+  };
+
+
+"""
+/*
+dojo.oldProfile = """
 dependencies = {
     layers:  [
         {
@@ -73,6 +116,10 @@ dependencies = {
     }
 }
 """
+*/
+
+
+
 
 environments {
   development {
