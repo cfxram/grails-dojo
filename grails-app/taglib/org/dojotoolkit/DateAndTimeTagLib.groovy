@@ -55,11 +55,10 @@ class DateAndTimeTagLib {
     }
 
     if (pickEarlierDate == 'false') {
-      //LocalDate today = new LocalDate()    *** Joda time
-      Date today = new Date()
-      def minYear = today.getYear().toString()
-      def minMonth = today.getMonthOfYear().toString()
-      def minDay = today.getDayOfMonth().toString()
+      GregorianCalendar today = new GregorianCalendar();
+      def minYear = today.get(GregorianCalendar.YEAR).toString();
+      def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString();
+      def minDay = today.get(GregorianCalendar.DAY_OF_MONTH).toString();
       def minMonthFormat = (minMonth.length() == 2) ? minMonth : "0${minMonth}"
       def minDayFormat = (minDay.length() == 2) ? minDay : "0${minDay}"
       minDate = minYear + "-" + minMonthFormat + "-" + minDayFormat
@@ -201,11 +200,10 @@ class DateAndTimeTagLib {
       dojoHour = (hour.length() == 2) ? hour : "0${hour}"
     }
     if (pickEarlierDate == 'false') {
-      //LocalDate today = new LocalDate()   **** Joda Time
-      Date today = new Date()
-      def minYear = today.getYear().toString()
-      def minMonth = today.getMonthOfYear().toString()
-      def minDay = today.getDayOfMonth().toString()
+      GregorianCalendar today = new GregorianCalendar();
+      def minYear = today.get(GregorianCalendar.YEAR).toString();
+      def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString();
+      def minDay = today.get(GregorianCalendar.DAY_OF_MONTH).toString();
       def minMonthFormat = (minMonth.length() == 2) ? minMonth : "0${minMonth}"
       def minDayFormat = (minDay.length() == 2) ? minDay : "0${minDay}"
       minDate = minYear + "-" + minMonthFormat + "-" + minDayFormat
