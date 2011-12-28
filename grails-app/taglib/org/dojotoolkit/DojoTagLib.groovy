@@ -20,7 +20,7 @@ class DojoTagLib {
    * @return
    */
   private boolean useCustomDojoCssBuild() {
-    def includeCustomCss = grailsApplication.config.dojo.use.customBuild.css ?: false 
+    def includeCustomCss = (grailsApplication?.config?.css?.size()) ?: (grailsApplication?.config?.dojo?.use?.customBuild?.css) ?: false
     return includeCustomCss
   }
 

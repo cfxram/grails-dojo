@@ -29,15 +29,37 @@ log4j = {
 // Dojo Plugin Settings
 dojo.optimize.during.build = true;
 dojo.use.customBuild.js = true;
-dojo.use.customBuild.css = true;
-dojo.profile = """
+dojo.use.customBuild.css = true; /* [DEPRICATED] use dojo.profile.css  */
+/**
+ * Use for Dojo 1.7 and up...
+ * Only Dojo Grails Plugin understand this. It will create a single css file from these
+ * files. Each of these files will be @import'ed so that the dojo build process will
+ * detect and combine them.
+ */
+dojo.css = """
+  dependencies: [
+    "../dojo/resources/dojo.css",
+    "../dijit/themes/dijit.css",
+    "../dijit/themes/tundra/tundra.css",
+    "../dojox/grid/resources/tundraGrid.css",
+    "../dojoui/resources/css/dojo-ui.css"
+  ]
+"""
 
+/**
+ * Use for Dojo 1.7 and up...
+ * New profile file format. See the livedocs for more information:
+ * http://livedocs.dojotoolkit.org/build/index
+ */
+dojo.profile = """
   var profile = {
     basePath: "../../web-app/js/dojoTmp",  //relative to grails-app/conf/
     releaseDir:"release",
     layerOptimize: "shrinksafe.keepLines",
+    cssOptimize: "comments.keepLines",
 
     packages: [
+      {name: "css", location: "css"},
       {name: "dojo", location: "dojo"},
       {name: "dijit", location: "dijit"},
       {name: "dojox", location: "dojox"},
@@ -61,11 +83,14 @@ dojo.profile = """
       ]}
     }
   };
-
-
 """
-/*
-dojo.oldProfile = """
+
+/**
+ * [DEPRICATED]
+ * This is the old profile supported by Dojo 1.6.1 and under. For more info, see:
+ * http://livedocs.dojotoolkit.org/build/pre17/build
+ */
+dojo.oldprofile = """
 dependencies = {
     layers:  [
         {
@@ -108,7 +133,7 @@ dependencies = {
     }
 }
 """
-*/
+
 
 
 
@@ -117,7 +142,7 @@ environments {
   development {
     dojo.optimize.during.build = false;
     dojo.use.customBuild.js = false;
-    dojo.use.customBuild.css = false;
+    dojo.use.customBuild.css = false;  /* [DEPRICATED] use dojo.profile.css  */
   }
 }
 
