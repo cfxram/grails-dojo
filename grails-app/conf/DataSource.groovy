@@ -4,10 +4,10 @@ dataSource {
   password = ""
 
   // Use for grails 2.0
-  driverClassName = "org.h2.Driver"
+  //driverClassName = "org.h2.Driver"
 
   // Use for grails 1.3.7
-  //driverClassName = "org.hsqldb.jdbcDriver"
+  driverClassName = "org.hsqldb.jdbcDriver"
 }
 
 hibernate {
@@ -23,10 +23,10 @@ environments {
       dbCreate = "create-drop"
 
       //Use for grails 1.3.7
-      //url = "jdbc:hsqldb:mem:devDB"
+      url = "jdbc:hsqldb:mem:devDB"
 
       // Use for grails 2.0
-      url = "jdbc:h2:mem:devDb;MVCC=TRUE"
+      //url = "jdbc:h2:mem:devDb;MVCC=TRUE"
     }
   }
 }
