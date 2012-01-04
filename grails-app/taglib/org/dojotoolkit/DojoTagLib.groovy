@@ -30,10 +30,9 @@ class DojoTagLib {
    * @return JSONObject
    */
   private Map getDojoCustomProfile() {
-    // Works for Dojo 1.6 profile.
     def jsonString = grailsApplication.config.dojo.profile
     def jsonObj = JSON.parse("{${jsonString}}");
-    return jsonObj.dependencies
+    return jsonObj
   }
 
   /**
@@ -58,8 +57,17 @@ class DojoTagLib {
    */
   def customDojoScripts = {
     if (useCustomDojoJsBuild()) {
-      def dependencies = getDojoCustomProfile()
-      dependencies.layers.each {
+      def profileObj = getDojoCustomProfile()
+
+      // For Dojo 1.7 profiles (AMD Module Based)
+      // Example http://svn.dojotoolkit.org/src/util/trunk/buildscripts/profiles/amd.profile.js
+      profileObj["var profile"]?.layers?.each{k,v->
+        out << "<script type='text/javascript' src='${dojoHome()}/${k}.js'></script>"
+      }
+
+      // For Dojo 1.6 profiles
+      // Example: http://livedocs.dojotoolkit.org/build/pre17/build#profiles
+      profileObj?.dependencies?.layers?.each {
         out << "<script type='text/javascript' src='${dojoHome()}/dojo/${it.name}'></script>"
       }
     }
