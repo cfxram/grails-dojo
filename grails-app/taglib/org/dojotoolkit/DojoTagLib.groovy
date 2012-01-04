@@ -30,6 +30,7 @@ class DojoTagLib {
    * @return JSONObject
    */
   private Map getDojoCustomProfile() {
+    // Works for Dojo 1.6 profile.
     def jsonString = grailsApplication.config.dojo.profile
     def jsonObj = JSON.parse("{${jsonString}}");
     return jsonObj.dependencies

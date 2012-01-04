@@ -41,7 +41,6 @@
       <library name="Grails User Library (Grails-dojo)">
         <CLASSES>
           <root url="file://$MODULE_DIR$/lib" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/antlr/antlr/jars/antlr-2.7.6.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -49,7 +48,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="grails-1.3.6" level="application" />
-    <orderEntry type="module" module-name="Grails-dojo-grailsPlugins" />
   </component>
 </module>
 

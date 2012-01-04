@@ -37,6 +37,7 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
   Ant.sequential {
     mkdir(dir: downloadDir)
     mkdir(dir: tmpWorkingDir)
+    mkdir(dir: dojoReleaseDir)
     get(dest: "${downloadDir}/dojo-src-${Dojo.version}.zip", src: "${srcHref}", verbose: true, usetimestamp: true)
     unzip(dest: downloadDir, src: "${downloadDir}/dojo-src-${Dojo.version}.zip")
     move(todir: tmpWorkingDir) {
@@ -109,11 +110,14 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
   java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true,
           dir: "${dojoUtilDir}/buildscripts", classpath: build_classpath) {
     arg(value: "${tmpWorkingDir}/dojo/dojo.js")
-    //arg(value: "baseUrl=${tmpWorkingDir}/dojo")
     arg(value: "load=build")
     arg(value: "action=release")
     arg(value: "profile=${dojoProfile}")
     arg(value: "cssOptimize=comments.keepLines")
+    // These are required for 1.6 build profiles
+    arg(value: "releaseName=")
+    arg(value: "releaseDir=${dojoReleaseDir}")
+    arg(value: "baseUrl=${tmpWorkingDir}/dojo")
   }
   delete(includeemptydirs: true) {
     fileset(dir: dojoReleaseDir, includes: "**/tests/**/")
