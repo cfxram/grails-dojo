@@ -77,27 +77,31 @@ class DojoTagLib {
    * Alternative to <g:javascript library="dojo"/>. This will include the dojo.js file,
    * adds the standard dojo headers., and sets the theme.
    *
-   * @params attrs.require = This is a map of components to include
-   * @params attrs.theme = (optional) Will include the theme if it is provided
-   * @params attrs.includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
+   * @param attrs.require = This is a map of components to include
+   * @param attrs.theme = (optional) Will include the theme if it is provided
+   * @param attrs.includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
    *                                    It is recommended you leave this to true. Setting to false, you will
    *                                    have to manually include the generated files yourself but it give more
-   *                                    fine grain control on when the files get included. 
+   *                                    fine grain control on when the files get included.
+   *
+   * @param attrs.async = Boolean (false) If true will use the AMD loader.
+   * @param attrs.modules = List (optional) A list of required modules to be included. Just calles require().
+   * @param attrs.modulePaths = List (optional) A list of paths to search for required modules.
    */
   def header = {attrs ->
     def debug = attrs.remove("debug") ?: "false"
     def parseOnLoad = attrs.remove("parseOnLoad") ?: "true"
-    def async = attrs.remove("async") ?: "true"
-    Map modulePaths = attrs.remove("modulePaths") ?: [:]
-    attrs.modules = attrs.modules ?: []
+    attrs.modulePaths = attrs?.modulePaths ?: [:]
     def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
     def showSpinner = attrs.remove("showSpinner") ?: "true"
+    attrs.async = attrs?.async ?: "false"
+    attrs.modules = attrs.modules ?: []
 
     // Add custom tags space to modulePath
-    def moduleList = []
-    modulePaths += ["dojoui": "../dojoui"]
-    modulePaths?.each{k,v->
-      moduleList.add("'${k}':'${v}'")
+    def moduleStringList = []
+    attrs.modulePaths += ["dojoui": "../dojoui"]
+    attrs.modulePaths?.each{k,v->
+      moduleStringList.add("'${k}':'${v}'")
     }
     if (attrs?.theme) {
       out << stylesheets(attrs)
@@ -105,14 +109,12 @@ class DojoTagLib {
 
     out << """
       <script>
-        var dojoConfig = {async:${async}, isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };
+        var dojoConfig = {async:${attrs?.async}, isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleStringList.join(',')}} };
         dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
       </script>
       <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
       <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
     """
-
-
 
     // if custom build then include released js files
     if(includeCustomBuild == "true"){
@@ -127,7 +129,7 @@ class DojoTagLib {
   /**
    * Will setup the base css and themes.User still needs to define <body class="${theme}">
    *
-   * @params attrs.theme  = (Tundra), Soria, Nihilio. The theme to bring in.
+   * @param attrs.theme  = (Tundra), Soria, Nihilio. The theme to bring in.
    */
   def stylesheets = {attrs ->
     def theme = attrs.remove("theme") ?: "tundra"
@@ -163,18 +165,45 @@ class DojoTagLib {
 
   /**
    * Will include dojo modules via the dojo loader.
-   * @params attrs.modules = This is a map of components to include 
+   * @param attrs.modules = This is a map of components to include
+   * @param attrs.async = If true will use the Dojo AMD compatible way to bring in modules.
    */
   def require = {attrs ->
-    // Add Required attributes
+    attrs.async = attrs?.async ?: "false"
     if (attrs.modules) {
-      out << "<script type='text/javascript'>"
-    }
-    attrs.modules.each {
-      out << "dojo.require('${it}');"
-    }
-    if (attrs.modules) {
-      out << "</script>"
+      if(attrs?.async == "true"){
+        out << amdRequire(attrs)
+      }
+      else{
+        def modules = attrs.modules.collect{"dojo.require('${it}')"}
+        out << "<script type='text/javascript'>${modules.join(';')}</script>"
+      }
     }
   }
+
+
+  /**
+   * Will bring in modules using the new amd async approach.
+   * @param attrs.modules - The modules to include
+   * @param attrs.modulePaths - Defines custom paths to look for those modules.
+   */
+  def amdRequire = {attrs->
+    def modules = attrs.modules.collect{"dojo.require('${it}')"}
+
+    out << """
+      <script type='text/javascript'>
+        require(['dojo/_base/kernel', 'dojo/_base/loader'],
+        function(dojo){
+    """
+      attrs?.modulePaths?.each{k,v->
+        out << " dojo.registerModulePath('${k}','${v}'); "
+      }
+
+    out << """
+        ${modules.join(';')}
+        });
+      </script>
+    """
+  }
+
 }
