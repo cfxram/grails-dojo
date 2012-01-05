@@ -87,6 +87,7 @@ class DojoTagLib {
   def header = {attrs ->
     def debug = attrs.remove("debug") ?: "false"
     def parseOnLoad = attrs.remove("parseOnLoad") ?: "true"
+    def async = attrs.remove("async") ?: "true"
     Map modulePaths = attrs.remove("modulePaths") ?: [:]
     attrs.modules = attrs.modules ?: []
     def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
@@ -104,7 +105,7 @@ class DojoTagLib {
 
     out << """
       <script>
-        var dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };
+        var dojoConfig = {async:${async}, isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };
         dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
       </script>
       <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>

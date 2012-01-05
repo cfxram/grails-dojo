@@ -99,6 +99,10 @@ target(createDojoProfile: "This will create the dojo profile js file") {
  * java -Xms256m -Xmx256m -cp ./../shrinksafe/js.jar:./../closureCompiler/compiler.jar
  * :./../shrinksafe/shrinksafe.jar org.mozilla.javascript.tools.shell.Main
  * ./../../dojo/dojo.js baseUrl=./../../dojo load=build  action=release profile=../../../../../grails-app/conf/dojo.profile.js
+ *
+ * Furthur notes about Dojo 1.7 custom builds:
+ * http://livedocs.dojotoolkit.org/releasenotes/1.7#considerations-for-custom-builds
+ *
  */
 target(buildDojo: "This will run shrinksafe to create an optimized version of dojo") {
   println "Runnning shrinksafe to create an optimized dojo..."
@@ -114,6 +118,7 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     arg(value: "action=release")
     arg(value: "profile=${dojoProfile}")
     arg(value: "cssOptimize=comments.keepLines")
+    arg(value: "selectorEngine=acme")
     // These are required for 1.6 build profiles
     arg(value: "releaseName=")
     arg(value: "releaseDir=${dojoReleaseDir}")
