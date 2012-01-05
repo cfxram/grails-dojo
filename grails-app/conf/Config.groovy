@@ -67,7 +67,7 @@ dojo.profile = """
     ],
 
     layers: {
-      "dojo/custom-dojo": {include: [
+      "dojo/plugin-custom-dojo": {include: [
           "dijit/layout/TabContainer",
           "dijit/layout/ContentPane",
           "dojo/io/iframe",

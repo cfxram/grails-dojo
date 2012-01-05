@@ -104,7 +104,7 @@ class DojoTagLib {
 
     out << """
       <script>
-        dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };
+        var dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleList.join(',')}} };
         dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
       </script>
       <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>

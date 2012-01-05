@@ -1,5 +1,4 @@
 dojo.provide("dojoui.widget.Tree");
-dojo.provide("dojoui.widget.TreeNode");
 dojo.require("dijit.Tree");
 
 

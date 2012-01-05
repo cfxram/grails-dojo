@@ -1,5 +1,4 @@
 dojo.provide("dojoui.widget.DropDownButton");
-dojo.provide("dojoui.widget.DropDownButtonLink");
 dojo.require("dijit.form.DropDownButton");
 
 
@@ -60,14 +59,5 @@ dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
   onMouseOut:function(){
     this.closeDropDown();
   }  
-}); 
-
-
-
-/**
- * As a Link
- */
-dojo.declare("dojoui.widget.DropDownButtonLink",dojoui.widget.DropDownButton,{
-  templateString: dojo.cache("dojoui", "widget/templates/DropDownButtonLink.html")
 }); 
 
