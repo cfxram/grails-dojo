@@ -1,5 +1,5 @@
 {
-	"name": "dojoui",
+	"name": "DojoUI",
 	"version":"1.7.1.0",
 	"dependencies": {
 		"dojo": "current"
