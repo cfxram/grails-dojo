@@ -8,7 +8,7 @@ class PopOverTagLib {
    * Outputs the required dojo modules needed for the popOver. This is not required.
    */
   def popOverResources = {attrs, body ->
-    out << dojo.require(modules:['dojoui.widget.DropDownButton','dojoui.widget.DropDownButtonLink','dijit.TooltipDialog', 'dojoui.layout.ContentPane'])
+    out << dojo.require(modules:['dijit.TooltipDialog','dojoui.widget.DropDownButton','dojoui.widget.DropDownButtonLink','dojoui.layout.ContentPane'])
   }
 
   /**

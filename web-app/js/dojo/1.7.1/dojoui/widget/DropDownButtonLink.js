@@ -1,4 +1,5 @@
 dojo.provide("dojoui.widget.DropDownButtonLink");
+dojo.require("dijit.form.DropDownButton");
 dojo.require("dojoui.widget.DropDownButton");
 
 /**
