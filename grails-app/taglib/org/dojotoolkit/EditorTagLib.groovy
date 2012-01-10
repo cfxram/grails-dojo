@@ -42,17 +42,12 @@ class EditorTagLib {
     def color       = " 'foreColor', 'hiliteColor' "
 
     def defaultPlugins = " ${fontSimple}, '|', ${lists}, '|',  ${indent}, '|', ${justify}, '|', ${msPaste}"
-
-
      /*
       WARNING - RM (12-20-2011)
       Don't use the "dijit._editor.plugins.EnterKeyHandling" plugin because of these bugs:
       http://bugs.dojotoolkit.org/ticket/13399
       http://bugs.dojotoolkit.org/ticket/13744
      */
-
-
-
 
     // Define default sets of plugins
     if(attrs?.type == "simple"){
