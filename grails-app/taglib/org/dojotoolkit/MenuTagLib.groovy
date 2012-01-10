@@ -24,7 +24,10 @@ class MenuTagLib {
         def id = attrs.remove("id") ?: "dojo_menuItem_${Util.randomId()}"
         def type = attrs.remove("type") ?: 'bar'  // bar || popup || barpopup || context || sidenav
         def label = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs.remove('label')
+
         if (type == 'bar') {
+          // This prevents the menu from flickering by hidding it before it renders.
+          attrs.style = (attrs?.style) ? "${attrs.style}; display:none;" : "display:none;"
           out << """
             <div dojoType="dijit.MenuBar" id="${id}" ${Util.htmlProperties(attrs)}>
               <script type="dojo/connect" method="postCreate">
