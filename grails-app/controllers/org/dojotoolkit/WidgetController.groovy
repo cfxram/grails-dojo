@@ -109,9 +109,9 @@ class WidgetController {
   def grid = {}
   def popOver = {}
   def dialog = {}
-
   def editor = {}
   def dateTime = {}
+  def panel = {}
 
 
   /**
@@ -127,10 +127,8 @@ class WidgetController {
    * test out static data populating a tree object.
    */
   def tree = {
-
     // Generate the JSON
     List releasedWidgets = Widget.findAllByReleased(true);
-    List protoTypeWidgets = Widget.findAllByReleased(false);
     def jsonMap = [
       identifier: "id",
       label:"name",

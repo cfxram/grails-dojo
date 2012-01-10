@@ -6,3 +6,23 @@
 }
 /* Tabs */
 /******************************************/
+
+
+
+
+
+/******************************************/
+/* Panel (Soria) */
+table.dojo-ui-panel{
+  display:inline;
+}
+
+.dojo-ui-panel-title.dijitTitlePaneTitle{
+	width:100%;
+}
+
+td.dojo-ui-panel-body{
+  height:100%;
+}
+/* Panel (Soria) */
+/******************************************/
