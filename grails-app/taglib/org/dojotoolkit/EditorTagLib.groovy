@@ -29,7 +29,8 @@ class EditorTagLib {
     attrs.type = attrs?.type ?: "simple"   // Can be simple || intermediate || advanced
     attrs.height = attrs?.height ?: "150px"
     attrs.class =  (attrs?.class) ? "${attrs?.class} DojoUiEditor" : "DojoUiEditor"
-    attrs.id = attrs.remove("elementId") ?: attrs?.id ?: attrs.remove("name") ?: "dojo_editor_${Util.randomId()}"
+    attrs.name = attrs?.name ?: attrs?.id ?: "dojo_editor_${Util.randomId()}"
+    attrs.id = attrs?.id ?: attrs.remove("elementId") ?: attrs.name
     def value = attrs.remove("value") ?: body()
 
     def undo        = " 'undo', 'redo' "
@@ -64,9 +65,10 @@ class EditorTagLib {
 
     out << """
       <fieldset class="dojo-ui-editor">
-        <div data-dojo-type="dijit.Editor" ${Util.htmlProperties(attrs)} data-dojo-props="plugins:[${plugins}]">
+        ${g.hiddenField([name: attrs?.name, value: value])}
+        <div dojoType="dijit.Editor" ${Util.htmlProperties(attrs)} data-dojo-props="plugins:[${plugins}]">
             <script type="dojo/connect" event="onDisplayChanged">
-              dojo.byId('${attrs?.id}').value = this.attr('value')
+              dojo.byId('${attrs?.name}').value = this.attr('value')
             </script>
             ${value}
         </div>

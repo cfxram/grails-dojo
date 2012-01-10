@@ -114,6 +114,13 @@ class WidgetController {
   def dateTime = {}
 
 
+  def saveAllEditors = {
+    println params
+
+    redirect(action:editor)
+  }
+
+
   /**
    * Will get the widgets nested as a tree structure to demo the tree component
    */
