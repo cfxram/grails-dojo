@@ -130,6 +130,20 @@
 </table>
 
 
+<table style="margin: 1em; font-weight: bold; margin: 1em auto 1em auto">
+  <tr style="text-align: center; font-size: 14px">
+    <td>Not Styled - Static Content (With just One level)</td>
+  </tr>
+  <tr>
+    <td style="padding-right:3em">
+      <dojo:tree name="widgetTreeStaticData" childField="hasChildNodes" class="widgetBrowser" data="${jsonString}" expandFirstChild="true">
+        <dojo:treeNode>{node.name}</dojo:treeNode>
+        <dojo:treeLeaf>{node.name}</dojo:treeLeaf>
+      </dojo:tree>
+    </td>
+  </tr>
+</table>
+
 
 </body>
 </html>

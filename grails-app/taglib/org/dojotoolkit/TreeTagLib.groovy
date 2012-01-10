@@ -36,8 +36,25 @@ class TreeTagLib {
     def id = attrs.remove("name") ?: "dojo_ui_tree${Util.randomId()}"
     def url = attrs.remove("href")
 
+
+    // Define empty data store json string is attached
+    if(attrs?.data){
+      out << """
+        <div dojoType="dojo.data.ItemFileWriteStore" jsid="${id}_store" urlPreventCache="yes">
+          <script type="dojo/method">
+            var myData = ${attrs?.data};
+            this.data = myData;
+          </script>
+        </div>
+      """
+    }
+    else{
+      out << """
+        <div dojoType="dojo.data.ItemFileWriteStore" jsid="${id}_store" url="${url}" urlPreventCache="yes"></div>
+      """
+    }
+
     out << """
-      <div dojoType="dojo.data.ItemFileWriteStore" jsid="${id}_store" url="${url}" urlPreventCache="yes"></div>
       <div dojoType="dojoui.widget.ForestStoreModel" rootLabel="${attrs.rootLabel}" rootId="treeRoot"
           store="${id}_store" jsid="${id}_forestStore" childrenAttrs="${attrs.childField}"></div>
       <div dojoType="dojoui.widget.Tree" model="${id}_forestStore" id="${id}" ${Util.htmlProperties(attrs)}>

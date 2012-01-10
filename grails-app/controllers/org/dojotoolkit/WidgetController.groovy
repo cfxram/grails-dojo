@@ -109,17 +109,38 @@ class WidgetController {
   def grid = {}
   def popOver = {}
   def dialog = {}
-  def tree = {}
+
   def editor = {}
   def dateTime = {}
 
 
+  /**
+   * Test saving of the dojo editor. Just look at the console of the outputed values.
+   */
   def saveAllEditors = {
     println params
-
     redirect(action:editor)
   }
 
+  /**
+   * Will display examples of the <dojo:tree> object. This will also created a static JSON string to
+   * test out static data populating a tree object.
+   */
+  def tree = {
+
+    // Generate the JSON
+    List releasedWidgets = Widget.findAllByReleased(true);
+    List protoTypeWidgets = Widget.findAllByReleased(false);
+    def jsonMap = [
+      identifier: "id",
+      label:"name",
+      items:[]
+    ]
+    releasedWidgets.each{w->
+      jsonMap.items.add([parent:'', id:w?.id, name:w?.name, category:w?.category, discounted:w?.discounted.toString() ])
+    }
+    render(view:"tree", model:[jsonString:jsonMap as JSON])
+  }
 
   /**
    * Will get the widgets nested as a tree structure to demo the tree component
