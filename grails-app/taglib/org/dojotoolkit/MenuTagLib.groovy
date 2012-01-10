@@ -24,6 +24,7 @@ class MenuTagLib {
         def id = attrs.remove("id") ?: "dojo_menuItem_${Util.randomId()}"
         def type = attrs.remove("type") ?: 'bar'  // bar || popup || barpopup || context || sidenav
         def label = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs.remove('label')
+        attrs.iconClass = attrs?.iconClass ?: ""
 
         if (type == 'bar') {
           // This prevents the menu from flickering by hidding it before it renders.

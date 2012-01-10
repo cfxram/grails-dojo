@@ -59,13 +59,15 @@
           <dojo:menuItem controller="widget" action="index" label="Try out the Remoting Tags" iconClass="remoting"/>
           <dojo:menuItem controller="widget" action="list" label="Try out the Paginate and Sortable tags" iconClass="sort"/>
           <dojo:menuItem controller="widget" action="dijits" label="Try out the Tab Container" iconClass="tab"/>
-          <dojo:menuItem controller="widget" action="grid" label="Check out the Grid and Data Source View" iconClass="grid"/>
           <dojo:menuItem controller="widget" action="popOver" label="Demo the PopOver" iconClass="popUps"/>
           <dojo:menuItem controller="widget" action="dialog" label="Demo the Dialog" iconClass="dialog"/>
           <dojo:menuItem controller="widget" action="editor" label="Demo the Rich Text Editor" iconClass="editor"/>
           <dojo:menuItem controller="widget" action="dateTime" label="Examples of the Date Time Fields" iconClass="calendar"/>
-          <dojo:menuItem controller="widget" action="tree" label="Try out the Tree Component" iconClass="tree"/>
           <dojo:menuItem controller="widget" action="panel" label="View the Panel" iconClass="remoting"/>
+          <dojo:menu type="popup" label="Advanced Components">
+            <dojo:menuItem controller="widget" action="grid" label="Check out the Grid and Data Source View" iconClass="grid"/>
+            <dojo:menuItem controller="widget" action="tree" label="Try out the Tree Component" iconClass="tree"/>
+          </dojo:menu>
         </dojo:menu>
       </dojo:menu>
       <%--
