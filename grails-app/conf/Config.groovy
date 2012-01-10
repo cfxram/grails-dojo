@@ -29,7 +29,7 @@ log4j = {
 // Dojo Plugin Settings
 dojo.optimize.during.build = true;
 dojo.use.customBuild.js = true;
- /* dojo.use.customBuild.css = true; [DEPRICATED] use dojo.profile.css  */
+
 /**
  * Use for Dojo 1.7 and up...
  * Only Dojo Grails Plugin understand this. It will create a single css file from these
@@ -45,7 +45,6 @@ dojo.css = """
     "../dojoui/resources/css/dojo-ui.css"
   ]
 """
-
 
 /**
  * Use for Dojo 1.7 and up...
@@ -88,56 +87,6 @@ dojo.profile = """
   };
 """
 
-/**
- * [DEPRICATED]
- * This is the old profile supported by Dojo 1.6.1 and under. For more info, see:
- * http://livedocs.dojotoolkit.org/build/pre17/build
-
-dojo.profile = """
-dependencies = {
-    layers:  [
-        {
-            name: "custom-dojo.js",
-            dependencies: [
-                "dijit.layout.TabContainer",
-                "dijit.layout.ContentPane",
-                "dojo.io.iframe",
-                "dijit.Tooltip",
-                "dijit.Dialog",
-                "dijit.TooltipDialog",
-                "dojoui.layout.ContentPane",
-                "dojoui.layout.TabContainer",
-                "dojoui.Bind",
-                "dojoui.widget.DropDownButton",
-                "dojoui.widget.DataSourceView",
-                "dojoui.widget.Tree"
-            ]
-        }
-    ],
-
-    prefixes: [
-        [ "dijit", "../dijit" ],
-        [ "dojox", "../dojox" ],
-        [ "css", "../css" ],
-        [ "dojoui", "../dojoui" ]
-    ],
-
-    // This is a customization to the standard dojo build profile. Only the
-    // dojo plugin build process will understand this. It will just be
-    // ignored by the standard dojo build.
-    css: {
-        dependencies: [
-            "../dojo/resources/dojo.css",
-            "../dijit/themes/dijit.css",
-            "../dijit/themes/tundra/tundra.css",
-            "../dojox/grid/resources/tundraGrid.css",
-            "../dojoui/resources/css/dojo-ui.css"
-        ]
-    }
-}
-"""
- */
-
 
 
 
@@ -148,6 +97,9 @@ environments {
     dojo.use.customBuild.css = false;  /* [DEPRICATED] use dojo.profile.css  */
   }
 }
+
+grails.release.scm.enabled = false
+
 
 grails.views.default.codec="none" // none, html, base64
 grails.views.gsp.encoding="UTF-8"
