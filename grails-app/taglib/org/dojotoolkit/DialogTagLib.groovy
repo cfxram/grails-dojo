@@ -32,9 +32,10 @@ class DialogTagLib {
    * @param visible  - (false) If true, the dialog will display automatically.
    * @param modeless - (false) If
    * @param name - if an id is not passed one will be generated for you.
+   * @param onOpen - javascript that is executed once the dialog is displayed.
    */
   def dialog = {attrs, body ->
-    attrs.title = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs?.title
+    attrs.title = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs?.title ?: ""
     if (attrs?.controller || attrs?.action) {
       attrs.href = createLink(attrs)
       attrs.remove('controller')
@@ -44,6 +45,7 @@ class DialogTagLib {
     }
     attrs.name = attrs?.name ?: "dojo_ui_dialog${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("name")
+    attrs.onOpen = attrs?.onOpen ?: ""
 
     // Defines whether the closable x in the upper right shows.
     def closableScript = ""
@@ -88,6 +90,7 @@ class DialogTagLib {
       out << """
         <style>#${attrs?.id}_underlay{background:gray; ${modelessTxt};}</style>
         <div dojoType="dijit.Dialog" ${Util.htmlProperties(attrs)}>
+          <script type="dojo/connect" event="show">${attrs?.onOpen}</script>
           <script type="dojo/connect" event="startup">
             ${visibleScript}
             ${closableScript}
