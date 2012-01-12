@@ -27,7 +27,7 @@ class DataSourceViewTagLib {
       out << """
         <div dojoType="dojo.data.ItemFileWriteStore" jsid="${name}_store" urlPreventCache="yes">
           <script type="dojo/method">
-            var myData = ${Util.jsSafeString( attrs.remove("data") )};
+            var myData = ${attrs.remove("data")};
             this.data = myData;
           </script>
         </div>
