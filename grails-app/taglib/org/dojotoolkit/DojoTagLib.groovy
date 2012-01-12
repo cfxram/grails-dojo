@@ -206,4 +206,33 @@ class DojoTagLib {
     """
   }
 
+
+
+
+  /**
+   * This will wrap a response in a text area element if a flash var is set.
+   * This is set by a dojo.io.iframe call and intercepted by the BaseController.
+   * The end result is that a user is able to do a file upload via an ajax call
+   * inside of a ContentPane.
+   *
+   * Add this code as a controller filter:
+      def filters = {
+        parameterFilter(controller: '*', action: '*') {
+          before = {
+            if (params?.dojoIoIframeTransport) { flash.dojoIoIframeTransport = true }
+          }
+        }
+      }
+   *
+   */
+  def ajaxUploadResponse = {attrs, body ->
+    if (flash?.dojoIoIframeTransport) {
+      out << "<textarea>${body()}</textarea>"
+      flash.remove("dojoIoIframeTransport")
+    }
+    else {
+      out << body()
+    }
+  }
+
 }

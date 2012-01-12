@@ -9,11 +9,13 @@
 	</style>
 
 	<dojo:popOverResources/>
+    <dojo:helpResources/>
 </head>
 <body class="soria">
 	
 	
 	<div style="float:right; margin-right:10em">
+
 		<dojo:frame id="popOverExamples" style="border:1px solid gray">
 			<div style="width:400px; height:250px;">
 				<ul>
@@ -27,6 +29,7 @@
 						<dojo:popOver label="${labelClosure}" type="button">
 							<div style="padding:2em">This is a popover that was activated by a click from a button.</div>
 						</dojo:popOver>
+                      <dojo:help>Examples of the dojo popOver.</dojo:help>
 					</li>
 					<li>
 						<dojo:popOver label="Load the action" type="button" controller="widget" action="popOverForm" containLinks="true"/>
