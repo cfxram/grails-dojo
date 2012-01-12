@@ -42,7 +42,7 @@ class TreeTagLib {
       out << """
         <div dojoType="dojo.data.ItemFileWriteStore" jsid="${id}_store" urlPreventCache="yes">
           <script type="dojo/method">
-            var myData = ${attrs.remove("data")};
+            var myData = ${Util.jsSafeString( attrs.remove("data") )};
             this.data = myData;
           </script>
         </div>
