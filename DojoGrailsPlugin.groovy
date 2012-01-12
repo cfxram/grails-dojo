@@ -23,17 +23,19 @@ class DojoGrailsPlugin {
     Adds these two tags: <dojo:paginate> and <dojo:sortableColumn>. These do the same thing
     that the grails versions of the tags but will do them via ajax calls. 
 
-    Also adds these convenient widget tags: 
-      <dojo:header>, <dojo:require>, <dojo:css>
-      <dojo:grid> (<dojo:col>, <dojo:bind>)
-      <dojo:dataSourceView>(<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>)
-      <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>)
-      <dojo:frame> (<dojo:frameLink> <dojo:onload>)
-      <dojo:tree> (<dojo:treeNode>, <dojo:treeLeaf>)
-      <dojo:editor>
-      <dojo:datePicker>
-      <dojo:timePicker>
-      <dojo:dateTimePicker>
+    Adds these convenient widget tags:
+      <dojo:header>, <dojo:require>, <dojo:css>,
+      <dojo:grid> (<dojo:col>, <dojo:bind>),
+      <dojo:dataSourceView> (<dojo:nodeTemplate>, <dojo:nodeDefaultTemplate>),
+      <dojo:popOver> (<dojo:popOverContent>, <dojo:closePopOver>),
+      <dojo:frame> (<dojo:frameLink> <dojo:onload>),
+      <dojo:tree> (<dojo:treeNode>, <dojo:treeLeaf>),
+      <dojo:help>,
+      <dojo:toolip>,
+      <dojo:editor>,
+      <dojo:datePicker>,
+      <dojo:timePicker>,
+      <dojo:dateTimePicker>,
       <dojo:numberPicker>
 
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
