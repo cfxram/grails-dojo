@@ -62,7 +62,6 @@
 </head>
 <body>
 
-
 <table style="margin: 1em; font-weight: bold; margin: 1em auto 0 auto">
   <tr style="text-align: center; font-size: 14px">
     <td>Not Styled</td>
@@ -81,10 +80,10 @@
           <div class="category">{node.name}</div>
         </dojo:treeNode>
         <dojo:treeLeaf>
-          <div class="regularWidget" onclick="{this}.setNodeValue({node.id},'discounted','true')">{node.name}</div>
+          <div class="regularWidget" onclick="{this}.setNodeValue('{node.id}','discounted','true')">{node.name}</div>
         </dojo:treeLeaf>
         <dojo:treeLeaf field="discounted" value="true">
-          <div class="discountWidget" onclick="{this}.setNodeValue({node.id},'discounted','false')">{node.name} (discounted)</div>
+          <div class="discountWidget" onclick="{this}.setNodeValue('{node.id}','discounted','false')">{node.name} (discounted)</div>
         </dojo:treeLeaf>
       </dojo:tree>
     </td>
@@ -105,10 +104,10 @@
           <div class="category">{node.name}</div>
         </dojo:treeNode>
         <dojo:treeLeaf>
-          <div class="regularWidget" onclick="{this}.setNodeValue({node.id},'discounted','true')">{node.name}</div>
+          <div class="regularWidget" onclick="{this}.setNodeValue('{node.id}','discounted','true')">{node.name}</div>
         </dojo:treeLeaf>
         <dojo:treeLeaf field="discounted" value="true">
-          <div class="discountWidget" onclick="{this}.setNodeValue({node.id},'discounted','false')">{node.name} (discounted)</div>
+          <div class="discountWidget" onclick="{this}.setNodeValue('{node.id}','discounted','false')">{node.name} (discounted)</div>
         </dojo:treeLeaf>
       </dojo:tree>
     </td>
@@ -116,7 +115,7 @@
 
       <dojo:dataSourceView store="widgetTreeStyledWithSearch_store" class="widgetBrowser">
         <dojo:nodeTemplate field="discounted" value="true">
-          <div class="discountWidget2" onclick="{this}.setNodeValue({node.id},'discounted','false')">{node.name} (discounted)</div>
+          <div class="discountWidget2" onclick="{this}.setNodeValue('{node.id}','discounted','false')">{node.name} (discounted)</div>
         </dojo:nodeTemplate>
         <dojo:noItemTemplate>
           <h1 style="color:gray; text-align: center">
@@ -135,11 +134,20 @@
     <td>Not Styled - Static Content (With just One level)</td>
   </tr>
   <tr>
-    <td style="padding-right:3em">
+    <td id="widgets"  style="padding-right:3em">
+
       <dojo:tree name="widgetTreeStaticData" childField="hasChildNodes" class="widgetBrowser" data="${jsonString}" expandFirstChild="true">
-        <dojo:treeNode>{node.name}</dojo:treeNode>
-        <dojo:treeLeaf>{node.name}</dojo:treeLeaf>
+        <dojo:treeNode>
+          <div class="category">{node.name}</div>
+        </dojo:treeNode>
+        <dojo:treeLeaf>
+          <div class="regularWidget" onclick="{this}.setNodeValue( '{node.id}' ,'discounted','true')">{node.name}</div>
+        </dojo:treeLeaf>
+        <dojo:treeLeaf field="discounted" value="true">
+          <div class="discountWidget" onclick="{this}.setNodeValue('{node.id}' ,'discounted','false')">{node.name} (discounted)</div>
+        </dojo:treeLeaf>
       </dojo:tree>
+
     </td>
   </tr>
 </table>

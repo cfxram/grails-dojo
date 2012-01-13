@@ -199,7 +199,9 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
 
     if (tnode) {
       tnode = tnode[0]
-      tnode.labelNode.innerHTML = this.renderNodeHTML(item);
+      var content = this.renderNodeHTML(item);
+      dojo.empty(tnode.labelNode);
+      dojo.place(content, tnode.labelNode)
     }        
     //rerun search
     this._searchFieldOnKeyUp();
@@ -367,19 +369,36 @@ dojo.declare("dojoui.widget.Tree",dijit.Tree,{
   },
 
 
+  /**
+   * This is overridden here so that we can call the some code defined in
+   * the grails taglib.
+   */
+  postMixInProperties:function(){
+    this.inherited(arguments);
+    this.setGrailsPluginProperties();
+  },
+
+
+  setGrailsPluginProperties:function(){
+
+  },
+
+
   postCreate:function(){
     this.inherited(arguments);
     if(this.searchAble){
       this.enableSearch();
     }
     this.establishDimensions();
+
   },
-  
+
+
+
   /**
    * Called when tree is finished loading and expanding.
    */
   onLoad:function(){
-
     // Expand First Child;
     if (this.expandFirstChild) {
       var firstNode = this.getNodesByItem(this.model.root.children[0]);

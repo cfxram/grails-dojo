@@ -58,7 +58,9 @@ class TreeTagLib {
       <div dojoType="dojoui.widget.ForestStoreModel" rootLabel="${attrs.rootLabel}" rootId="treeRoot"
           store="${id}_store" jsid="${id}_forestStore" childrenAttrs="${attrs.childField}"></div>
       <div dojoType="dojoui.widget.Tree" model="${id}_forestStore" id="${id}" ${Util.htmlProperties(attrs)}>
-        <script type="dojo/connect">${body()}</script>
+        <script type="dojo/event" event="setGrailsPluginProperties">
+          ${body()}
+        </script>
       </div>
     """
   }

@@ -129,13 +129,33 @@ class WidgetController {
   def tree = {
     // Generate the JSON
     List releasedWidgets = Widget.findAllByReleased(true);
+    List protoTypeWidgets = Widget.findAllByReleased(false);
+
     def jsonMap = [
       identifier: "id",
       label:"name",
       items:[]
     ]
+
+    def releasedWidgetMap = [
+      parent:"",
+      id:999998,
+      name:"Released Widgets",
+      hasChildNodes:true
+    ]
+    def unreleased = [
+      parent:"",
+      id:999999,
+      name:"Protottypes",
+      hasChildNodes:true
+    ]
+    jsonMap.items.add(releasedWidgetMap)
+    jsonMap.items.add(unreleased)
     releasedWidgets.each{w->
-      jsonMap.items.add([parent:'', id:w?.id, name:w?.name, category:w?.category, discounted:w?.discounted.toString() ])
+      jsonMap.items.add([parent:999998, id:w?.id, name:w?.name, category:w?.category, discounted:w?.discounted.toString() ])
+    }
+    protoTypeWidgets.each{w->
+      jsonMap.items.add([parent:999999, id:w?.id, name:w?.name, category:w?.category, discounted:w?.discounted.toString()])
     }
     render(view:"tree", model:[jsonString:jsonMap as JSON])
   }
