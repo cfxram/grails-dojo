@@ -97,12 +97,18 @@ class DojoTagLib {
     attrs.async = attrs?.async ?: "false"
     attrs.modules = attrs.modules ?: []
 
-    // Add custom tags space to modulePath
+    // Add custom tags space to modulePath (Append new path to be relative to plugin's version of dojo.js
     def moduleStringList = []
-    attrs.modulePaths += ["dojoui": "../dojoui"]
+    def jsRoot = "${resource()}/js"
     attrs.modulePaths?.each{k,v->
-      moduleStringList.add("'${k}':'${v}'")
+      moduleStringList.add("'${k}':'${jsRoot}/${v}'")
     }
+
+    //Add DojoUI Module Path
+    attrs.modulePaths += ["dojoui": "../dojoui"]
+    moduleStringList.add("'dojoui':'../dojoui'")
+
+
     if (attrs?.theme) {
       out << stylesheets(attrs)
     }
