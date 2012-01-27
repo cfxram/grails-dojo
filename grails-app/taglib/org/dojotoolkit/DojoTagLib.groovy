@@ -102,33 +102,46 @@ class DojoTagLib {
     attrs.modulePaths = attrs?.modulePaths ?: [:]
     def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
     def showSpinner = attrs.remove("showSpinner") ?: "true"
-    attrs.async = attrs?.async ?: "false"
+    attrs.async = attrs?.async ? attrs.async : "false"
     attrs.modules = attrs.modules ?: []
 
     // Add custom tags space to modulePath (Append new path to be relative to plugin's version of dojo.js
     def moduleStringList = []
+	def packagePaths = []
     def jsRoot = "${resource()}/js"
     attrs.modulePaths?.each{k,v->
       moduleStringList.add("'${k}':'${jsRoot}/${v}'")
+	  packagePaths.add("{name : '${k}', location : '${jsRoot}/${v}'}")
     }
 
     //Add DojoUI Module Path
     attrs.modulePaths += ["dojoui": "../dojoui"]
     moduleStringList.add("'dojoui':'../dojoui'")
-
+	packagePaths.add("{name : 'dojoui', location : '../dojoui'}")
 
     if (attrs?.theme) {
       out << stylesheets(attrs)
     }
 
-    out << """
-      <script>
-        var dojoConfig = {async:${attrs?.async}, isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleStringList.join(',')}} };
-        dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
-      </script>
-      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
-      <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
-    """
+    if (attrs.async == "true") {
+		out << """
+			<script>
+			  dojoConfig = {isDebug:${debug}, async:true, parseOnLoad:${parseOnLoad}, packages:[ ${packagePaths.join(',')}] };
+			  dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+			</script>
+			<script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
+			<script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
+		  """
+	} else {
+	    out << """
+	      <script>
+	        dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleStringList.join(',')}} };
+	        dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+	      </script>
+	      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
+	      <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
+	    """
+	}
 
     // if custom build then include released js files
     if(includeCustomBuild == "true"){
