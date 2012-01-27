@@ -62,6 +62,7 @@
           <dojo:menuItem controller="widget" action="popOver" label="Demo the PopOver" iconClass="popUps"/>
           <dojo:menuItem controller="widget" action="dialog" label="Demo the Dialog" iconClass="dialog"/>
           <dojo:menuItem controller="widget" action="editor" label="Demo the Rich Text Editor" iconClass="editor"/>
+          <dojo:menuItem controller="widget" action="editorFeatures" label="Editor Features" iconClass="editor"/>
           <dojo:menuItem controller="widget" action="dateTime" label="Examples of the Date Time Fields" iconClass="calendar"/>
           <dojo:menuItem controller="widget" action="panel" label="View the Panel" iconClass="remoting"/>
           <dojo:menu type="popup" label="Advanced Components">
@@ -75,7 +76,9 @@
       --%>
     </div>
   </div>
+  <%--
   <div dojoType="appwidgets.CustomWidget"></div>
+  --%>
 
   <g:layoutBody/>
 </body>

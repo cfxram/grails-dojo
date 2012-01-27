@@ -110,8 +110,10 @@ class WidgetController {
   def popOver = {}
   def dialog = {}
   def editor = {}
+  def editorFeatures = {}
   def dateTime = {}
   def panel = {}
+  def treeCombo = {}
 
 
   /**

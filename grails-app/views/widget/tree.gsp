@@ -62,6 +62,27 @@
 </head>
 <body>
 
+
+<div style="margin: 1em">
+  <button onclick="dijit.byId('myContainer').selectChild('One');">One</button>
+  <button onclick="dijit.byId('myContainer').selectChild('Two');">Two</button>
+  <button onclick="dijit.byId('myContainer').selectChild('Three');">Three</button>
+
+  <div dojoType="dijit.layout.StackContainer" id="myContainer" style="width:400px; border: 1px solid gray">
+    <div dojoType="dijit.layout.ContentPane" style="height:100px; background: #eee" id="One">
+      Pane 1
+    </div>
+    <div dojoType="dijit.layout.ContentPane" style="height:100px; background: #ddd" id="Two">
+      Pane 2
+    </div>
+    <div dojoType="dijit.layout.ContentPane" style="height:100px; background: #ccc" id="Three">
+      Pane 3
+    </div>
+  </div>
+</div>
+
+
+
 <table style="margin: 1em; font-weight: bold; margin: 1em auto 0 auto">
   <tr style="text-align: center; font-size: 14px">
     <td>Not Styled</td>

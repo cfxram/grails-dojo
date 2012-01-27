@@ -52,6 +52,14 @@ class DojoTagLib {
   }
 
   /**
+   * Will allow other tags to get the dojo home.
+   */
+  def home = {
+    out << dojoHome()
+  }
+
+
+  /**
    * Will output custom js scripts that were created as part of the custom dojo build.
    * Will check if dojo.include.custombuild.inHeader is true.
    */
