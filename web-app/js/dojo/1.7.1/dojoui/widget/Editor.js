@@ -22,7 +22,8 @@ dojo.require("dijit._editor.plugins.LinkDialog");
 dojo.require("dijit._editor.plugins.ViewSource");
 dojo.require("dijit._editor.plugins.FontChoice");
 dojo.require("dojox.editor.plugins.PasteFromWord");
-dojo.require("dijit._editor.plugins.EnterKeyHandling");
+//dojo.require("dijit._editor.plugins.EnterKeyHandling");
+dojo.require("dojoui.widget.EnterKeyHandling");
 dojo.require("dojox.editor.plugins.AutoUrlLink");
 
 
@@ -112,7 +113,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'insertOrderedList', 'insertUnorderedList', '|',
         'indent', 'outdent', '|',
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
-        'pastefromword', 'dojox.editor.plugins.AutoUrlLink'
+        'pastefromword'
       ];
     }
 
@@ -124,7 +125,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
-        'createLink','viewsource', 'dojox.editor.plugins.AutoUrlLink'
+        'createLink','viewsource'
       ];
     }
 
@@ -138,7 +139,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
         'foreColor', 'hiliteColor', '|',
-        'createLink','viewsource', 'dojox.editor.plugins.AutoUrlLink'
+        'createLink','viewsource'
       ];
     }
     // THis seems to throw a js error... with bullets and enter key.
@@ -146,6 +147,8 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
 
     // This screws up IE when bulleting. (uses BR)
     //this.plugins.push('dijit._editor.plugins.EnterKeyHandling');
+
+    this.plugins.push({name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'});
   },
 
 
