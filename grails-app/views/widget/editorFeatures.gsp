@@ -30,7 +30,7 @@
 <body class="tundra">
 
   <div style="margin: 2em">
-    <dojo:editor type="intermediate" name="contentEditor" style="width:800px; margin-bottom:1em" debug="true"></dojo:editor>
+    <dojo:editor type="advanced" name="contentEditor" style="width:800px; margin-bottom:1em" debug="true"></dojo:editor>
 
     <p>
       <button onclick="Page.showContents()" style="margin: 2px">Show Contents</button>
@@ -38,6 +38,9 @@
       <button onclick="Page.insertAtCursor()" style="margin: 2px">Insert at Cursor</button>
       <button onclick="Page.showHiddenForm()" style="margin: 2px">Show form value</button>
     </p>
+    <%--
+    <div dojoType="dijit.Editor" style="width:800px; margin-bottom:1em" id="testEditor"></div>
+    --%>
   </div>
 </body>
 </html>

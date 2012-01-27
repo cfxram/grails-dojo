@@ -8,7 +8,7 @@
 
   In IE, put cursor at begging of line and hit bullet... extra <br> tag is entered. But it works fine if cursor is anywhere else on the line.
 
-  AutoUrlLink doesn't work in FF 9.
+  dojox.editor.plugins.AutoUrlLink doesn't work in FF 9. Works in Safari but throws an error. ('null' is not an object (evaluating '_b.nodeType'))
 
  */
 
