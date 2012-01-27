@@ -20,7 +20,7 @@ class EditorTagLib {
    */
   def editor = {attrs, body ->
     attrs.type = attrs?.type ?: ""   // Can be simple || intermediate || advanced
-    attrs.height = attrs?.height ?: "150px"
+    attrs.height = attrs?.height ?: "150px" // IE 6 doesn't recognize the height style attribute.
     attrs.class =  (attrs?.class) ? "${attrs?.class} DojoUiEditor" : "DojoUiEditor"
     attrs.name = attrs?.name ?: attrs?.id ?: "dojo_editor_${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("elementId") ?: attrs.name
@@ -28,9 +28,7 @@ class EditorTagLib {
 
     out << """
       <fieldset class="dojo-ui-editor">
-        <div data-dojo-type="dojoui.widget.Editor" ${Util.htmlProperties(attrs)}>
-            ${value}
-        </div>
+        <div data-dojo-type="dojoui.widget.Editor" ${Util.htmlProperties(attrs)}>${value}</div>
       </fieldset>
     """
 

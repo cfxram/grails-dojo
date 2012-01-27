@@ -30,7 +30,7 @@
 <body class="tundra">
 
   <div style="margin: 2em">
-    <dojo:editor name="contentEditor" style="width:800px; margin-bottom:1em"></dojo:editor>
+    <dojo:editor type="intermediate" name="contentEditor" style="width:800px; margin-bottom:1em" debug="true"></dojo:editor>
 
     <p>
       <button onclick="Page.showContents()" style="margin: 2px">Show Contents</button>

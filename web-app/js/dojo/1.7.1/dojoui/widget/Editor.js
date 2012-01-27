@@ -1,3 +1,18 @@
+
+/*
+  Findings: (1-26-2012) version 1.7.1 of Dojo.
+
+  If EnterKeyHandling (EKH) is off, IE uses <p> tags. Safari uses <div>. Firefox uses <br>.
+  If EKH is on, they all use <br> but IE bullets break. (not to mention browser crash issue)
+  IF EKH is on and set to use <p> or <div>, then js error when hitting enter on a bullet item (.apply is not a function).
+
+  In IE, put cursor at begging of line and hit bullet... extra <br> tag is entered. But it works fine if cursor is anywhere else on the line.
+
+  AutoUrlLink doesn't work in FF 9.
+
+ */
+
+
 dojo.provide("dojoui.widget.Editor");
 dojo.require("dijit.Editor");
 
@@ -14,7 +29,7 @@ dojo.require("dojox.editor.plugins.AutoUrlLink");
 dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   editorFormField:null,
   //styleSheets:'../js/dojo/dojoui/widget/resources/css/dojo-ui-editor.css',
-  debug:true,
+  debug:false,
   type:"", // simple || intermediate || advanced
 
   /**
@@ -52,6 +67,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
    * Event fired when a user changes something.
    */
   onDisplayChanged:function(){
+    this.inherited(arguments);
     this.updateFormField();
   },
 
@@ -90,14 +106,13 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
    *  http://bugs.dojotoolkit.org/ticket/13744
    */
   definePlugins:function(){
-
     if(this.type === "simple"){
       this.plugins = [
         'bold', 'italic', 'underline', 'strikethrough', '|',
         'insertOrderedList', 'insertUnorderedList', '|',
         'indent', 'outdent', '|',
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
-        'pastefromword'
+        'pastefromword', 'dojox.editor.plugins.AutoUrlLink'
       ];
     }
 
@@ -109,7 +124,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
-        'createLink','viewsource'
+        'createLink','viewsource', 'dojox.editor.plugins.AutoUrlLink'
       ];
     }
 
@@ -123,10 +138,13 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
         'foreColor', 'hiliteColor', '|',
-        'createLink','viewsource'
+        'createLink','viewsource', 'dojox.editor.plugins.AutoUrlLink'
       ];
     }
+    // THis seems to throw a js error... with bullets and enter key.
+    //this.plugins.push({name:'dijit._editor.plugins.EnterKeyHandling', blockNodeForEnter:'p'});
 
+    // This screws up IE when bulleting. (uses BR)
     //this.plugins.push('dijit._editor.plugins.EnterKeyHandling');
   },
 
