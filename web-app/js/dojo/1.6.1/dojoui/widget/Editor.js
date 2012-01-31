@@ -23,7 +23,7 @@ dojo.require("dijit._editor.plugins.ViewSource");
 dojo.require("dijit._editor.plugins.FontChoice");
 dojo.require("dojox.editor.plugins.PasteFromWord");
 //dojo.require("dijit._editor.plugins.EnterKeyHandling");
-dojo.require("dojoui.widget.EnterKeyHandling");
+//dojo.require("dojoui.widget.EnterKeyHandling");
 dojo.require("dojox.editor.plugins.AutoUrlLink");
 
 
@@ -148,7 +148,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
     // This screws up IE when bulleting. (uses BR)
     //this.plugins.push('dijit._editor.plugins.EnterKeyHandling');
 
-    this.plugins.push({name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'});
+    //this.plugins.push({name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'});
   },
 
 
