@@ -26,77 +26,86 @@ log4j = {
 }
 
 
-// Dojo Plugin Settings
+
+// Dojo Plugin Properties
 dojo.optimize.during.build = true;
 dojo.use.customBuild.js = true;
-
-/**
- * Use for Dojo 1.7 and up...
- * Only Dojo Grails Plugin understand this. It will create a single css file from these
- * files. Each of these files will be @import'ed so that the dojo build process will
- * detect and combine them.
- */
-dojo.css = """
-  dependencies: [
-    "../dojo/resources/dojo.css",
-    "../dijit/themes/dijit.css",
-    "../dijit/themes/tundra/tundra.css",
-    "../dojox/grid/resources/tundraGrid.css",
-    "../dojoui/resources/css/dojo-ui.css"
-  ]
-"""
-
-/**
- * Use for Dojo 1.7 and up...
- * New profile file format. See the livedocs for more information:
- * http://livedocs.dojotoolkit.org/build/index
- */
+dojo.use.customBuild.css = true;
 dojo.profile = """
-  var profile = {
-    releaseDir:"release",
-    layerOptimize: "shrinksafe.keepLines",
-    cssOptimize: "comments.keepLines",
-
-    packages: [
-      {name: "css", location: "css"},
-      {name: "dojo", location: "dojo"},
-      {name: "dijit", location: "dijit"},
-      {name: "dojox", location: "dojox"},
-      {name: "dojoui", location: "dojoui"}
+dependencies = {
+    layers:  [
+        {
+            name: "dojo-all.js",
+            dependencies: [
+                "dijit.layout.TabContainer",
+                "dijit.layout.ContentPane",
+                "dojo.io.iframe",
+                "dijit.Tooltip",
+                "dijit.Dialog",
+                "dijit.ProgressBar",
+                "dijit.TooltipDialog",
+                "dojo.data.ItemFileReadStore",
+                "dojo.data.ItemFileWriteStore",
+                "dojox.grid.DataGrid",
+                "dijit.Tree",
+                "dijit.MenuBar",
+                "dijit.PopupMenuBarItem",
+                "dijit.Menu",
+                "dijit.MenuItem",
+                "dijit.PopupMenuItem",
+                "dijit.form.DateTextBox",
+                "dijit.form.TimeTextBox",
+                "dijit.form.NumberSpinner",
+                "dojo.fx",
+                "dojo.NodeList-traverse",
+                "dijit.TooltipDialog",
+                "dijit.Editor",
+                "dijit._editor.plugins.LinkDialog",
+                "dijit._editor.plugins.FontChoice",
+                "dojoui.layout.ContentPane",
+                "dojoui.layout.TabContainer",
+                "dojoui.Bind",
+                "dojoui.widget.DropDownButton",
+                "dojoui.widget.DataSourceView",
+                "dojoui.widget.Tree"
+            ]
+        }
     ],
 
-    layers: {
-      "dojo/plugin-custom-dojo": {include: [
-          "dojo/has",
-          "dojo/main",
-          "dojo/on",
-          "dijit/layout/TabContainer",
-          "dijit/layout/ContentPane",
-          "dojo/io/iframe",
-          "dijit/Tooltip",
-          "dijit/Dialog",
-          "dijit/TooltipDialog",
-          "dojoui/layout/ContentPane",
-          "dojoui/layout/TabContainer",
-          "dojoui/Bind",
-          "dojoui/widget/DropDownButton",
-          "dojoui/widget/DataSourceView",
-          "dojoui/widget/Tree"
-      ]}
+    prefixes: [
+        [ "dijit", "../dijit" ],
+        [ "dojox", "../dojox" ],
+        [ "css", "../css"],
+        [ "dojoui", "../dojoui" ]
+
+    ],
+    css: {
+        dependencies: [
+            "../dojo/resources/dojo.css",
+            "../dijit/themes/dijit.css",
+            "../dijit/themes/tundra/tundra.css",
+            "../dojoui/resources/css/dojo-ui.css",
+            "../dojox/grid/resources/Grid.css",
+            "../dojox/grid/resources/tundraGrid.css"
+        ]
     }
-  };
+
+}
 """
 
 
 
 
+
+/*
 environments {
   development {
     dojo.optimize.during.build = false;
     dojo.use.customBuild.js = false;
-    dojo.use.customBuild.css = false;  /* [DEPRICATED] use dojo.profile.css  */
+    dojo.use.customBuild.css = false;
   }
 }
+*/
 
 grails.release.scm.enabled = false
 

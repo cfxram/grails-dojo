@@ -111,20 +111,15 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
   def build_classpath = Ant.path {
     pathelement(location: "${dojoUtilDir}/shrinksafe/js.jar")
     pathelement(location: "${dojoUtilDir}/shrinksafe/shrinksafe.jar")
-    pathelement(location: "${dojoUtilDir}/closureCompiler/compiler.jar")
   }
   java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true,
-          dir: "${dojoUtilDir}/buildscripts", classpath: build_classpath) {
-    arg(value: "${tmpWorkingDir}/dojo/dojo.js")
-    arg(value: "load=build")
+          dir: "${dojoUtilDir}/buildscripts", classpath: shrinksafe_classpath) {
+    arg(value: "${dojoUtilDir}/buildscripts/build.js")
+    arg(value: "profileFile=${dojoProfile}")
     arg(value: "action=release")
-    arg(value: "profile=${dojoProfile}")
-    arg(value: "cssOptimize=comments.keepLines")
-    arg(value: "selectorEngine=acme")
-    // These are required for 1.6 build profiles
-    arg(value: "releaseName=")
-    arg(value: "releaseDir=${dojoReleaseDir}")
-    arg(value: "baseUrl=${tmpWorkingDir}/dojo")
+    arg(value: "optimize=shrinksafe,comments")
+    arg(value: "copyTests=off")
+    arg(value: "cssOptimize=comments,keepLines")
   }
   delete(includeemptydirs: true) {
     fileset(dir: dojoReleaseDir, includes: "**/tests/**/")
