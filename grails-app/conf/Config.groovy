@@ -97,7 +97,7 @@ dependencies = {
 
 
 
-/*
+
 environments {
   development {
     dojo.optimize.during.build = false;
@@ -105,7 +105,7 @@ environments {
     dojo.use.customBuild.css = false;
   }
 }
-*/
+
 
 grails.release.scm.enabled = false
 
