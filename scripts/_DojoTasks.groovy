@@ -10,7 +10,7 @@ def srcHref = "http://download.dojotoolkit.org/release-${Dojo.version}/dojo-rele
 def downloadDir = "${grailsWorkDir}/download"
 def tmpWorkingDir = "${basedir}/web-app/js/dojoTmp"
 def dojoUtilDir = "${tmpWorkingDir}/util/"
-def dojoReleaseDir = "${tmpWorkingDir}/release"
+def dojoReleaseDir = "${tmpWorkingDir}/release/dojo"
 def dojoCssBuildFile = "${tmpWorkingDir}/css/custom-dojo.css"
 def dojoProfile = "${tmpWorkingDir}/dojo.profile.js"
 def dojoUiDir = "${dojoPluginDir}/web-app/js/dojo/${Dojo.version}/dojoui"
@@ -45,9 +45,6 @@ target(downloadDojoSource: "This will download the source version of Dojo.") {
     }
     copy(todir: "${tmpWorkingDir}/dojoui/") {
       fileset(dir: dojoUiDir, includes: "**/**")
-    }
-    copy(todir: "${tmpWorkingDir}/css/") {
-      fileset(dir: "${dojoPluginDir}/web-app/js/dojo/${Dojo.version}/css", includes: "**/**")
     }
   }
 }
@@ -113,7 +110,7 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     pathelement(location: "${dojoUtilDir}/shrinksafe/shrinksafe.jar")
   }
   java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true,
-          dir: "${dojoUtilDir}/buildscripts", classpath: shrinksafe_classpath) {
+          dir: "${dojoUtilDir}/buildscripts", classpath: build_classpath) {
     arg(value: "${dojoUtilDir}/buildscripts/build.js")
     arg(value: "profileFile=${dojoProfile}")
     arg(value: "action=release")
