@@ -41,8 +41,9 @@ dojo.css = """
     "../dojo/resources/dojo.css",
     "../dijit/themes/dijit.css",
     "../dijit/themes/tundra/tundra.css",
-    "../dojox/grid/resources/tundraGrid.css",
-    "../dojoui/resources/css/dojo-ui.css"
+    "../dojoui/resources/css/dojo-ui.css",
+    "../dojox/grid/resources/Grid.css",
+    "../dojox/grid/resources/tundraGrid.css"
   ]
 """
 
@@ -66,35 +67,79 @@ dojo.profile = """
     ],
 
     layers: {
-      "dojo/plugin-custom-dojo": {include: [
-          "dojo/has",
-          "dojo/main",
-          "dojo/on",
-          "dijit/layout/TabContainer",
-          "dijit/layout/ContentPane",
-          "dojo/io/iframe",
-          "dijit/Tooltip",
-          "dijit/Dialog",
-          "dijit/TooltipDialog",
-          "dojoui/layout/ContentPane",
-          "dojoui/layout/TabContainer",
-          "dojoui/Bind",
-          "dojoui/widget/DropDownButton",
-          "dojoui/widget/DataSourceView",
-          "dojoui/widget/Tree"
+      "dojo/dojo-all": {
+        exclude: [ "dojo/_firebug" ],
+        include: [
+
+        // Dojo
+        "dojo/main",
+        "dojo/require",
+        "dojo/NodeList-traverse",
+        "dojo/dnd/Moveable",
+        "dojo/dnd/TimedMoveable",
+        "dojo/dnd/AutoSource",
+        "dojo/dnd/Target",
+        "dojo/io/iframe",
+        "dojo/data/ItemFileReadStore",
+        "dojo/data/ItemFileWriteStore",
+        "dojo/cldr/nls/en/gregorian",
+        "dojo/cldr/nls/en/number",
+        "dojo/fx/Toggler",
+
+        // Dijit
+        "dijit/main",
+        "dijit/_base",
+        "dijit/_Widget",
+        "dijit/Tooltip",
+        "dijit/Dialog",
+        "dijit/TooltipDialog",
+        "dijit/ProgressBar",
+        "dijit/Tree",
+        "dijit/MenuBar",
+        "dijit/Menu",
+        "dijit/MenuItem",
+        "dijit/PopupMenuBarItem",
+        "dijit/PopupMenuItem",
+        "dijit/MenuSeparator",
+        "dijit/Editor",
+        "dijit/_editor/plugins/TextColor",
+        "dijit/_editor/plugins/ViewSource",
+        "dijit/_editor/plugins/LinkDialog",
+        "dijit/_editor/plugins/FontChoice",
+        "dijit/layout/TabContainer",
+        "dijit/layout/ContentPane",
+        "dijit/form/DateTextBox",
+        "dijit/form/TimeTextBox",
+        "dijit/form/NumberSpinner",
+        "dijit/form/ComboButton",
+        "dijit/form/MultiSelect",
+
+        // Dojox
+        "dojox/main",
+        "dojox/grid/DataGrid",
+        "dojox/editor/plugins/PasteFromWord",
+
+        //DojoUI
+        "dojoui/Bind",
+        "dojoui/DojoGrailsSpinner",
+        "dojoui/layout/ContentPane",
+        "dojoui/layout/TabContainer",
+        "dojoui/widget/DropDownButton",
+        "dojoui/widget/DropDownButtonLink",
+        "dojoui/widget/ForestStoreModel",
+        "dojoui/widget/DataSourceView",
+        "dojoui/widget/Tree"
       ]}
     }
   };
 """
 
 
-
-
 environments {
   development {
     dojo.optimize.during.build = false;
     dojo.use.customBuild.js = false;
-    dojo.use.customBuild.css = false;  /* [DEPRICATED] use dojo.profile.css  */
+    // dojo.use.customBuild.css = false;  /* [DEPRICATED] use dojo.profile.css  */
   }
 }
 

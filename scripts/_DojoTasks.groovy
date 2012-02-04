@@ -107,7 +107,7 @@ target(createDojoProfile: "This will create the dojo profile js file") {
  *
  */
 target(buildDojo: "This will run shrinksafe to create an optimized version of dojo") {
-  println "Runnning shrinksafe to create an optimized dojo..."
+  println "Runnning Google Closure Compiler to create an optimized dojo..."
   def build_classpath = Ant.path {
     pathelement(location: "${dojoUtilDir}/shrinksafe/js.jar")
     pathelement(location: "${dojoUtilDir}/shrinksafe/shrinksafe.jar")
@@ -115,17 +115,21 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
   }
   java(classname: "org.mozilla.javascript.tools.shell.Main", fork: true,
           dir: "${dojoUtilDir}/buildscripts", classpath: build_classpath) {
+
     arg(value: "${tmpWorkingDir}/dojo/dojo.js")
-    arg(value: "load=build")
-    arg(value: "action=release")
-    arg(value: "profile=${dojoProfile}")
-    arg(value: "cssOptimize=comments.keepLines")
-    arg(value: "selectorEngine=acme")
-    // These are required for 1.6 build profiles
-    arg(value: "releaseName=")
     arg(value: "releaseDir=${dojoReleaseDir}")
+    arg(value: "action=release")
+    arg(value: "cssOptimize=comments")
+    arg(value: "mini=true")
+    arg(value: "layerOptimize=closure")
+    arg(value: "optimize=closure")
+    arg(value: "stripConsole=all")
+    arg(value: "selectorEngine=acme")
+    arg(value: "load=build")
+    arg(value: "profile=${dojoProfile}")
     arg(value: "baseUrl=${tmpWorkingDir}/dojo")
   }
+
   delete(includeemptydirs: true) {
     fileset(dir: dojoReleaseDir, includes: "**/tests/**/")
     fileset(dir: dojoReleaseDir, includes: "**/demos/**/")
@@ -136,6 +140,8 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     fileset(dir: dojoReleaseDir, includes: "**/*.as")
     fileset(dir: dojoReleaseDir, includes: "**/*.swf")
     fileset(dir: dojoReleaseDir, includes: "**/*.uncompressed.js")
+    fileset(dir: dojoReleaseDir, includes: "**/package.json")
+    fileset(dir: dojoReleaseDir, includes: "**/build-report.txt")
   }
 }
 
