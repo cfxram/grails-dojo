@@ -10,13 +10,12 @@
 
   dojox.editor.plugins.AutoUrlLink doesn't work in FF 9. Works in Safari but throws an error. ('null' is not an object (evaluating '_b.nodeType'))
 
+ function(str){ console.log(1); return str.replace('\xA0', ' '); }
  */
 
 
 dojo.provide("dojoui.widget.Editor");
 dojo.require("dijit.Editor");
-
-// Plugins
 dojo.require("dijit._editor.plugins.TextColor");
 dojo.require("dijit._editor.plugins.LinkDialog");
 dojo.require("dijit._editor.plugins.ViewSource");
@@ -31,6 +30,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   //styleSheets:'../js/dojo/dojoui/widget/resources/css/dojo-ui-editor.css',
   debug:false,
   type:"", // simple || intermediate || advanced
+
 
   /**
    * Will get the value of the hidden form field.
@@ -151,6 +151,10 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   postCreate: function(){
     this.definePlugins();
     this.inherited(arguments);
+
+    // This will filter out the strange double spaces.
+    // http://dojo-toolkit.33424.n3.nabble.com/Dijit-editor-saving-unknown-characters-when-user-enters-a-double-space-td1436891.html
+    this.contentPostFilters = [ function(str){return str.replace('\xA0', ' ');} ];
   }
 
 });
