@@ -22,8 +22,7 @@ dojo.require("dijit._editor.plugins.LinkDialog");
 dojo.require("dijit._editor.plugins.ViewSource");
 dojo.require("dijit._editor.plugins.FontChoice");
 dojo.require("dojox.editor.plugins.PasteFromWord");
-//dojo.require("dijit._editor.plugins.EnterKeyHandling");
-dojo.require("dojoui.widget.EnterKeyHandling");
+dojo.require("dojoui.widget.EnterKeyHandling");    // uses a custom enter key handler to fix bugs in dojo.
 dojo.require("dojox.editor.plugins.AutoUrlLink");
 
 
@@ -100,11 +99,6 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
    *
    * If this.type is left blank then the dojo default plugin set will
    * be used.
-   *
-   *  WARNING - RM (1-26-2012)
-   *  Don't use the "dijit._editor.plugins.EnterKeyHandling" plugin with 'BR' because of these bugs:
-   *  http://bugs.dojotoolkit.org/ticket/13399
-   *  http://bugs.dojotoolkit.org/ticket/13744
    */
   definePlugins:function(){
     if(this.type === "simple"){
@@ -113,7 +107,9 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'insertOrderedList', 'insertUnorderedList', '|',
         'indent', 'outdent', '|',
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
-        'pastefromword'
+        'pastefromword',
+        {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
+        'dojox.editor.plugins.AutoUrlLink'
       ];
     }
 
@@ -125,7 +121,9 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
-        'createLink','viewsource'
+        'createLink','viewsource',
+        {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
+        'dojox.editor.plugins.AutoUrlLink'
       ];
     }
 
@@ -139,16 +137,11 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
         'foreColor', 'hiliteColor', '|',
-        'createLink','viewsource'
+        'createLink','viewsource',
+        {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
+        'dojox.editor.plugins.AutoUrlLink'
       ];
     }
-    // THis seems to throw a js error... with bullets and enter key.
-    //this.plugins.push({name:'dijit._editor.plugins.EnterKeyHandling', blockNodeForEnter:'p'});
-
-    // This screws up IE when bulleting. (uses BR)
-    //this.plugins.push('dijit._editor.plugins.EnterKeyHandling');
-
-    this.plugins.push({name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'});
   },
 
 
