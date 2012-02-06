@@ -110,11 +110,21 @@ class WidgetController {
   def popOver = {}
   def dialog = {}
   def editor = {}
-  def editorFeatures = {}
+
   def dateTime = {}
   def panel = {}
   def treeCombo = {}
+  def editorFeatures = {}
 
+
+  def saveEditorFeatures = {
+    println "***************** "
+    params?.contentEditor?.each{
+      println Character.codePointAt(it?.chars,0)
+    }
+    println "***************** "
+    redirect(action:"editorFeatures",params:[contentEditor:params?.contentEditor])
+  }
 
   /**
    * Test saving of the dojo editor. Just look at the console of the outputed values.

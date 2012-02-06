@@ -23,24 +23,33 @@
 
       showHiddenForm:function(){
         alert( this.editor().getContent() );
+      },
+
+      showChars:function(){
+        this.editor().outputCharacters()
       }
     }
   </script>
 </head>
 <body class="tundra">
 
-  <div style="margin: 2em">
-    <dojo:editor type="advanced" name="contentEditor" style="width:800px; margin-bottom:1em" debug="true"></dojo:editor>
+  Content: ${params?.contentEditor}<br/>
+  <g:each in="${params?.contentEditor}" var="i">${Character.codePointAt(i?.chars,0)}<br/></g:each>
 
-    <p>
-      <button onclick="Page.showContents()" style="margin: 2px">Show Contents</button>
-      <button onclick="Page.setContent()" style="margin: 2px">Set Content</button>
-      <button onclick="Page.insertAtCursor()" style="margin: 2px">Insert at Cursor</button>
-      <button onclick="Page.showHiddenForm()" style="margin: 2px">Show form value</button>
-    </p>
-    <%--
-    <div dojoType="dijit.Editor" style="width:800px; margin-bottom:1em" id="testEditor"></div>
-    --%>
+
+  <div style="margin: 2em">
+    <g:form action="saveEditorFeatures">
+      <dojo:editor type="advanced" name="contentEditor" style="width:800px; margin-bottom:1em;" debug="true" height="150px"></dojo:editor>
+      <p>
+
+        <button onclick="Page.showContents()" style="margin: 2px" type="button">Show Contents</button>
+        <button onclick="Page.setContent()" style="margin: 2px" type="button">Set Content</button>
+        <button onclick="Page.insertAtCursor()" style="margin: 2px" type="button">Insert at Cursor</button>
+        <button onclick="Page.showHiddenForm()" style="margin: 2px" type="button">Show form value</button>
+        <button onclick="Page.showChars()" type="button">SHow Characters...</button>
+      </p>
+      <g:submitButton name="save" value="Save Changes"/>
+    </g:form>
   </div>
 </body>
 </html>

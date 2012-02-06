@@ -60,7 +60,21 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   },
 
 
-
+  /**
+   * Only used for debuging.
+   */
+  outputCharacters:function(){
+    console.log('Editor Characters....');
+    var value = this.get('value');
+    for (i=0; i < value.length; i++){
+      console.log(value.charCodeAt(i));
+    }
+    console.log('Field Characters....');
+    var value = this.editorFormField.value;
+    for (i=0; i < value.length; i++){
+      console.log(value.charCodeAt(i));
+    }
+  },
 
 
   /**
@@ -152,9 +166,15 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
     this.definePlugins();
     this.inherited(arguments);
 
-    // This will filter out the strange double spaces.
-    // http://dojo-toolkit.33424.n3.nabble.com/Dijit-editor-saving-unknown-characters-when-user-enters-a-double-space-td1436891.html
-    this.contentPostFilters = [ function(str){return str.replace('\xA0', ' ');} ];
+    /*
+      When a user type 2 spaces in a row the editor does a char(32) [space] and a char(160)[non breaking space].
+      If the user's browser is not in a character encoding the understands char(160), then the character will
+      get submitted as an unknown character. This code replaces char(160) to the "&nbsp;" string so this wont happen.
+    */
+    this.contentPostFilters = [
+      function(str){return str.replace(/\xA0/gi, '&nbsp;')}
+    ];
+
   }
 
 });
