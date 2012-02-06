@@ -9,8 +9,6 @@
   In IE, put cursor at begging of line and hit bullet... extra <br> tag is entered. But it works fine if cursor is anywhere else on the line.
 
   dojox.editor.plugins.AutoUrlLink doesn't work in FF 9. Works in Safari but throws an error. ('null' is not an object (evaluating '_b.nodeType'))
-
- function(str){ console.log(1); return str.replace('\xA0', ' '); }
  */
 
 
@@ -32,12 +30,14 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   type:"", // simple || intermediate || advanced
 
 
+
   /**
    * Will get the value of the hidden form field.
    */
   getContent:function(){
     return this.editorFormField.value;
   },
+
 
 
   /**
@@ -51,6 +51,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   },
 
 
+
   /**
    * Will insert content at the place of the cursor
    * @param content
@@ -58,6 +59,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   insertAtCursor:function(content){
     this.execCommand("inserthtml", content);
   },
+
 
 
   /**
@@ -77,13 +79,27 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   },
 
 
+
   /**
-   * Event fired when a user changes something.
+   * Event fired when a user changes something. Fires when user types mostly.
+   * This doesn't work for pasteing text via keyboard or mouse.
    */
   onDisplayChanged:function(){
     this.inherited(arguments);
     this.updateFormField();
   },
+
+
+
+  /**
+   * Need this for when a user pastes text using the keyboard or file menu.
+   * This will update the hidden form field faster than the onDisplayChanged can.
+   */
+  _onBlur:function(){
+    this.inherited(arguments);
+    this.updateFormField();
+  },
+
 
 
   /**
@@ -93,7 +109,6 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
     if(this.editorFormField){
       return;
     }
-
     this.editorFormField = dojo.create("textarea",{id:this.id+'-formField',name:this.id});
     if(!this.debug){
       dojo.style(this.editorFormField,"display","none");
