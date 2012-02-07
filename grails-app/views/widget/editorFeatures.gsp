@@ -39,7 +39,7 @@
 
   <div style="margin: 2em">
     <g:form action="saveEditorFeatures">
-      <dojo:editor type="advanced" name="contentEditor" style="width:800px; margin-bottom:1em;" debug="true" height="150px"></dojo:editor>
+      <dojo:editor type="intermediate" name="contentEditor" style="width:800px; margin-bottom:1em;" debug="true" height="150px"></dojo:editor>
       <p>
 
         <button onclick="Page.showContents()" style="margin: 2px" type="button">Show Contents</button>

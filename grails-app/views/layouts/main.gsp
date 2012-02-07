@@ -45,7 +45,7 @@
 </head>
 <body class="tundra">
   <div style="height:30px; border:1px solid #ccc; background:#eee; color:gray">
-    <div dojoType="appwidgets.CustomWidget" style="display:inline-block; padding: 8px"></div>
+    <div dojoType="appwidgets.CustomWidget" style="display:inline-block; padding: 8px; float:left"></div>
 
     <div style="float:right; border-left: 1px solid #ccc; height:30px;">
 

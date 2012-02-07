@@ -150,7 +150,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
-        'createLink','viewsource',
+        'createLink',
         {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
         'dojox.editor.plugins.AutoUrlLink'
       ];
@@ -166,7 +166,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
         'foreColor', 'hiliteColor', '|',
-        'createLink','viewsource',
+        'createLink',
         {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
         'dojox.editor.plugins.AutoUrlLink'
       ];

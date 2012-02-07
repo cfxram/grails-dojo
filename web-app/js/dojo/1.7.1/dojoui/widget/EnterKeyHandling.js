@@ -154,19 +154,19 @@ return declare("dijit._editor.plugins.EnterKeyHandling", _Plugin, {
 		if(this._checkListLater){
 			if(win.withGlobal(this.editor.window, 'isCollapsed', dijit)){
 
-                // ***********************************
-                /// TODO: Create a bug report with this
+        // ***********************************
+        /// TODO: Create a bug report with this (RM 2-6-2012)
 				//var liparent=win.withGlobal(this.editor.window, 'getAncestorElement', selection, ['LI']);       // Old
-                var liparent=win.withGlobal(this.editor.window, 'getAncestorElement', selectionapi, ['LI']);      // New
+        var liparent=win.withGlobal(this.editor.window, 'getAncestorElement', selectionapi, ['LI']);      // New
 
 				if(!liparent){
 					// circulate the undo detection code by calling RichText::execCommand directly
 					RichText.prototype.execCommand.call(this.editor, 'formatblock',this.blockNodeForEnter);
 					// set the innerHTML of the new block node
 
-                    // ***********************************
-                    /// TODO: Create a bug report with this
-                    //var block = win.withGlobal(this.editor.window, 'getAncestorElement', selection, [this.blockNodeForEnter]);  // Old
+          // ***********************************
+          /// TODO: Create a bug report with this (RM 2-6-2012)
+          //var block = win.withGlobal(this.editor.window, 'getAncestorElement', selection, [this.blockNodeForEnter]);  // Old
 					var block = win.withGlobal(this.editor.window, 'getAncestorElement', selectionapi, [this.blockNodeForEnter]);  // New
 					if(block){
 						block.innerHTML=this.bogusHtmlContent;
@@ -198,6 +198,7 @@ return declare("dijit._editor.plugins.EnterKeyHandling", _Plugin, {
 			}
 			this._checkListLater = false;
 		}
+
 		if(this._pressedEnterInBlock){
 			// the new created is the original current P, so we have previousSibling below
 			if(this._pressedEnterInBlock.previousSibling){
@@ -364,6 +365,7 @@ return declare("dijit._editor.plugins.EnterKeyHandling", _Plugin, {
 			}
 			return false;
 		}
+
 		var _letBrowserHandle = true;
 
 		// first remove selection
@@ -409,6 +411,7 @@ return declare("dijit._editor.plugins.EnterKeyHandling", _Plugin, {
 			block = {blockNode:win.withGlobal(this.editor.window, "getAncestorElement", selectionapi, [this.blockNodeForEnter]),
 					blockContainer: this.editor.editNode};
 			if(block.blockNode){
+
 				if(block.blockNode != this.editor.editNode &&
 					(!(block.blockNode.textContent || block.blockNode.innerHTML).replace(/^\s+|\s+$/g, "").length)){
 					this.removeTrailingBr(block.blockNode);
@@ -417,12 +420,16 @@ return declare("dijit._editor.plugins.EnterKeyHandling", _Plugin, {
 			}else{	// we shouldn't be here if formatblock worked
 				block.blockNode = this.editor.editNode;
 			}
+
+
 			selection = rangeapi.getSelection(this.editor.window);
 			range = selection.getRangeAt(0);
 		}
 
 		var newblock = doc.createElement(this.blockNodeForEnter);
 		newblock.innerHTML=this.bogusHtmlContent;
+// TODO: ADD this back in when you can find the rest (RM 2-6-2012)
+//newblock.style.margin="0";
 		this.removeTrailingBr(block.blockNode);
 		var endOffset = range.endOffset;
 		var node = range.endContainer;
