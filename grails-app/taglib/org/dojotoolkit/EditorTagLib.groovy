@@ -28,7 +28,7 @@ class EditorTagLib {
 
     out << """
       <fieldset class="dojo-ui-editor">
-        <div data-dojo-type="dojoui.widget.Editor" ${Util.htmlProperties(attrs)}>${value}</div>
+        <div dojoType="dojoui.widget.Editor" ${Util.htmlProperties(attrs)}>${value}</div>
       </fieldset>
     """
 

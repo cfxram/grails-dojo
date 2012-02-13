@@ -9,21 +9,17 @@
   In IE, put cursor at begging of line and hit bullet... extra <br> tag is entered. But it works fine if cursor is anywhere else on the line.
 
   dojox.editor.plugins.AutoUrlLink doesn't work in FF 9. Works in Safari but throws an error. ('null' is not an object (evaluating '_b.nodeType'))
-
  */
 
 
 dojo.provide("dojoui.widget.Editor");
 dojo.require("dijit.Editor");
-
-// Plugins
 dojo.require("dijit._editor.plugins.TextColor");
 dojo.require("dijit._editor.plugins.LinkDialog");
 dojo.require("dijit._editor.plugins.ViewSource");
 dojo.require("dijit._editor.plugins.FontChoice");
 dojo.require("dojox.editor.plugins.PasteFromWord");
-//dojo.require("dijit._editor.plugins.EnterKeyHandling");
-//dojo.require("dojoui.widget.EnterKeyHandling");
+dojo.require("dojoui.widget.EnterKeyHandling");    // uses a custom enter key handler to fix bugs in dojo.
 dojo.require("dojox.editor.plugins.AutoUrlLink");
 
 
@@ -33,12 +29,15 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   debug:false,
   type:"", // simple || intermediate || advanced
 
+
+
   /**
    * Will get the value of the hidden form field.
    */
   getContent:function(){
     return this.editorFormField.value;
   },
+
 
 
   /**
@@ -52,6 +51,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   },
 
 
+
   /**
    * Will insert content at the place of the cursor
    * @param content
@@ -62,15 +62,44 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
 
 
 
+  /**
+   * Only used for debuging.
+   */
+  outputCharacters:function(){
+    console.log('Editor Characters....');
+    var value = this.get('value');
+    for (i=0; i < value.length; i++){
+      console.log(value.charCodeAt(i));
+    }
+    console.log('Field Characters....');
+    var value = this.editorFormField.value;
+    for (i=0; i < value.length; i++){
+      console.log(value.charCodeAt(i));
+    }
+  },
+
 
 
   /**
-   * Event fired when a user changes something.
+   * Event fired when a user changes something. Fires when user types mostly.
+   * This doesn't work for pasteing text via keyboard or mouse.
    */
   onDisplayChanged:function(){
     this.inherited(arguments);
     this.updateFormField();
   },
+
+
+
+  /**
+   * Need this for when a user pastes text using the keyboard or file menu.
+   * This will update the hidden form field faster than the onDisplayChanged can.
+   */
+  _onBlur:function(){
+    this.inherited(arguments);
+    this.updateFormField();
+  },
+
 
 
   /**
@@ -80,7 +109,6 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
     if(this.editorFormField){
       return;
     }
-
     this.editorFormField = dojo.create("textarea",{id:this.id+'-formField',name:this.id});
     if(!this.debug){
       dojo.style(this.editorFormField,"display","none");
@@ -100,11 +128,6 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
    *
    * If this.type is left blank then the dojo default plugin set will
    * be used.
-   *
-   *  WARNING - RM (1-26-2012)
-   *  Don't use the "dijit._editor.plugins.EnterKeyHandling" plugin with 'BR' because of these bugs:
-   *  http://bugs.dojotoolkit.org/ticket/13399
-   *  http://bugs.dojotoolkit.org/ticket/13744
    */
   definePlugins:function(){
     if(this.type === "simple"){
@@ -113,7 +136,9 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'insertOrderedList', 'insertUnorderedList', '|',
         'indent', 'outdent', '|',
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
-        'pastefromword'
+        'pastefromword',
+        {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
+        'dojox.editor.plugins.AutoUrlLink'
       ];
     }
 
@@ -125,7 +150,9 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'justifyLeft', 'justifyRight', 'justifyCenter', '|',
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
-        'createLink','viewsource'
+        'createLink',
+        {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
+        'dojox.editor.plugins.AutoUrlLink'
       ];
     }
 
@@ -139,16 +166,11 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
         'pastefromword', '|',
         'fontName', 'fontSize', '|',
         'foreColor', 'hiliteColor', '|',
-        'createLink','viewsource'
+        'createLink',
+        {name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'},
+        'dojox.editor.plugins.AutoUrlLink'
       ];
     }
-    // THis seems to throw a js error... with bullets and enter key.
-    //this.plugins.push({name:'dijit._editor.plugins.EnterKeyHandling', blockNodeForEnter:'p'});
-
-    // This screws up IE when bulleting. (uses BR)
-    //this.plugins.push('dijit._editor.plugins.EnterKeyHandling');
-
-    //this.plugins.push({name:'dojoui.widget.EnterKeyHandling',blockNodeForEnter:'P'});
   },
 
 
@@ -158,6 +180,16 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
   postCreate: function(){
     this.definePlugins();
     this.inherited(arguments);
+
+    /*
+      When a user type 2 spaces in a row the editor does a char(32) [space] and a char(160)[non breaking space].
+      If the user's browser is not in a character encoding the understands char(160), then the character will
+      get submitted as an unknown character. This code replaces char(160) to the "&nbsp;" string so this wont happen.
+    */
+    this.contentPostFilters = [
+      function(str){return str.replace(/\xA0/gi, '&nbsp;')}
+    ];
+
   }
 
 });
