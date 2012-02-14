@@ -41,7 +41,7 @@ class PopOverTagLib {
         <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
             <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
             <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
-            <div class="dojoui-popover-tooltipDialog" dojoType="dojoui.widget.TooltipDialog" autoFocus="false" id="${name}_TooltipDialog" containLinks="${containLinks}" preventCache="true" href="${href}">
+            <div class="dojoui-popover-tooltipDialog" dojoType="dojoui.widget.TooltipDialog" style="display:none"  autoFocus="false" id="${name}_TooltipDialog" containLinks="${containLinks}" preventCache="true" href="${href}">
               <script type="dojo/connect" event="onDownloadEnd">
                 dijit.byId('${name}').openDropDown();
               </script>

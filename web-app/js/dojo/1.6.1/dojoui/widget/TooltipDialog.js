@@ -44,6 +44,17 @@ dojo.declare("dojoui.widget.TooltipDialog",[dojoui.layout.ContentPane, dijit._Te
 
   templateString: dojo.cache("dojoui", "widget/templates/TooltipDialog.html"),
 
+
+  /**
+   * This is here to fix a bug where the toolip will display if the browser is resized.
+   *
+   * This stops the propagation of the resize method.
+   */
+  resize:function(){
+    //this.inherited(arguments);
+  },
+
+
   _setTitleAttr: function(/*String*/ title){
     this.containerNode.title = title;
     this._set("title", title)
