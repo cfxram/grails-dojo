@@ -7,24 +7,16 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
   baseIoArgs:null,
   originalHref:"",
   preventCache:true,  
-  
-  
-  /**
-   * Override this to get code to fire when a tab becomes active.
-   */
-  _onShow:function(){
-    this.inherited(arguments);
-  },
 
 
   postCreate:function(){
     var pane = this;
-    pane.originalHref = pane.attr("originalHref") || pane.attr("href");
+    pane.originalHref = pane.get("originalHref") || pane.get("href");
     
     pane._selectTabIfTabNameInUrl()
     
     // If ContentPane has static content then still constrain the form submissions.
-    if (!pane.attr("href").length) {
+    if (!pane.get("href").length) {
       pane._constrainFormSubmissions();
     }         
     
@@ -48,6 +40,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
   refresh:function(){
     this.cancel();
     this.onLoadDeferred = new dojo.Deferred(dojo.hitch(this, "cancel"));
+    this.onLoadDeferred.addCallback(dojo.hitch(this, "onLoad"));
     var pane = this;
     if(!this.isLoaded){
       this._load();      
@@ -87,7 +80,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
     pane.ioMethod = dojo.xhrGet;
     pane.ioArgs = dojo.clone(pane.baseIoArgs);
     pane.ioArgs.content = null;
-    pane.attr("href", pane.originalHref);
+    pane.set("href", pane.originalHref);
   },
   
   
@@ -149,7 +142,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
           pane.ioMethod = dojo.xhrGet;
           pane.ioArgs = dojo.clone(pane.baseIoArgs);
           pane.ioArgs.content = null;
-          pane.attr("href", elem.href);
+          pane.set("href", elem.href);
         }
         dojo.stopEvent(e);
       }
@@ -242,7 +235,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
             currentPane.ioArgs = dojo.clone(currentPane.baseIoArgs);
             currentPane.ioMethod = dojo.xhrPost;
             currentPane.ioArgs.content = dojo.formToObject(thisForm);
-            currentPane.attr("href", formHref);
+            currentPane.set("href", formHref);
           }
         }); 
       } 

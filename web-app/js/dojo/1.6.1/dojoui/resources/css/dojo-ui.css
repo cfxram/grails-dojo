@@ -31,6 +31,47 @@ body div.grailsdojospinner{
 
 
 /******************************************/
+/* PopOver */
+.dijitTooltipDialogPopup .dojoui-popover-tooltipDialog{
+
+}
+
+
+.dijitTooltipDialogPopup .dojoui-popover-frame{
+  border: 1px solid red;
+  /*
+  height:200px;
+  width:380px;
+  */
+  /*
+  display:block;
+  overflow: visible;
+  */
+}
+
+/*
+.dijitTooltipDialogPopup .dijitTooltipContainer{
+  border: 1px solid green;
+  position:relative;
+  height:200px;
+}
+
+.dijitTooltipContainer .dijitTooltipContents{
+  border: 1px solid red;
+  position: relative;
+  display:block;
+  height:100%;
+}
+*/
+
+/* PopOver */
+/******************************************/
+
+
+
+
+
+/******************************************/
 /* dijit.Editor */
 .dojo-ui-editor {
   display: inline-block;

@@ -8,7 +8,7 @@ class PopOverTagLib {
    * Outputs the required dojo modules needed for the popOver. This is not required.
    */
   def popOverResources = {attrs, body ->
-    out << dojo.require(modules:['dijit.TooltipDialog','dojoui.widget.DropDownButton','dojoui.widget.DropDownButtonLink','dojoui.layout.ContentPane'])
+    out << dojo.require(modules:['dojoui.widget.TooltipDialog','dojoui.widget.DropDownButton','dojoui.widget.DropDownButtonLink','dojoui.layout.ContentPane'])
   }
 
   /**
@@ -41,13 +41,10 @@ class PopOverTagLib {
         <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
             <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
             <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
-            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
-              <div dojoType="dojoui.layout.ContentPane" id="${name}_content" containLinks="${containLinks}" preventCache="true" href="${href}">
-                <script type="dojo/connect" event="onDownloadEnd">
-                  dijit.byId('${name}').openDropDown();
-                </script>
-                ${body()}
-              </div>
+            <div class="dojoui-popover-tooltipDialog" dojoType="dojoui.widget.TooltipDialog" autoFocus="false" id="${name}_TooltipDialog" containLinks="${containLinks}" preventCache="true" href="${href}">
+              <script type="dojo/connect" event="onDownloadEnd">
+                dijit.byId('${name}').openDropDown();
+              </script>
             </div>
         </div>
       """    
@@ -57,7 +54,7 @@ class PopOverTagLib {
         <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
             <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
             <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
-            <div class="dojo-grails" dojoType="dijit.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
+            <div class="dojo-grails" dojoType="dojoui.widget.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
               ${body()}
             </div>
         </div>

@@ -10,7 +10,8 @@ dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
   contentDomId:'',        // put the content from this dom id into the tooltip.
   templateString: dojo.cache("dojoui", "widget/templates/DropDownButton.html"),
   btnClass:"",
-  
+
+
   /**
    * Will destroy any dijit that has the same id as this one.
    * This is called before this dijit is registered in the dijit.registry.
@@ -20,7 +21,9 @@ dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
       dijit.byId(this.id).destroy();
     }
   },
-  
+
+
+
   postCreate:function(){
     if (this.activate == 'hover') {
       dojo.connect(this.domNode, "onmouseover", this, this.onMouseOver);
@@ -32,30 +35,36 @@ dojo.declare("dojoui.widget.DropDownButton",dijit.form.DropDownButton,{
     }
     this.inherited(arguments);
   },
-  
-  
+
+
+
   openDropDown:function(){
+    // If there is static content defined in a div then move it into the drop down pane.
     if(this.contentDomId && !this._replacedContent){
       var elem = dojo.byId(this.contentDomId)
       var container = this.dropDown.containerNode;
       dojo.empty(container);
       dojo.place(elem, container);
       this._replacedContent = true;
-    }    
+    }
+
     this.inherited(arguments);
   },
-  
-  
-  onClick:function(){},
-  
+
+
+
   _onMouse:function(){
     this.inherited(arguments);
   },
-  
+
+
+
   onMouseOver:function(){
     this.openDropDown();
   },
-  
+
+
+
   onMouseOut:function(){
     this.closeDropDown();
   }  

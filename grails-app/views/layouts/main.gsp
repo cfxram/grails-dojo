@@ -5,7 +5,7 @@
 	<link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
     <title><g:layoutTitle/></title>
   
-    <dojo:header theme="tundra" modulePaths="['appwidgets':'appwidgets']" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane','appwidgets.CustomWidget']" showSpinner="true"/>
+    <dojo:header theme="tundra"  modulePaths="['appwidgets':'appwidgets']" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane','appwidgets.CustomWidget']" showSpinner="true"/>
     <dojo:menuResources/>
 
     <g:layoutHead/>
