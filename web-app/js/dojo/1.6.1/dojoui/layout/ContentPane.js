@@ -42,10 +42,11 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
     this.onLoadDeferred = new dojo.Deferred(dojo.hitch(this, "cancel"));
     this.onLoadDeferred.addCallback(dojo.hitch(this, "onLoad"));
     var pane = this;
+
     if(!this.isLoaded){
       this._load();      
     }
-    else if((this.href != this.originalHref)){
+    else if((this.originalHref.length) && (this.href != this.originalHref) ){
       this.loadOriginalHref();
     }      
     else{
@@ -77,6 +78,10 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
    */
   loadOriginalHref:function(){
     var pane = this;
+    if(!pane.originalHref.length){
+      return;
+    }
+
     pane.ioMethod = dojo.xhrGet;
     pane.ioArgs = dojo.clone(pane.baseIoArgs);
     pane.ioArgs.content = null;

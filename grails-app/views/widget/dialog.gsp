@@ -6,6 +6,17 @@
   <dojo:frameResources/>
 	<dojo:gridResources theme="tundra"/>
 	<dojo:dataSourceViewResources/>
+
+  <script type="text/javascript">
+    function openDialogViaJS(){
+      var dialog = dijit.byId('openViaJS');
+      var url = '${createLink(action:"index")}'
+      dialog.set("href", url);
+      dialog.show();
+
+    }
+
+  </script>
 </head>
 
 <body>
@@ -23,6 +34,9 @@
     </li>
     <li>
       <dojo:openDialog dialogId="DialogFour">Open Dialog DialogFour (Dojo Grid)</dojo:openDialog>
+    </li>
+    <li>
+      <button type="button" onclick="openDialogViaJS()">Open Dialog with Javascript </button>
     </li>
   </ul>
   <h2>Dialog Settings</h2>
@@ -82,7 +96,7 @@
   </dojo:dialog>
 
   <%-- Dialog Six --%>
-  <dojo:dialog title="Dialog Seven - Auto Open" name="DialogSeven" visible="true">
+  <dojo:dialog title="Dialog Seven - Auto Open" name="DialogSeven" visible="false">
     <div style="margin: 5em">
       This window is set to open automatically.
     </div>
@@ -90,5 +104,9 @@
       <dojo:closeDialog dialogId="DialogSeven" style="float:right">Close</dojo:closeDialog>
     </div>
   </dojo:dialog>
+
+
+
+  <dojo:dialog name="openViaJS" title="This is opened via JS" containLinks="true" style="height:400px; width:600px;"/>
 </body>
 </html>
