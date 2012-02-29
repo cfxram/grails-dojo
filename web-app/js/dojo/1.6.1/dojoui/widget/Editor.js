@@ -173,7 +173,6 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
     }
   },
 
-
   /**
    * Fires after widget is rendered.
    */
@@ -190,6 +189,151 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
       function(str){return str.replace(/\xA0/gi, '&nbsp;')}
     ];
 
-  }
+
+    this.iframe.onclick = this.focus();
+  },
+
+
+
+
+
+  /**
+   * Copied from RichText.js
+   *
+   * THis is overridden so we can get the iPad working. Just had to define the height of the div area to be larger than
+   * 1 line higher.
+   */
+	_getIframeDocTxt: function(){
+		// summary:
+		//		Generates the boilerplate text of the document inside the iframe (ie, <html><head>...</head><body/></html>).
+		//		Editor content (if not blank) should be added afterwards.
+		// tags:
+		//		private
+		var _cs = dojo.getComputedStyle(this.domNode);
+
+		// The contents inside of <body>.  The real contents are set later via a call to setValue().
+		var html = "";
+		var setBodyId = true;
+		if(dojo.isIE || dojo.isWebKit || (!this.height && !dojo.isMoz)){
+			// In auto-expand mode, need a wrapper div for AlwaysShowToolbar plugin to correctly
+			// expand/contract the editor as the content changes.
+			html = "<div id='dijitEditorBody'></div>";
+			setBodyId = false;
+		}else if(dojo.isMoz){
+			// workaround bug where can't select then delete text (until user types something
+			// into the editor)... and/or issue where typing doesn't erase selected text
+			this._cursorToStart = true;
+			html = "&nbsp;";
+		}
+
+
+    /** ----------------------------------------------------- **/
+    /** ----------------------------------------------------- **/
+    /** ----  Begin: iOS Customization ---- **/
+    var isIpad = navigator.userAgent.match(/iPad/i) != null;
+    var isIphone = navigator.userAgent.match(/iPhone/i) != null;
+    var isIpod = navigator.userAgent.match(/iPod/i) != null;
+    var isIOS = (isIpad || isIphone || isIpod);
+
+    if(isIOS){
+      html = "<div id='dijitEditorBody' style='height:99%'></div>";
+    }
+    /** ----  End: iOS Customization ---- **/
+    /** ----------------------------------------------------- **/
+    /** ----------------------------------------------------- **/
+
+
+		var font = [ _cs.fontWeight, _cs.fontSize, _cs.fontFamily ].join(" ");
+
+		// line height is tricky - applying a units value will mess things up.
+		// if we can't get a non-units value, bail out.
+		var lineHeight = _cs.lineHeight;
+		if(lineHeight.indexOf("px") >= 0){
+			lineHeight = parseFloat(lineHeight)/parseFloat(_cs.fontSize);
+			// console.debug(lineHeight);
+		}else if(lineHeight.indexOf("em")>=0){
+			lineHeight = parseFloat(lineHeight);
+		}else{
+			// If we can't get a non-units value, just default
+			// it to the CSS spec default of 'normal'.  Seems to
+			// work better, esp on IE, than '1.0'
+			lineHeight = "normal";
+		}
+		var userStyle = "";
+		var self = this;
+		this.style.replace(/(^|;)\s*(line-|font-?)[^;]+/ig, function(match){
+			match = match.replace(/^;/ig,"") + ';';
+			var s = match.split(":")[0];
+			if(s){
+				s = dojo.trim(s);
+				s = s.toLowerCase();
+				var i;
+				var sC = "";
+				for(i = 0; i < s.length; i++){
+					var c = s.charAt(i);
+					switch(c){
+						case "-":
+							i++;
+							c = s.charAt(i).toUpperCase();
+						default:
+							sC += c;
+					}
+				}
+				dojo.style(self.domNode, sC, "");
+			}
+			userStyle += match + ';';
+		});
+
+
+		// need to find any associated label element and update iframe document title
+		var label=dojo.query('label[for="'+this.id+'"]');
+
+		return [
+			this.isLeftToRight() ? "<html>\n<head>\n" : "<html dir='rtl'>\n<head>\n",
+			(dojo.isMoz && label.length ? "<title>" + label[0].innerHTML + "</title>\n" : ""),
+			"<meta http-equiv='Content-Type' content='text/html'>\n",
+			"<style>\n",
+			"\tbody,html {\n",
+			"\t\tbackground:transparent;\n",
+			"\t\tpadding: 1px 0 0 0;\n",
+			"\t\tmargin: -1px 0 0 0;\n", // remove extraneous vertical scrollbar on safari and firefox
+
+			// Set the html/body sizing.  Webkit always needs this, other browsers
+			// only set it when height is defined (not auto-expanding), otherwise
+			// scrollers do not appear.
+			((dojo.isWebKit)?"\t\twidth: 100%;\n":""),
+			((dojo.isWebKit)?"\t\theight: 100%;\n":""),
+			"\t}\n",
+
+			// TODO: left positioning will cause contents to disappear out of view
+			//	   if it gets too wide for the visible area
+			"\tbody{\n",
+			"\t\ttop:0px;\n",
+			"\t\tleft:0px;\n",
+			"\t\tright:0px;\n",
+			"\t\tfont:", font, ";\n",
+				((this.height||dojo.isOpera) ? "" : "\t\tposition: fixed;\n"),
+			// FIXME: IE 6 won't understand min-height?
+			"\t\tmin-height:", this.minHeight, ";\n",
+			"\t\tline-height:", lineHeight,";\n",
+			"\t}\n",
+			"\tp{ margin: 1em 0; }\n",
+
+			// Determine how scrollers should be applied.  In autoexpand mode (height = "") no scrollers on y at all.
+			// But in fixed height mode we want both x/y scrollers.  Also, if it's using wrapping div and in auto-expand
+			// (Mainly IE) we need to kill the y scroller on body and html.
+			(!setBodyId && !this.height ? "\tbody,html {overflow-y: hidden;}\n" : ""),
+			"\t#dijitEditorBody{overflow-x: auto; overflow-y:" + (this.height ? "auto;" : "hidden;") + " outline: 0px;}\n",
+			"\tli > ul:-moz-first-node, li > ol:-moz-first-node{ padding-top: 1.2em; }\n",
+			// Can't set min-height in IE9, it puts layout on li, which puts move/resize handles.
+			(!dojo.isIE ? "\tli{ min-height:1.2em; }\n" : ""),
+			"</style>\n",
+			this._applyEditingAreaStyleSheets(),"\n",
+			"</head>\n<body ",
+			(setBodyId?"id='dijitEditorBody' ":""),
+			"onload='frameElement._loadFunc(window,document)' style='"+userStyle+"'>", html, "</body>\n</html>"
+		].join(""); // String
+	}
+
 
 });
