@@ -189,8 +189,9 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
       function(str){return str.replace(/\xA0/gi, '&nbsp;')}
     ];
 
-
-    this.iframe.onclick = this.focus();
+    // This is for the iPad. When a user clicks anywhere in on the iFrame,
+    // then focus on the editor inside of the iFrame.
+    this.iframe.onclick = this.focus;
   },
 
 
@@ -234,6 +235,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
     var isIphone = navigator.userAgent.match(/iPhone/i) != null;
     var isIpod = navigator.userAgent.match(/iPod/i) != null;
     var isIOS = (isIpad || isIphone || isIpod);
+
 
     if(isIOS){
       html = "<div id='dijitEditorBody' style='height:99%'></div>";
@@ -283,6 +285,8 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
 			}
 			userStyle += match + ';';
 		});
+
+
 
 
 		// need to find any associated label element and update iframe document title
