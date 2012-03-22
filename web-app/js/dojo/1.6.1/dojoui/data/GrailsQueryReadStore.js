@@ -26,14 +26,16 @@ dojo.declare("dojoui.data.GrailsQueryReadStore", [dojox.data.QueryReadStore],{
      this.lastRequest = dojo.clone(request);
      var tmpOrder = "asc";
      var tmpSort = null;
-     if(request.sort[0].attribute){        
-       tmpOrder = (request.sort[0].descending) ? "desc" : "asc";
-       tmpSort = [request.sort[0].attribute];
-     } 
-     else if(this.sort.length){
-       tmpOrder = (this.sort.descending) ? "desc" : "asc";
-       tmpSort = [this.sort];
-     }     
+     if(request.sort){
+       if(request.sort[0].attribute){
+         tmpOrder = (request.sort[0].descending) ? "desc" : "asc";
+         tmpSort = [request.sort[0].attribute];
+       }
+       else if(this.sort.length){
+         tmpOrder = (this.sort.descending) ? "desc" : "asc";
+         tmpSort = [this.sort];
+       }
+     }
      request.count = null;
      request.serverQuery = {
        order: tmpOrder,
