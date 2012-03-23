@@ -15,7 +15,6 @@
       dialog.show();
 
     }
-
   </script>
 </head>
 
@@ -102,7 +101,7 @@
   </dojo:dialog>
 
   <%-- Dialog Six --%>
-  <dojo:dialog title="Dialog Seven - Auto Open" name="DialogSeven" visible="false">
+  <dojo:dialog title="Dialog Seven - Auto Open" name="DialogSeven" visible="true">
     <div style="margin: 5em">
       This window is set to open automatically.
     </div>

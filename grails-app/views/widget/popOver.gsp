@@ -10,13 +10,7 @@
 
 	<dojo:popOverResources/>
   <dojo:helpResources/>
-  <script type="text/javascript">
-    function showDimensions(){
-      var pane = dijit.byId('brokenPopover_content');
-      console.log( dojo.style(pane,"height") );
-    }
 
-  </script>
 </head>
 <body class="soria">
 
@@ -48,9 +42,6 @@
 							<dojo:frameLink name="myButton" action="list" frame="popOverExamples">Ajax Call (without using a grails tag)</dojo:frameLink>
 						</dojo:popOver>
 					</li>
-          <li>
-            <button type="button" onclick="showDimensions()">Test</button>
-          </li>
           <li>
             <dojo:popOver name="brokenPopover" label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="true"/>
           </li>
