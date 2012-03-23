@@ -90,6 +90,9 @@ class WidgetController {
     render(view:'remoteDialogContentWithLinks')
   }
 
+  def remoteDialogContentWithForm = {}
+
+
   def remoteDijitContent = {}
 
   def popOverForm = {}

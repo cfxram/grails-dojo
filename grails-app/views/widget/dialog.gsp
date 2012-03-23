@@ -33,6 +33,9 @@
       <dojo:openDialog dialogId="DialogThree">Open Dialog Three (Remote Content with ContainLinks)</dojo:openDialog>
     </li>
     <li>
+      <dojo:openDialog dialogId="DialogThreeFive">Open Dialog 3.5 (Remote Content with ContainLinks & Form)</dojo:openDialog>
+    </li>
+    <li>
       <dojo:openDialog dialogId="DialogFour">Open Dialog DialogFour (Dojo Grid)</dojo:openDialog>
     </li>
     <li>
@@ -62,6 +65,9 @@
 
   <%-- Dialog Three --%>
   <dojo:dialog title="Dialog Three" name="DialogThree" action="remoteDialogContentWithLinks" containLinks="true"/>
+
+  <%-- Dialog Three and a half --%>
+  <dojo:dialog title="Dialog Three and Half" name="DialogThreeFive" action="remoteDialogContentWithForm" containLinks="true"/>
 
   <%-- Dialog Four --%>
   <dojo:dialog name="DialogFour" title="Complex grid in a dialog">

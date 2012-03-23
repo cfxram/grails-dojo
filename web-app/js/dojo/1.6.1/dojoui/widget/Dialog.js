@@ -7,6 +7,7 @@ dojo.declare("dojoui.widget.Dialog", [dojoui.layout.ContentPane, dijit._DialogBa
     
 
   onDownloadEnd:function(){
+    this.inherited(arguments);
     this.layout();
   },
 
