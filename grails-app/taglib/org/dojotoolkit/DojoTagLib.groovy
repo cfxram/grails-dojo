@@ -130,7 +130,7 @@ class DojoTagLib {
     moduleStringList.add("'dojoui':'../dojoui'")
 	  packagePaths.add("{name : 'dojoui', location : '../dojoui'}")
 
-    def dojoConfig = attrs.collect{ "${it.key}:${it.value}" }.join(',')
+    def dojoConfig = attrs.collect{ "${it.key}:${it.value}" }.join(', ')
 
     if (theme) {
       out << stylesheets([theme:theme])

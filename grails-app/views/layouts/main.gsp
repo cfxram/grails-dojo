@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="bookmark-icon.png" />
     -->    
   
-    <dojo:header theme="tundra"  modulePaths="['appwidgets':'appwidgets']" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane','appwidgets.CustomWidget']" showSpinner="true"/>
+    <dojo:header theme="tundra" locale="'en-us'" modulePaths="['appwidgets':'appwidgets']" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane','appwidgets.CustomWidget']" showSpinner="true"/>
     <dojo:menuResources/>
 
     <g:layoutHead/>
