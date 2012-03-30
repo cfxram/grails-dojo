@@ -78,7 +78,7 @@
     </div>
     <div dojoType="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">	
 		  <dojo:grid controller="widget" action="listJson" name="myGrid2" max="20" sort="color"
-				style="height:200px" header="This is the second grid." selectable="true">
+				style="height:200px;" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 				<dojo:col width="15%" name="Color" field="color"/>
 				<dojo:col width="15%" name="Shape" field="shape"/>

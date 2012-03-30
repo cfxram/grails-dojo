@@ -45,29 +45,47 @@ class GridTagLib {
       <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}"></div>
     """
       
-    // Grid  
-    out << """
-      <div dojoType="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
-        <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">        
-          ${(header && (header instanceof Closure)) ? header.call() : header}
-        </div>
-        <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">      
-          <div dojoType="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
-            sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
-            <script type="dojo/method">
-                var gridStruct = [{                
-                  cells:[
-                    ${body()}
-                    {hidden:true}
-                  ]
-                }]
-                this.setGridStructure(gridStruct);                
-            </script>
+    // Grid
+    if(header){
+      out << """
+        <div dojoType="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
+          <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
+            ${(header && (header instanceof Closure)) ? header.call() : header}
           </div>
-          
+          <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
+            <div dojoType="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
+              sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
+              <script type="dojo/method">
+                  var gridStruct = [{
+                    cells:[
+                      ${body()}
+                      {hidden:true}
+                    ]
+                  }]
+                  this.setGridStructure(gridStruct);
+              </script>
+            </div>
+
+          </div>
         </div>
-      </div>    
-    """
+      """
+    }
+    else{
+      out << """
+        <div dojoType="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}"
+          sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
+          <script type="dojo/method">
+              var gridStruct = [{
+                cells:[
+                  ${body()}
+                  {hidden:true}
+                ]
+              }]
+              this.setGridStructure(gridStruct);
+          </script>
+        </div>
+      """
+    }
   }
 
 
