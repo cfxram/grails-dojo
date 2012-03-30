@@ -25,6 +25,7 @@ class DojoTagLib {
   }
 
 
+
   /**
    * Reads the dojo.profile.js file and converts into a grails object
    * @return JSONObject
@@ -35,11 +36,13 @@ class DojoTagLib {
     return jsonObj
   }
 
+
+
   /**
    * Will return the dojo home based on if it has a custom build
    * @return String
    */
-  def dojoHome() {
+  private String dojoHome() {
     def dojoHome = "${g.resource(dir: pluginContextPath)}/js/dojo/${Dojo.version}"
     def customDojo = "${g.resource(dir:'')}/js/dojo/${Dojo.pluginVersion}-custom"
     
@@ -51,12 +54,15 @@ class DojoTagLib {
     }
   }
 
+
+
   /**
-   * Will allow other tags to get the dojo home.
+   * Will allow other tags to get the dojo home as ${dojo.home()}
    */
   def home = {
     out << dojoHome()
   }
+
 
 
   /**
@@ -81,6 +87,8 @@ class DojoTagLib {
     }
   }
 
+
+
   /**
    * Alternative to <g:javascript library="dojo"/>. This will include the dojo.js file,
    * adds the standard dojo headers., and sets the theme.
@@ -99,25 +107,26 @@ class DojoTagLib {
   def header = {attrs ->
     def debug = attrs.remove("debug") ?: "false"
     def parseOnLoad = attrs.remove("parseOnLoad") ?: "true"
-    attrs.modulePaths = attrs?.modulePaths ?: [:]
     def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
     def showSpinner = attrs.remove("showSpinner") ?: "true"
+    attrs.modulePaths = attrs?.modulePaths ?: [:]
     attrs.async = attrs?.async ? attrs.async : "false"
     attrs.modules = attrs.modules ?: []
+    attrs.locale = attrs.locale ?: ""
 
     // Add custom tags space to modulePath (Append new path to be relative to plugin's version of dojo.js
     def moduleStringList = []
-	def packagePaths = []
+	  def packagePaths = []
     def jsRoot = "${resource()}/js"
-    attrs.modulePaths?.each{k,v->
+      attrs.modulePaths?.each{k,v->
       moduleStringList.add("'${k}':'${jsRoot}/${v}'")
-	  packagePaths.add("{name : '${k}', location : '${jsRoot}/${v}'}")
+	    packagePaths.add("{name : '${k}', location : '${jsRoot}/${v}'}")
     }
 
     //Add DojoUI Module Path
     attrs.modulePaths += ["dojoui": "../dojoui"]
     moduleStringList.add("'dojoui':'../dojoui'")
-	packagePaths.add("{name : 'dojoui', location : '../dojoui'}")
+	  packagePaths.add("{name : 'dojoui', location : '../dojoui'}")
 
     if (attrs?.theme) {
       out << stylesheets(attrs)
@@ -125,23 +134,24 @@ class DojoTagLib {
 
     if (attrs.async == "true") {
 		out << """
-			<script>
-			  dojoConfig = {isDebug:${debug}, async:true, parseOnLoad:${parseOnLoad}, packages:[ ${packagePaths.join(',')}] };
-			  dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
-			</script>
-			<script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
-			<script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
-		  """
-	} else {
-	    out << """
-	      <script>
-	        dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleStringList.join(',')}} };
-	        dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
-	      </script>
-	      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
-	      <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
-	    """
-	}
+      <script>
+        dojoConfig = {isDebug:${debug}, async:true, parseOnLoad:${parseOnLoad}, packages:[ ${packagePaths.join(',')}] };
+        dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+      </script>
+      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
+      <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
+		"""
+    }
+    else {
+      out << """
+        <script>
+          dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleStringList.join(',')}} };
+          dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+        </script>
+        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
+        <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
+      """
+    }
 
     // if custom build then include released js files
     if(includeCustomBuild == "true"){
@@ -153,33 +163,36 @@ class DojoTagLib {
     }
   }
 
+
+
   /**
    * Will setup the base css and themes.User still needs to define <body class="${theme}">
-   *
    * @param attrs.theme  = (Tundra), Soria, Nihilio. The theme to bring in.
    */
   def stylesheets = {attrs ->
     def theme = attrs.remove("theme") ?: "tundra"
     if(useCustomDojoCssBuild()){
-        out << """
-            <link rel="stylesheet" type="text/css" href="${dojoHome()}/css/custom-dojo.css" />
-            <!--[if lt IE 8]>
-              <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui-ie.css" />
-            <![endif]-->            
-        """        
-    }
-    else{
-        out << """
-          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojo/resources/dojo.css" />
-          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/dijit.css" />
-          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/${theme}/${theme}.css" />
-          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui.css" />
+      out << """
+          <link rel="stylesheet" type="text/css" href="${dojoHome()}/css/custom-dojo.css" />
           <!--[if lt IE 8]>
             <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui-ie.css" />
-          <![endif]-->          
-        """
+          <![endif]-->
+      """
+    }
+    else{
+      out << """
+        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojo/resources/dojo.css" />
+        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/dijit.css" />
+        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/${theme}/${theme}.css" />
+        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui.css" />
+        <!--[if lt IE 8]>
+          <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui-ie.css" />
+        <![endif]-->
+      """
     }   
   }
+
+
 
   /**
    * Includes a dojo specific css file. This is used mostly for extended css files in dojox.
@@ -188,6 +201,7 @@ class DojoTagLib {
   def css = {attrs ->
     out << "<link rel='stylesheet' type='text/css' href='${dojoHome()}/${attrs?.file}'/>" 
   }
+
 
 
   /**
@@ -207,6 +221,7 @@ class DojoTagLib {
       }
     }
   }
+
 
 
   /**
