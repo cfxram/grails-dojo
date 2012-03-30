@@ -135,6 +135,8 @@ class DojoTagLib {
     if (theme) {
       out << stylesheets([theme:theme])
     }
+
+    // New Dojo AMD Loader
     if (attrs.async == "true") {
       out << """
         <script>
@@ -145,6 +147,7 @@ class DojoTagLib {
         <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
       """
     }
+    // Use old Dojo loader
     else {
       out << """
         <script>
@@ -155,12 +158,10 @@ class DojoTagLib {
         <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
       """
     }
-
     // if custom build then include released js files
     if(includeCustomBuild == "true"){
       out << customDojoScripts()
     }
-
     if (modules?.size()) {
       out << require([async:attrs.async, modules:modules])
     }
