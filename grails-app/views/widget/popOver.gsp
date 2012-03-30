@@ -9,15 +9,15 @@
 	</style>
 
 	<dojo:popOverResources/>
-    <dojo:helpResources/>
+  <dojo:helpResources/>
+
 </head>
 <body class="soria">
-	
-	
-	<div style="float:right; margin-right:10em">
+
+	<div style="float:right; margin-right:1em">
 
 		<dojo:frame id="popOverExamples" style="border:1px solid gray">
-			<div style="width:400px; height:250px;">
+			<div style="width:400px;">
 				<ul>
 					<li>
                       <%
@@ -41,15 +41,21 @@
 						<dojo:popOver label="Open" type="button">
 							<dojo:frameLink name="myButton" action="list" frame="popOverExamples">Ajax Call (without using a grails tag)</dojo:frameLink>
 						</dojo:popOver>
-					</li>				
+					</li>
+          <li>
+            <dojo:popOver name="brokenPopover" label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="true"/>
+          </li>
 				</ul>
 			</div>
 		</dojo:frame>
 		<dojo:frameLink elementId="reloadButton" action="list" frame="popOverExamples">Reload the Pane</dojo:frameLink><br/>
-        <dojo:frameLink action="list" frame="popOverExamples" onclick="alert(1)">Reload the Pane (with onclick)</dojo:frameLink>
+
+    <dojo:frameLink action="list" frame="popOverExamples" onclick="alert(1)">Reload the Pane (with onclick)</dojo:frameLink><br/>
+
+
 	</div>
 	
-	<ul>
+	<ul style="float:left">
 		<li>		
 			<dojo:popOver label="Click to Activate PopOver" type="button">
 				<div style="padding:2em">This is a popover that was activated by a click from a button.</div>
@@ -83,12 +89,14 @@
 			</dojo:popOverContent>			
 		</li>			
 		<li>
-			<dojo:popOver label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="false"/>
+			<dojo:popOver label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="true"/>
 		</li>
 	</ul>
 	
 
+<div style="clear:both; margin-top:5em">
 
+</div>
 	
 	
 </body>

@@ -24,11 +24,12 @@ class EditorTagLib {
     attrs.class =  (attrs?.class) ? "${attrs?.class} DojoUiEditor" : "DojoUiEditor"
     attrs.name = attrs?.name ?: attrs?.id ?: "dojo_editor_${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("elementId") ?: attrs.name
+    def style = attrs.remove("style") ?: ""
     def value = attrs.remove("value") ?: body()
 
     out << """
-      <fieldset class="dojo-ui-editor">
-        <div data-dojo-type="dojoui.widget.Editor" ${Util.htmlProperties(attrs)}>${value}</div>
+      <fieldset class="dojo-ui-editor" style="${style}">
+        <div dojoType="dojoui.widget.Editor" ${Util.htmlProperties(attrs)} onclick="this.focus()">${value}</div>
       </fieldset>
     """
 

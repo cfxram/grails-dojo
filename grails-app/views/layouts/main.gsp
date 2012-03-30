@@ -2,10 +2,16 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
+	  <link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
     <title><g:layoutTitle/></title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    
+    <!--
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <link rel="apple-touch-icon" href="bookmark-icon.png" />
+    -->    
   
-    <dojo:header theme="tundra" modulePaths="['appwidgets':'appwidgets']" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane','appwidgets.CustomWidget']" showSpinner="true"/>
+    <dojo:header theme="tundra"  modulePaths="['appwidgets':'appwidgets']" modules="['dijit.layout.TabContainer','dijit.layout.ContentPane','appwidgets.CustomWidget']" showSpinner="true"/>
     <dojo:menuResources/>
 
     <g:layoutHead/>

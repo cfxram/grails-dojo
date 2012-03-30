@@ -6,6 +6,16 @@
   <dojo:frameResources/>
 	<dojo:gridResources theme="tundra"/>
 	<dojo:dataSourceViewResources/>
+
+  <script type="text/javascript">
+    function openDialogViaJS(){
+      var dialog = dijit.byId('openViaJS');
+      var url = '${createLink(action:"index")}'
+      dialog.set("href", url);
+      dialog.show();
+
+    }
+  </script>
 </head>
 
 <body>
@@ -22,7 +32,13 @@
       <dojo:openDialog dialogId="DialogThree">Open Dialog Three (Remote Content with ContainLinks)</dojo:openDialog>
     </li>
     <li>
+      <dojo:openDialog dialogId="DialogThreeFive">Open Dialog 3.5 (Remote Content with ContainLinks & Form)</dojo:openDialog>
+    </li>
+    <li>
       <dojo:openDialog dialogId="DialogFour">Open Dialog DialogFour (Dojo Grid)</dojo:openDialog>
+    </li>
+    <li>
+      <button type="button" onclick="openDialogViaJS()">Open Dialog with Javascript </button>
     </li>
   </ul>
   <h2>Dialog Settings</h2>
@@ -48,6 +64,9 @@
 
   <%-- Dialog Three --%>
   <dojo:dialog title="Dialog Three" name="DialogThree" action="remoteDialogContentWithLinks" containLinks="true"/>
+
+  <%-- Dialog Three and a half --%>
+  <dojo:dialog title="Dialog Three and Half" name="DialogThreeFive" action="remoteDialogContentWithForm" containLinks="true"/>
 
   <%-- Dialog Four --%>
   <dojo:dialog name="DialogFour" title="Complex grid in a dialog">
@@ -90,5 +109,9 @@
       <dojo:closeDialog dialogId="DialogSeven" style="float:right">Close</dojo:closeDialog>
     </div>
   </dojo:dialog>
+
+
+
+  <dojo:dialog name="openViaJS" title="This is opened via JS" containLinks="true" style="height:400px; width:600px;"/>
 </body>
 </html>

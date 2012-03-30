@@ -14,7 +14,7 @@ class DialogTagLib {
    * This will bring in all the resources required by the dialog tag.
    */
   def dialogResources = {attrs, body ->
-    out << dojo.require(modules: ['dijit.Dialog','dojoui.layout.ContentPane'])
+    out << dojo.require(modules: ['dojoui.widget.Dialog','dojoui.layout.ContentPane'])
   }
 
 
@@ -45,7 +45,8 @@ class DialogTagLib {
     }
     attrs.name = attrs?.name ?: "dojo_ui_dialog${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("name")
-    attrs.onOpen = attrs?.onOpen ?: ""
+    def onOpen = attrs.remove("onOpen") ?: ""
+    attrs.preventCache = "true"
 
     // Defines whether the closable x in the upper right shows.
     def closableScript = ""
@@ -59,7 +60,7 @@ class DialogTagLib {
     }
 
     // Helps hide info before it's rendered.
-    attrs.style = "${attrs?.style}; display:none"
+    attrs.style = (attrs?.style) ? "${attrs?.style}; display:none" : "display:none"
 
     // Defines whether this dialog should show automatically
     def visibleScript = ""
@@ -73,32 +74,18 @@ class DialogTagLib {
       modelessTxt = 'display:none'
     }
 
-    if(attrs?.containLinks == "true"){
-      def href = attrs.remove("href")
-      out << """
-        <style>#${attrs?.id}_underlay{background:gray; ${modelessTxt};}</style>
-        <div dojoType="dijit.Dialog" ${Util.htmlProperties(attrs)}>
-          <script type="dojo/connect" event="startup">
-            ${visibleScript}
-            ${closableScript}
-          </script>
-          ${dojo.frame([href:href, containLinks:true, ],body())}
-        </div>
-      """
-    }
-    else{
-      out << """
-        <style>#${attrs?.id}_underlay{background:gray; ${modelessTxt};}</style>
-        <div dojoType="dijit.Dialog" ${Util.htmlProperties(attrs)}>
-          <script type="dojo/connect" event="show">${attrs?.onOpen}</script>
-          <script type="dojo/connect" event="startup">
-            ${visibleScript}
-            ${closableScript}
-          </script>
-          ${body()}
-        </div>
-     """
-    }
+    out << """
+      <style>#${attrs?.id}_underlay{background:gray; ${modelessTxt};}</style>
+      <div dojoType="dojoui.widget.Dialog" ${Util.htmlProperties(attrs)}>
+        <script type="dojo/connect" event="show">${onOpen}</script>
+        <script type="dojo/connect" event="startup">
+          ${visibleScript}
+          ${closableScript}
+        </script>
+        ${body()}
+      </div>
+   """
+
 
   }
 

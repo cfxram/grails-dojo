@@ -25,6 +25,7 @@ class TreeTagLib {
     attrs.style = attrs.style ?: ''
     attrs.searchAble = attrs.searchAble ?: 'false'
     attrs.expandFirstChild = attrs.expandFirstChild ?: 'false'
+    attrs.persist = attrs.persist ?: 'false'
 
     if (attrs?.controller || attrs?.action) {
       attrs.href = createLink(attrs)

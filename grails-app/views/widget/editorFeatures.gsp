@@ -30,6 +30,11 @@
       }
     }
   </script>
+  <style type="text/css">
+    .tundra .dijitEditorIFrameContainer iframe.dijitEditorIFrame{
+    }
+  </style>
+
 </head>
 <body class="tundra">
 

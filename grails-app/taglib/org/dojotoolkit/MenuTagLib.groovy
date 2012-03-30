@@ -26,6 +26,13 @@ class MenuTagLib {
         def label = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs.remove('label')
         attrs.iconClass = attrs?.iconClass ?: ""
 
+
+        def openDirection = attrs.openDirection ?: 'right'  // changes the submenus for a menu bar.
+        def directionString = ""
+        if (openDirection == "right") {
+          directionString = '<script type="dojo/connect">this._orient = {BR:"TR"}</script>'
+        }
+
         if (type == 'bar') {
           // This prevents the menu from flickering by hidding it before it renders.
           attrs.style = (attrs?.style) ? "${attrs.style}; display:none;" : "display:none;"
@@ -34,6 +41,7 @@ class MenuTagLib {
               <script type="dojo/connect" method="postCreate">
                   dojo.style(this.domNode,'display','block');
               </script>
+              ${directionString}
               ${body()}
             </div>
           """
