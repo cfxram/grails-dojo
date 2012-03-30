@@ -1,0 +1,19 @@
+.grails-dojo-grid-header{
+  height:30px;
+  overflow:hidden;
+  text-align:center;
+}
+
+.grails-dojo-grid-title{
+	font-weight:bold;
+  font-size:16px;
+}
+
+.grails-dojo-grid-selected-label{
+  text-align:right;
+  float:left;
+}
+
+.grails-dojo-grid-selected-num{
+  
+}
