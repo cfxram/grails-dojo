@@ -105,47 +105,50 @@ class DojoTagLib {
    * @param attrs.modulePaths = List (optional) A list of paths to search for required modules.
    */
   def header = {attrs ->
-    def debug = attrs.remove("debug") ?: "false"
-    def parseOnLoad = attrs.remove("parseOnLoad") ?: "true"
+    // Standard Dojo Config Settings (and defaults)
+    attrs.isDebug = attrs.isDebug ?: "false"
+    attrs.parseOnLoad = attrs.parseOnLoad ?: "true"
+    attrs.async = attrs.async ?: "false"
+
+
+    // Custom Properties for Dojo Plugin
     def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
     def showSpinner = attrs.remove("showSpinner") ?: "true"
-    attrs.modulePaths = attrs?.modulePaths ?: [:]
-    attrs.async = attrs?.async ? attrs.async : "false"
-    attrs.modules = attrs.modules ?: []
-    attrs.locale = attrs.locale ?: ""
+    def modulePaths = attrs.remove("modulePaths") ?: [:]
+    def modules = attrs.remove("modules") ?: []
+    def theme = attrs.remove("theme") ?: "tundra"
+    def jsRoot = "${resource()}/js"
 
     // Add custom tags space to modulePath (Append new path to be relative to plugin's version of dojo.js
     def moduleStringList = []
 	  def packagePaths = []
-    def jsRoot = "${resource()}/js"
-      attrs.modulePaths?.each{k,v->
+    modulePaths?.each{k,v->
       moduleStringList.add("'${k}':'${jsRoot}/${v}'")
 	    packagePaths.add("{name : '${k}', location : '${jsRoot}/${v}'}")
     }
-
     //Add DojoUI Module Path
-    attrs.modulePaths += ["dojoui": "../dojoui"]
     moduleStringList.add("'dojoui':'../dojoui'")
 	  packagePaths.add("{name : 'dojoui', location : '../dojoui'}")
 
-    if (attrs?.theme) {
-      out << stylesheets(attrs)
-    }
+    def dojoConfig = attrs.collect{ "${it.key}:${it.value}" }.join(',')
 
+    if (theme) {
+      out << stylesheets([theme:theme])
+    }
     if (attrs.async == "true") {
-		out << """
-      <script>
-        dojoConfig = {isDebug:${debug}, async:true, parseOnLoad:${parseOnLoad}, packages:[ ${packagePaths.join(',')}] };
-        dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
-      </script>
-      <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
-      <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
-		"""
+      out << """
+        <script>
+          dojoConfig = {${dojoConfig}, packages:[ ${packagePaths.join(',')}] };
+          dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+        </script>
+        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
+        <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
+      """
     }
     else {
       out << """
         <script>
-          dojoConfig = {isDebug:${debug}, parseOnLoad:${parseOnLoad}, modulePaths:{ ${moduleStringList.join(',')}} };
+          dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}} };
           dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
         </script>
         <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
@@ -158,8 +161,8 @@ class DojoTagLib {
       out << customDojoScripts()
     }
 
-    if (attrs.modules?.size()) {
-      out << require(attrs)
+    if (modules?.size()) {
+      out << require([async:attrs.async, modules:modules])
     }
   }
 
