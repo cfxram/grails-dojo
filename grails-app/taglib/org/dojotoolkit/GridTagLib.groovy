@@ -100,7 +100,7 @@ class GridTagLib {
     def label = attrs.label ?: ''
     def code = attrs.code ?: ''
     def cleanedString = body().encodeAsJavaScript()
-    def formatter = "null"
+    def formatter = attrs.formatter ?: "null"
 
     if (code.length()) {
       label = message(code: code);
