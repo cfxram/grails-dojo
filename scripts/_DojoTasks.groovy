@@ -142,7 +142,13 @@ target(buildDojo: "This will run shrinksafe to create an optimized version of do
     fileset(dir: dojoReleaseDir, includes: "**/*.uncompressed.js")
     fileset(dir: dojoReleaseDir, includes: "**/package.json")
     fileset(dir: dojoReleaseDir, includes: "**/build-report.txt")
+    fileset(dir: dojoReleaseDir, includes: "**/DojoGrailsSpinner.js")
   }
+
+
+  // Hack - spinner wont work if processed by build process. So copy over original.
+  // DojoGrailsSpinner.js needs to be written in AMD format so we can remove this hack. (RM 3-31-2012)
+  copy(file:"${dojoUiDir}/DojoGrailsSpinner.js", tofile: "${dojoReleaseDir}/dojoui/DojoGrailsSpinner.js")
 }
 
 

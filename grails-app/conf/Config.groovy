@@ -138,7 +138,7 @@ dojo.profile = """
 environments {
   development {
     dojo.optimize.during.build = false;
-    dojo.use.customBuild.js = false;
+    dojo.use.customBuild.js = true;
     // dojo.use.customBuild.css = false;  /* [DEPRICATED] use dojo.profile.css  */
   }
 }
