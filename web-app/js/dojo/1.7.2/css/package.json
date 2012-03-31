@@ -1,0 +1,10 @@
+{
+	"name": "DojoUI-CSS",
+	"version":"1.7.1.0",
+	"dependencies": {
+		"dojo": "current"
+	},
+	"description": "Extensions to the Dojo Toolkit to make working with dojo and grails easier. This is where any compiled css files will be placed.",
+	"keywords": ["JavaScript", "Dojo", "Grails"],
+	"homepage": "http://www.grails.org/plugin/dojo"
+}
