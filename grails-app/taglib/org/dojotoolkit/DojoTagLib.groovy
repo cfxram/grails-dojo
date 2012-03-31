@@ -144,7 +144,6 @@ class DojoTagLib {
           dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
         </script>
         <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
-        <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
       """
     }
     // Use old Dojo loader
@@ -154,10 +153,13 @@ class DojoTagLib {
           dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}} };
           dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
         </script>
-        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
-        <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script>
+        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>        
       """
     }
+    if(showSpinner == "true"){
+      out << """ <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script> """
+    }
+    
     // if custom build then include released js files
     if(includeCustomBuild == "true"){
       out << customDojoScripts()
