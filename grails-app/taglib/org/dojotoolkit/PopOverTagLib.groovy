@@ -35,39 +35,35 @@ class PopOverTagLib {
       attrs.remove('params')
       attrs.remove('id')
     }
-    
-    if(containLinks == 'true' || href?.size()  > 0){
-      out << """
-        <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
-            <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
-            <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
-            <div class="dojoui-popover-tooltipDialog" dojoType="dojoui.widget.TooltipDialog" style="display:none"  autoFocus="false" id="${name}_TooltipDialog" containLinks="${containLinks}" preventCache="true" href="${href}">
-              <script type="dojo/connect" event="onDownloadEnd">
-                dijit.byId('${name}').openDropDown();
-              </script>
-            </div>
-        </div>
-      """    
-    }
-    else{
-      out << """
-        <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
-            <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
-            <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
-            <div class="dojo-grails" dojoType="dojoui.widget.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog">
-              ${body()}
-            </div>
-        </div>
-      """
-    }
+
+    out << """
+      <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
+          <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
+          <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
+          <div class="dojoui-popover-tooltipDialog" dojoType="dojoui.widget.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog" containLinks="${containLinks}" preventCache="true" href="${href}">
+            <script type="dojo/connect" event="onDownloadEnd">dijit.byId('${name}').openDropDown();</script>
+            ${body()}
+          </div>
+      </div>
+    """
   }
 
+
+
+  /**
+   * Will generate javascript that will close the popover.
+   */
   def closePopOverScript = {attrs, body ->
     def onclick = attrs?.onclick ?: ''
     out << "dijit.byId('${attrs?.popOver}').closeDropDown(); ${onclick}"
   }
 
 
+
+  /**
+   * Creates an inline section that is put into a popover using innerHTML.
+   * This is used for rare instances when the content doesn't render correctly inside of a popover.
+   */
   def popOverContent = {attrs, body ->
     out << """
       <div style="display:none">
@@ -75,8 +71,12 @@ class PopOverTagLib {
       </div>
     """
   }
-  
-  
+
+
+
+  /**
+   * Creates an anchor tag that will close the popover when clicked.
+   */
   def closePopOver = {attrs, body ->
     def onclick = closePopOverScript(attrs)
     attrs.remove('popOver');    

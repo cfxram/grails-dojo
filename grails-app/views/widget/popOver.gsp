@@ -91,6 +91,15 @@
 		<li>
 			<dojo:popOver label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="true"/>
 		</li>
+    <li>
+      <dojo:popOver label="Containlinks with static content" type="button" containLinks="true">
+        <div style="width:300px; height:100px; padding:1em; text-align:center; border: 1px solid #ccc">
+          <h2>This is loaded from a controller action via ajax.</h2>
+          <g:link action="list">Load Something else</g:link>
+        </div>
+      </dojo:popOver>
+    </li>
+
 	</ul>
 	
 
