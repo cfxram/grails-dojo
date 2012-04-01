@@ -1,7 +1,7 @@
 import org.dojotoolkit.*
 import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptTagLib
 class DojoGrailsPlugin {
-  def version = "1.7.2.0-DEV"
+  def version = "1.7.2.0"
   def grailsVersion = "1.3.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
