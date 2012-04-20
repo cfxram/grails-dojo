@@ -14,6 +14,7 @@ grails.project.dependency.resolution = {
         grailsHome()
         grailsCentral()
 
+        grailsRepo "http://grails.org/plugins"
         // uncomment the below to enable remote dependency resolution
         // from public Maven repositories
         //mavenLocal()
