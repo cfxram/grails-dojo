@@ -31,7 +31,21 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
     };
     pane.ioArgs = dojo.clone(pane.baseIoArgs);
   },
-  
+
+
+  /**
+   * Convenience method to load new href in a window. But cleans up previous
+   * data from old ajax call.
+   * @param href
+   */
+  loadHref:function(urlString){
+    this.ioMethod = dojo.xhrGet;
+    this.ioArgs = dojo.clone(this.baseIoArgs);
+    this.ioArgs.content = null;
+    this.set("content","");
+    this.set("href", urlString);
+  },
+
   
   /**
    * Overrides built in refresh so we can control it. This is called when the tab is made visible or 
@@ -81,11 +95,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
     if(!pane.originalHref.length){
       return;
     }
-
-    pane.ioMethod = dojo.xhrGet;
-    pane.ioArgs = dojo.clone(pane.baseIoArgs);
-    pane.ioArgs.content = null;
-    pane.set("href", pane.originalHref);
+    this.loadHref(pane.originalHref);
   },
   
   
@@ -144,10 +154,7 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
           window.open(elem.href);
         }   
         else{
-          pane.ioMethod = dojo.xhrGet;
-          pane.ioArgs = dojo.clone(pane.baseIoArgs);
-          pane.ioArgs.content = null;
-          pane.set("href", elem.href);
+          this.loadHref(elem.href);
         }
         dojo.stopEvent(e);
       }

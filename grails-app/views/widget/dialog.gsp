@@ -13,7 +13,19 @@
       var url = '${createLink(action:"index")}'
       dialog.set("href", url);
       dialog.show();
+    }
 
+
+    function createNewDialog(){
+      newDialog = window.newDialog || new dojoui.widget.Dialog({
+        title: "Created by Javascript",
+        id:'testPopUpPanel',
+        containLinks:true,
+        content:""
+      });
+
+      newDialog.loadHref('${createLink(action:"remoteDialogContentWithLinks")}');
+      newDialog.show();
     }
   </script>
 </head>
@@ -49,6 +61,9 @@
     <li>
       <dojo:openDialog dialogId="DialogSix">Open Dialog that has not close button</dojo:openDialog>
     </li>
+    <li>
+      <button onclick="createNewDialog();" type="button">Create New Dialog</button>
+    </li>
   </ul>
 
 
@@ -63,7 +78,7 @@
   <dojo:dialog title="Dialog Two" name="DialogTwo" action="remoteDialogContent"/>
 
   <%-- Dialog Three --%>
-  <dojo:dialog title="Dialog Three" name="DialogThree" action="remoteDialogContentWithLinks" containLinks="true"/>
+  <dojo:dialog title="Dialog Three" name="DialogThree" action="remoteDialogContentWithLinks" containLinks="true">asdasdasd</dojo:dialog>
 
   <%-- Dialog Three and a half --%>
   <dojo:dialog title="Dialog Three and Half" name="DialogThreeFive" action="remoteDialogContentWithForm" containLinks="true"/>
@@ -101,7 +116,7 @@
   </dojo:dialog>
 
   <%-- Dialog Six --%>
-  <dojo:dialog title="Dialog Seven - Auto Open" name="DialogSeven" visible="true">
+  <dojo:dialog title="Dialog Seven - Auto Open" name="DialogSeven" visible="false">
     <div style="margin: 5em">
       This window is set to open automatically.
     </div>

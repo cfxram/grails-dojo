@@ -82,11 +82,13 @@ class WidgetController {
   }
 
   def remoteDialogContent = {
+
      render(view:"remoteDialogContent")
   }
 
 
   def remoteDialogContentWithLinks = {
+    Thread.currentThread().sleep(3000);
     render(view:'remoteDialogContentWithLinks')
   }
 
@@ -99,6 +101,7 @@ class WidgetController {
 
 
   def list = {
+    Thread.currentThread().sleep(1000);
     if (!params.max) params.max = 10
     [widgetList: Widget.list(params), total: Widget.count()]
   }

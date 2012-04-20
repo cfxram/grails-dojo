@@ -31,6 +31,20 @@ body div.grailsdojospinner{
 
 
 /******************************************/
+/* Dialog */
+.dijitContentPaneLoading{
+  display: inline-block;
+  margin:70px 150px 70px 150px;
+  color:gray;
+}
+/* Dialog */
+/******************************************/
+
+
+
+
+
+/******************************************/
 /* dijit.Editor */
 .dojo-ui-editor {
   display: inline-block;
