@@ -15,7 +15,7 @@ class DojoGrailsPlugin {
           "web-app/js/appwidgets/**"
   ]
   def author = "Rob Meidal"
-  def authorEmail = "cfxram@codehaus.org"
+  def authorEmail = "cfxram@gmail.com"
   def title = "Dojo 1.6.1 for Grails"
   def description = """
     The Dojo Plugin adds the Dojo toolkit to your application. This javascript library provides
@@ -46,7 +46,9 @@ class DojoGrailsPlugin {
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
   """  
   def documentation = "http://grails.org/plugin/dojo"
-
+  def license = "APACHE"
+  def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPDOJO" ]
+  def scm = [ url: "https://github.com/cfxram/grails-dojo" ]
   def doWithApplicationContext = { applicationContext ->
     JavascriptTagLib.PROVIDER_MAPPINGS.dojo = DojoProvider.class
     JavascriptTagLib.LIBRARY_MAPPINGS.dojo = ["dojo/${Dojo.version}/dojo/dojo"]
