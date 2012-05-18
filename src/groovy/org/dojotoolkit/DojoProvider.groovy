@@ -75,41 +75,46 @@ class DojoProvider implements JavascriptProvider {
     // Update property for <g:remoteFunction> is optional so don't run js code if empty    
     if(updateDomElem?.length()){
       updateDomElemScript = 
-      "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});} " +
-      "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
-      "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "          
+      "array.forEach(registry.findWidgets(dom.byId('${updateDomElem}')), function(w){" +
+	  		"console.debug('destroying',w);w.destroyRecursive();" +
+	  "}); " +
+      "domAttr.set(dom.byId('${updateDomElem}'),'innerHTML',response); " +
+      "parser.parse(dom.byId('${updateDomElem}')); "          
     }
 
     // Error dom element is optional so don't run js code if empty    
     if(errorDomElem?.length()){
-      errorDomElemScript = "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); "
+      errorDomElemScript = "domAttr.set(dom.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText);"
     }
 
     def dojoString =
     "${onLoading}" +
     "try{DojoGrailsSpinner.show();}catch(e){} " +
-    "dojo.xhr('${method}',{" +
-        (!async ? "sync:${async}, ": "") +
-        (parameters?.length() ? "content:${parameters}, " : "") +
-        (formName?.length() ? "form:${formName}, " : "") +
-        "preventCache:${preventCache}, " +
-        "url:'${url}', " +
-        "load:function(response){" +
-            "${updateDomElemScript} " + 
-            "${onLoaded} " +
-            "${onSuccess} " +
-        "}, " +
-        "handle:function(response,ioargs){" +
-          "${statusCodeHandlers}" +
-          "try{DojoGrailsSpinner.hide();}catch(e){}" +
-          "${onComplete} " +          
-        "}, " +
-        "error:function(error,ioargs){" +
-          "try{DojoGrailsSpinner.hide();}catch(e){}" +
-          "${errorDomElemScript}" + 
-          "${onLoaded} " +
-          "${onFailure} " +
-        "} " +
+    "require(['dojo/_base/xhr','dijit/registry', 'dojo/_base/array', 'dojo/dom', 'dojo/dom-attr', 'dojo/parser'], " +
+		"function(xhr,registry, array, dom, domAttr, parser) { " + 
+			"xhr.${method.toLowerCase()}({" +
+        		(!async ? "sync:${async}, ": "") +
+				(parameters?.length() ? "content:${parameters}, " : "") +
+				(formName?.length() ? "form:${formName}, " : "") +
+				"preventCache:${preventCache}, " +
+				"url:'${url}'," +
+				"load:function(response){" +
+					"${updateDomElemScript} " +
+					"${onLoaded} " +
+					"${onSuccess} " +
+				"}, " +
+				"handle:function(response,ioargs){" +
+				  "${statusCodeHandlers}" +
+				  "try{DojoGrailsSpinner.hide();}catch(e){}" +
+				  "${onComplete} " +
+				"}, " +
+				"error:function(error,ioargs){" +
+				  "try{DojoGrailsSpinner.hide();}catch(e){}" +
+				  "${errorDomElemScript}" +
+				  "${onLoaded} " +
+				  "${onFailure} " +
+				"} " +
+			"});" +
     "});"
     return dojoString
   }
