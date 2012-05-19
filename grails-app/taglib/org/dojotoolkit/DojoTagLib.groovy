@@ -1,6 +1,6 @@
 package org.dojotoolkit
 
-import grails.converters.deep.JSON
+import grails.converters.JSON
 
 
 class DojoTagLib {
@@ -211,50 +211,35 @@ class DojoTagLib {
 
 
   /**
-   * Will include dojo modules via the dojo loader.
+   * Will include dojo modules via the dojo loader and make them available in the body of the tag script
+   * Each require will provide a callback parameter named after the last part of the module name
+   * e.g.: "dijit/form/Form" will provide a parameter called "Form" in the callback
    * @param attrs.modules = This is a map of components to include
-   * @param attrs.async = If true will use the Dojo AMD compatible way to bring in modules.
+   * @param attrs.callbackParamNames = This overrides the default callback parameter names, in case you want to use different ones than the defaults
    */
-  def require = {attrs ->
-    attrs.async = attrs?.async ?: "false"
-    if (attrs.modules) {
-      if(attrs?.async == "true"){
-        out << amdRequire(attrs)
-      }
-      else{
-        def modules = attrs.modules.collect{"dojo.require('${it}')"}
-        out << "<script type='text/javascript'>${modules.join(';')}</script>"
-      }
-    }
+  def require = {attrs, body ->
+	  def modules = attrs.modules.collect{ "'${it}'" }
+	  def callbacks = attrs.modules.collect{ it.split("/").last() }
+	  if (attrs.callbackParamNames) {
+		  callbacks = attrs.callbackParamNames
+	  }
+	  assert attrs.callbackParamNames?.size() <= modules.size()
+	  
+	  out << """
+		<script type='text/javascript'>
+		  require(${modules},
+		  function(${callbacks.join(',')}){
+	  """
+		attrs?.modulePaths?.each{k,v->
+		  out << " dojo.registerModulePath('${k}','${v}'); "
+		}
+  
+	  out << body()
+	  out << """
+	  		});
+		</script>
+	  """
   }
-
-
-
-  /**
-   * Will bring in modules using the new amd async approach.
-   * @param attrs.modules - The modules to include
-   * @param attrs.modulePaths - Defines custom paths to look for those modules.
-   */
-  def amdRequire = {attrs->
-    def modules = attrs.modules.collect{"dojo.require('${it}')"}
-
-    out << """
-      <script type='text/javascript'>
-        require(['dojo/_base/kernel', 'dojo/_base/loader'],
-        function(dojo){
-    """
-      attrs?.modulePaths?.each{k,v->
-        out << " dojo.registerModulePath('${k}','${v}'); "
-      }
-
-    out << """
-        ${modules.join(';')}
-        });
-      </script>
-    """
-  }
-
-
 
 
   /**
