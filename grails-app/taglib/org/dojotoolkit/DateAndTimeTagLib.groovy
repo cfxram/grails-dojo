@@ -11,7 +11,7 @@ class DateAndTimeTagLib {
    * Outputs the required javascript dojo libraries
    */
   def dateTimeResources = {attrs, body ->
-    out << dojo.require(modules: ['dijit.form.DateTextBox', 'dijit.form.TimeTextBox', 'dijit.form.NumberSpinner'])
+    out << dojo.require(modules: ['dijit/form/DateTextBox', 'dijit/form/TimeTextBox', 'dijit/form/NumberSpinner'])
   }
 
 
@@ -76,18 +76,20 @@ class DateAndTimeTagLib {
         <input type="hidden" name="${name}_day" id="${id}_day" value="${day}"/>
         <input type="hidden" name="${name}_month" id="${id}_month" value="${month}"/>
         <input type="hidden" name="${name}_year" id="${id}_year" value="${year}"/>
-        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" dojoType="dijit.form.DateTextBox" ${style} ${className} constraints="{min:'${minDate}'}">
-            <script type="dojo/connect" event="onChange" args="d">
-                if(d){
-                    dojo.byId("${id}_day").value = d.getDate();
-                    dojo.byId("${id}_month").value = d.getMonth()+1;
-                    dojo.byId("${id}_year").value = d.getFullYear();
-                }
-                else{
-                    dojo.byId("${id}_day").value = "";
-                    dojo.byId("${id}_month").value = "";
-                    dojo.byId("${id}_year").value = "";
-                }
+        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" data-dojo-type="dijit.form.DateTextBox" ${style} ${className} constraints="{min:'${minDate}'}">
+            <script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="d">
+				require(['dijit/registry'],function(registry) {
+	                if(d){
+	                    registry.byId("${id}_day").value = d.getDate();
+	                    registry.byId("${id}_month").value = d.getMonth()+1;
+	                    registry.byId("${id}_year").value = d.getFullYear();
+	                }
+	                else{
+	                    registry.byId("${id}_day").value = "";
+	                    registry.byId("${id}_month").value = "";
+	                    registry.byId("${id}_year").value = "";
+	                }
+				});
             </script>
         </div>
     """
@@ -144,7 +146,7 @@ class DateAndTimeTagLib {
         <input type="hidden" name="${name}_day" id="${id}_day" value="${day}"/>
         <input type="hidden" name="${name}_month" id="${id}_month" value="${month}"/>
         <input type="hidden" name="${name}_year" id="${id}_year" value="${year}"/>
-        <div type="text" name="${name}-TimePicker" id="${id}-TimePicker" value="T${dojoHour}:${dojoMinute}:00" dojoType="dijit.form.TimeTextBox" ${style} ${className}>
+        <div type="text" name="${name}-TimePicker" id="${id}-TimePicker" value="T${dojoHour}:${dojoMinute}:00" data-dojo-type="dijit.form.TimeTextBox" ${style} ${className}>
             <script type="dojo/connect" event="onChange" args="d">
                 dojo.byId("${id}_hour").value = d.getHours();
                 dojo.byId("${id}_minute").value = d.getMinutes();
@@ -224,14 +226,14 @@ class DateAndTimeTagLib {
         <input type="hidden" name="${name}_month" id="${id}_month" value="${month}"/>
         <input type="hidden" name="${name}_year" id="${id}_year" value="${year}"/>
 
-        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" dojoType="dijit.form.DateTextBox" ${style} ${className} constraints="{min:'${minDate}'}">
+        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" data-dojo-type="dijit.form.DateTextBox" ${style} ${className} constraints="{min:'${minDate}'}">
             <script type="dojo/connect" event="onChange" args="d">
                 dojo.byId("${id}_day").value = d.getDate();
                 dojo.byId("${id}_month").value = d.getMonth()+1;
                 dojo.byId("${id}_year").value = d.getFullYear();
             </script>
         </div>
-        <div type="text" name="${name}-TimeChooser" id="${id}-TimeChooser" value="T${dojoHour}:${dojoMinute}:00" dojoType="dijit.form.TimeTextBox" ${style} ${className}>
+        <div type="text" name="${name}-TimeChooser" id="${id}-TimeChooser" value="T${dojoHour}:${dojoMinute}:00" data-dojo-type="dijit.form.TimeTextBox" ${style} ${className}>
             <script type="dojo/connect" event="onChange" args="d">
                 dojo.byId("${id}_hour").value = d.getHours();
                 dojo.byId("${id}_minute").value = d.getMinutes();
@@ -262,7 +264,7 @@ class DateAndTimeTagLib {
       disabledText = "disabled";
     }
     out << """
-        <input id="${id}" ${style} ${className} dojoType="dijit.form.NumberSpinner" value="${value}" constraints="{min:0}" id="${id}" name="${name}" ${disabledText}/>
+        <input id="${id}" ${style} ${className} data-dojo-type="dijit.form.NumberSpinner" value="${value}" constraints="{min:0}" id="${id}" name="${name}" ${disabledText}/>
     """
   }
 

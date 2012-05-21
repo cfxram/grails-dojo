@@ -11,7 +11,7 @@ class TooltipTagLib {
    * This will bring in all the resources required by the tab and its related components.
    */
   def tooltipResources = {attrs, body ->
-    out << dojo.require(modules: ['dijit.Tooltip'])
+    out << dojo.require(modules: ['dijit/Tooltip'])
   }
 
 
@@ -35,7 +35,7 @@ class TooltipTagLib {
 
     out << """
       <div class="dojo-ui-panel-help" id="${id}" ${style}></div>
-      <div dojoType="dijit.Tooltip" connectId="${id}">${body()}</div>
+      <div data-dojo-type="dijit.Tooltip" connectId="${id}">${body()}</div>
     """
   }
 
@@ -55,7 +55,7 @@ class TooltipTagLib {
       style = """style="${style}" """
     }
     out << """
-      <div dojoType="dijit.Tooltip" connectId="${id}">${body()}</div>
+      <div data-dojo-type="dijit.Tooltip" connectId="${id}">${body()}</div>
     """
   }
 

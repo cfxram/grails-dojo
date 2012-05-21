@@ -11,7 +11,7 @@ class ContentPaneTagLib {
    * This will bring in all the resources required by the tab and its related components.
    */
   def contentPaneResources = {attrs, body ->
-      out << dojo.require(modules: ['dijit.layout.ContentPane'])
+      out << dojo.require(modules: ['dijit/layout/ContentPane'])
   }
 
 
@@ -42,6 +42,6 @@ class ContentPaneTagLib {
     attrs.name = attrs?.name ?: "dojo_ui_contentPane${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("name")
 
-    out << """ <div dojoType="dijit.layout.ContentPane" ${Util.htmlProperties(attrs)}>${body()}</div> """
+    out << """ <div data-dojo-type="dijit.layout.ContentPane" ${Util.htmlProperties(attrs)}>${body()}</div> """
   }
 }

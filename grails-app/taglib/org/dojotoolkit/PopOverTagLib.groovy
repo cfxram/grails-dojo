@@ -8,7 +8,7 @@ class PopOverTagLib {
    * Outputs the required dojo modules needed for the popOver. This is not required.
    */
   def popOverResources = {attrs, body ->
-    out << dojo.require(modules:['dojoui.widget.TooltipDialog','dojoui.widget.DropDownButton','dojoui.widget.DropDownButtonLink','dojoui.layout.ContentPane'])
+    out << dojo.require(modules:['dojoui/widget/TooltipDialog','dojoui/widget/DropDownButton','dojoui/widget/DropDownButtonLink','dojoui/layout/ContentPane'])
   }
 
   /**
@@ -37,11 +37,11 @@ class PopOverTagLib {
     }
 
     out << """
-      <div dojoType="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
+      <div data-dojo-type="${dojoWidget}" id="${name}" activate="${activate}" btnClass="${btnClass}" ${Util.htmlProperties(attrs)}>
           <script type="dojo/method" event="onClick" args="evt">${onOpen}</script>
           <span>${(label && (label instanceof Closure)) ? label.call() : label}</span>
-          <div class="dojoui-popover-tooltipDialog" dojoType="dojoui.widget.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog" containLinks="${containLinks}" preventCache="true" href="${href}">
-            <script type="dojo/connect" event="onDownloadEnd">dijit.byId('${name}').openDropDown();</script>
+          <div class="dojoui-popover-tooltipDialog" data-dojo-type="dojoui.widget.TooltipDialog" style="display:none" autoFocus="false" id="${name}_TooltipDialog" containLinks="${containLinks}" preventCache="true" href="${href}">
+            <script type="dojo/connect" data-dojo-event="onDownloadEnd">require(['dijit/registry'], function(regisry){registry.byId('${name}').openDropDown();});</script>
             ${body()}
           </div>
       </div>

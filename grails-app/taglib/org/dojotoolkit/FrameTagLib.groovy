@@ -8,7 +8,7 @@ class FrameTagLib {
    * Outputs the required dojo modules needed for the frame. This is not required.
    */
   def frameResources = {attrs, body ->
-    out << dojo.require(modules:['dojoui.layout.ContentPane'])
+    out << dojo.require(modules:['dojoui/layout/ContentPane'])
   }
   
   
@@ -38,7 +38,7 @@ class FrameTagLib {
     }
     attrs.name = attrs?.name ?: "dojo_ui_frame${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("name")
-    out << """ <div dojoType="dojoui.layout.ContentPane" ${Util.htmlProperties(attrs)}>${body()}</div> """
+    out << """ <div data-dojo-type="dojoui.layout.ContentPane" ${Util.htmlProperties(attrs)}>${body()}</div> """
   }
  
  
@@ -114,7 +114,7 @@ class FrameTagLib {
       selectTabScript = """
         var parentTabViewDom = this.domNode.parentNode.parentNode.parentNode;
         var parentTab = this.domNode.parentNode;
-        if( (dojo.hasClass(parentTabViewDom,"dijitTabContainer")) && (dojo.attr(parentTab, "dojoType") == "dijit.layout.ContentPane") ){
+        if( (dojo.hasClass(parentTabViewDom,"dijitTabContainer")) && (dojo.attr(parentTab, "data-dojo-type") == "dijit.layout.ContentPane") ){
             var parentTabView = dijit.byNode(parentTabViewDom);
             parentTabView.selectChild("${selectParentTabId}");
         }
@@ -127,8 +127,8 @@ class FrameTagLib {
      */
     if (insideTab == 'true') {
       out << """
-        <div dojoType="dijit.layout.ContentPane" style="display:none" id="${id}">&nbsp;
-            <script type="dojo/method" event="startup">
+        <div data-dojo-type="dijit.layout.ContentPane" style="display:none" id="${id}">&nbsp;
+            <script type="dojo/method" data-dojo-event="startup">
                 ${selectTabScript}
                 ${body()}
                 window[this.id] = this;

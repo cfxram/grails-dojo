@@ -4,7 +4,9 @@
   <meta name="layout" content="main"/>
 	<dojo:tabResources/>
 	<dojo:frameResources/>
-    <dojo:require modules="['dijit.layout.StackContainer']" />
+    <dojo:require modules="['dijit/layout/StackContainer', 'dijit/registry']" wrapperFunction="selectPane(parentId,childId)">
+    	registry.byId(parentId).selectChild(childId);
+    </dojo:require>
   <style type="text/css">
     .stackPane{
       height:200px;
@@ -40,17 +42,17 @@
 
 
 <div style="margin:1em;">
-  <button onclick="dijit.byId('genericStack').selectChild('stackOne');">One</button>
-  <button onclick="dijit.byId('genericStack').selectChild('stackTwo');">Two</button>
-  <button onclick="dijit.byId('genericStack').selectChild('stackThree');">Three</button>
-  <div dojoType="dijit.layout.StackContainer" id="genericStack" doLayout="false" style="border: 1px solid gray; width:400px;">
-    <div dojoType="dijit.layout.ContentPane" class="stackPane" id="stackOne" style="height:100px; background: #eee;">
+  <button onclick="selectPane('genericStack','stackOne');">One</button>
+  <button onclick="selectPane('genericStack','stackTwo');">Two</button>
+  <button onclick="selectPane('genericStack','stackThree');">Three</button>
+  <div data-dojo-type="dijit.layout.StackContainer" id="genericStack" doLayout="false" style="border: 1px solid gray; width:400px;">
+    <div data-dojo-type="dijit.layout.ContentPane" class="stackPane" id="stackOne" style="height:100px; background: #eee;">
       Stack Pane One
     </div>
-    <div dojoType="dijit.layout.ContentPane" class="stackPane"  id="stackTwo" style="height:100px; background: #ddd;">
+    <div data-dojo-type="dijit.layout.ContentPane" class="stackPane"  id="stackTwo" style="height:100px; background: #ddd;">
       Stack Pane Two
     </div>
-    <div dojoType="dijit.layout.ContentPane" class="stackPane"  id="stackThree" style="height:100px; background: #ccc;">
+    <div data-dojo-type="dijit.layout.ContentPane" class="stackPane"  id="stackThree" style="height:100px; background: #ccc;">
       Stack Pane Two
     </div>
   </div>

@@ -10,7 +10,7 @@ class PanelTagLib {
    * This will bring in all the resources required by the dialog tag.
    */
   def panelResources = {attrs, body ->
-    out << dojo.require(modules: ['dijit.Tooltip'])
+    out << dojo.require(modules: ['dijit/Tooltip'])
   }
 
 
@@ -81,7 +81,7 @@ class PanelTagLib {
         <div class="dojo-ui-panel-help" id="${id}"></div>
       """
       helpText = """
-        <div dojoType="dijit.Tooltip" connectId="${id}">${help}</div>
+        <div data-dojo-type="dijit.Tooltip" connectId="${id}">${help}</div>
       """
     }
 

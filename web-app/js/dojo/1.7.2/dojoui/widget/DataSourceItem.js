@@ -1,34 +1,34 @@
-dojo.provide("dojoui.widget.DataSourceItem");
-
-dojo.require("dojox.dtl._DomTemplated");
-dojo.require("dojox.dtl.tag.logic");
-dojo.require("dojox.dtl.tag.loop");
-dojo.require("dojox.dtl.filter.lists");
-
-/**
- * Widget that will render templates based on a data source.
- */
-dojo.declare("dojoui.widget.DataSourceItem",[dijit._Widget, dojox.dtl._DomTemplated],{
+define(["dojo/_base/declare",
+        "dojo/text!./templates/DataSourceItem.html",
+        "dijit/_Widget",
+        "dojox/dtl/_DomTemplated", 
+        "dojo/dom-attr"], function(declare,template,_Widget,_DomTemplated,domAttr) {
+	
+	/**
+	 * Widget that will render templates based on a data source.
+	 */
+	return declare([_Widget, _DomTemplated],{
   
-  //The data used by the template
-  node:null,
-  
-  // Default template that is then overridden
-  templateString: dojo.cache("dojoui", "widget/templates/DataSourceItem.html"),  
-  
-  /**
-   * Will set a new node object and re-render the template
-   * @param {Object} node
-   */
-  updateNode:function(node){
-    this.node = node;
-    this.render();
-  },
-  
-  // This will run any code that is defined via a dojoAttachEvent property.
-  _eventHandler:function(e){
-    var elem = e.target;
-    eval(dojo.attr(elem,'eventHandler'));
-  }
-  
-}); 
+	  //The data used by the template
+	  node:null,
+	  
+	  // Default template that is then overridden
+	  templateString: template,
+	  
+	  /**
+	   * Will set a new node object and re-render the template
+	   * @param {Object} node
+	   */
+	  updateNode:function(node){
+	    this.node = node;
+	    this.render();
+	  },
+	  
+	  // This will run any code that is defined via a dojoAttachEvent property.
+	  _eventHandler:function(e){
+	    var elem = e.target;
+	    eval(domAttr.set(elem,'eventHandler'));
+	  }
+	  
+	}); 
+});

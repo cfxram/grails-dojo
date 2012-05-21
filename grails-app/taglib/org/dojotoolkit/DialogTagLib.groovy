@@ -14,7 +14,7 @@ class DialogTagLib {
    * This will bring in all the resources required by the dialog tag.
    */
   def dialogResources = {attrs, body ->
-    out << dojo.require(modules: ['dojoui.widget.Dialog','dojoui.layout.ContentPane'])
+    out << dojo.require(modules: ['dojoui/widget/Dialog','dojoui/layout/ContentPane'])
   }
 
 
@@ -52,10 +52,12 @@ class DialogTagLib {
     def closableScript = ""
     if (attrs.remove("closable") == "false") {
       closableScript = """
-        dojo.style(this.closeButtonNode,"display","none");
-        this._onKey = function(evt){
-            if(evt.charOrCode == dojo.keys.ESCAPE) return;
-        }
+	  	require(["dojo/dom-style","dojo/keys], function(domStyle,keys){
+	        domStyle.set(this.closeButtonNode,"display","none");
+	        this._onKey = function(evt){
+	            if(evt.charOrCode == keys.ESCAPE) return;
+	        }
+	  	}
       """
     }
 
@@ -76,9 +78,9 @@ class DialogTagLib {
 
     out << """
       <style>#${attrs?.id}_underlay{background:gray; ${modelessTxt};}</style>
-      <div dojoType="dojoui.widget.Dialog" ${Util.htmlProperties(attrs)}>
-        <script type="dojo/connect" event="show">${onOpen}</script>
-        <script type="dojo/connect" event="startup">
+      <div data-dojo-type="dojoui.widget.Dialog" ${Util.htmlProperties(attrs)}>
+        <script type="dojo/connect" data-dojo-event="show">${onOpen}</script>
+        <script type="dojo/connect" data-dojo-event="startup">
           ${visibleScript}
           ${closableScript}
         </script>
@@ -96,7 +98,7 @@ class DialogTagLib {
    */
   def openDialogScript = {attrs, body ->
     def onclick = attrs?.onclick ?: ''
-    out << "dijit.byId('${attrs?.dialogId}').show(); ${onclick}; return false;"
+    out << "require(['dijit/registry'],function(registry){registry.byId('${attrs?.dialogId}').show(); ${onclick}; return false;});"
   }
 
 
@@ -106,7 +108,7 @@ class DialogTagLib {
    */
   def closeDialogScript = {attrs,body->
     def onclick = attrs?.onclick ?: ''
-    out << "dijit.byId('${attrs?.dialogId}').hide(); ${onclick}; return false;"
+    out << "require(['dijit/registry'],function(registry){registry.byId('${attrs?.dialogId}').hide(); ${onclick}; return false;});"
   }
 
 
@@ -161,6 +163,6 @@ class DialogTagLib {
     def label = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs.remove('label')
     def dialogId = attrs.remove('dialogId')// id of the dialog to close
     def id = attrs.remove("id") ?: "dojo_ui_dialog_close${Util.randomId()}"
-    out << """ <a target="_self" id="${id}" ${Util.htmlProperties(attrs)} onclick="dijit.byId('${dialogId}').hide(); ${onclick}">${label}</a> """
+    out << """ <a target="_self" id="${id}" ${Util.htmlProperties(attrs)} onclick="require(['dijit/registry'],function(registry){registry.byId('${dialogId}').hide(); ${onclick}});">${label}</a> """
   }
 }

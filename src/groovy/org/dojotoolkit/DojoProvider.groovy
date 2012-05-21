@@ -42,7 +42,7 @@ class DojoProvider implements JavascriptProvider {
     else if(params instanceof String){
       paramString = "{${params}}"      
     }
-    return paramString
+    return paramString.replaceAll("this", "obj")
   }
 
 
@@ -90,6 +90,7 @@ class DojoProvider implements JavascriptProvider {
     def dojoString =
     "${onLoading}" +
     "try{DojoGrailsSpinner.show();}catch(e){} " +
+	"var obj = this;" +
     "require(['dojo/_base/xhr','dijit/registry', 'dojo/_base/array', 'dojo/dom', 'dojo/dom-attr', 'dojo/parser'], " +
 		"function(xhr,registry, array, dom, domAttr, parser) { " + 
 			"xhr.${method.toLowerCase()}({" +

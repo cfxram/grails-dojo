@@ -2,20 +2,22 @@
 <head>
   <title>Grid Component</title>
   <meta name="layout" content="main"/>
-  <dojo:require modules="['dijit.layout.TabContainer','dijit.layout.ContentPane']"/>
-  <dojo:require modules="['dojoui.layout.TabContainer','dojoui.layout.ContentPane']"/>
+  <dojo:require modules="['dijit/layout/TabContainer','dijit/layout/ContentPane']"/>
+  <dojo:require modules="['dojoui/layout/TabContainer','dojoui/layout/ContentPane']"/>
   <dojo:gridResources theme="tundra"/>
   <dojo:dataSourceViewResources/>
 
   <script type="text/javascript">
       function myTest(){
-      var allGrid = dijit.byId('myGrid');
-      console.log('All Users Grid');
-      console.log(allGrid.selectedRows);
-
-      var progGrid = dijit.byId('myGrid2');
-      console.log('Program Users Grid');
-      console.log(progGrid.selectedRows);
+          require(["dijit/registry"], function(registry){
+		      var allGrid = registry.byId('myGrid');
+		      console.log('All Users Grid');
+		      console.log(allGrid.selectedRows);
+		
+		      var progGrid = registry.byId('myGrid2');
+		      console.log('Program Users Grid');
+		      console.log(progGrid.selectedRows);
+          });
       }
   </script>
 	
@@ -68,15 +70,15 @@
 		}
 	%>
 
-  <div dojoType="dojoui.layout.TabContainer" style="width:750px; height:300px; margin:2em">
-    <div dojoType="dojoui.layout.ContentPane" title="First Grid" containLinks="true">	
+  <div data-dojo-type="dojoui.layout.TabContainer" style="width:750px; height:300px; margin:2em">
+    <div data-dojo-type="dojoui.layout.ContentPane" title="First Grid" containLinks="true">	
 		  <dojo:grid controller="widget" action="listJson" name="myGrid" max="20" sort="name" header="${header}" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 				<dojo:col width="15%" name="Color" field="color"/>
 				<dojo:col width="15%" name="Shape" field="shape"/>
 		  </dojo:grid>		
     </div>
-    <div dojoType="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">	
+    <div data-dojo-type="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">	
 		  <dojo:grid controller="widget" action="listJson" name="myGrid2" max="20" sort="color"
 				style="height:200px;" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
