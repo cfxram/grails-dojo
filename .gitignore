@@ -3,3 +3,7 @@
 grails-dojo.iml
 grails-dojo-grailsPlugins.iml
 target/
+target-eclipse/
+.settings
+.classpath
+.project

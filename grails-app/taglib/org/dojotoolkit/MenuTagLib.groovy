@@ -11,7 +11,7 @@ class MenuTagLib {
      * This will bring in all the resources required by the menu tag.
      */
     def menuResources = {attrs, body ->
-        out << dojo.require(modules: ['dijit.Menu', 'dijit.MenuItem', 'dijit.MenuBar', 'dijit.MenuBarItem', 'dijit.MenuSeparator', 'dijit.PopupMenuBarItem', 'dijit.PopupMenuItem'])
+        out << dojo.require(modules: ['dijit/Menu', 'dijit/MenuItem', 'dijit/MenuBar', 'dijit/MenuBarItem', 'dijit/MenuSeparator', 'dijit/PopupMenuBarItem', 'dijit/PopupMenuItem'])
     }
     /**
      * This will create the base menu item either a menu bar or a popup menu/right click(context) or sidenav.  The menu is then filled with
@@ -37,9 +37,12 @@ class MenuTagLib {
           // This prevents the menu from flickering by hidding it before it renders.
           attrs.style = (attrs?.style) ? "${attrs.style}; display:none;" : "display:none;"
           out << """
-            <div dojoType="dijit.MenuBar" id="${id}" ${Util.htmlProperties(attrs)}>
-              <script type="dojo/connect" method="postCreate">
-                  dojo.style(this.domNode,'display','block');
+            <div data-dojo-type="dijit.MenuBar" id="${id}" ${Util.htmlProperties(attrs)}>
+              <script type="dojo/connect" data-dojo-event="postCreate">
+				var obj = this;
+				require(['dojo/dom-style'], function(domStyle){
+                  domStyle.set(obj.domNode,'display','block');
+				});
               </script>
               ${directionString}
               ${body()}
@@ -48,9 +51,9 @@ class MenuTagLib {
         }
         else if (type == 'barpopup') {
           out << """
-            <div dojoType="dijit.PopupMenuBarItem" id="${id}" ${Util.htmlProperties(attrs)}>
+            <div data-dojo-type="dijit.PopupMenuBarItem" id="${id}" ${Util.htmlProperties(attrs)}>
               <span>${label}</span>
-              <div dojoType="dijit.Menu">
+              <div data-dojo-type="dijit.Menu">
                   ${body()}
               </div>
             </div>
@@ -58,9 +61,9 @@ class MenuTagLib {
         }
         else if (type == 'popup') {
           out << """
-            <div dojoType="dijit.PopupMenuItem" id="${id}" ${Util.htmlProperties(attrs)}>
+            <div data-dojo-type="dijit.PopupMenuItem" id="${id}" ${Util.htmlProperties(attrs)}>
               <span>${label}</span>
-              <div dojoType="dijit.Menu">
+              <div data-dojo-type="dijit.Menu">
                 ${body()}
               </div>
             </div>
@@ -68,7 +71,7 @@ class MenuTagLib {
         }
         else if (type == 'sidenav') {
           out << """
-            <div dojoType="dijit.Menu" id="${id}" ${Util.htmlProperties(attrs)}>
+            <div data-dojo-type="dijit.Menu" id="${id}" ${Util.htmlProperties(attrs)}>
                 ${body()}
             </div>
           """
@@ -78,7 +81,7 @@ class MenuTagLib {
           def style = attrs.remove('style') ?: ''
           style = """ style="${attrs.style}; display:none;" """
           out << """
-            <div dojoType="dijit.Menu" id="${id}" style="${style}" ${Util.htmlProperties(attrs)} contextMenuForWindow="true">
+            <div data-dojo-type="dijit.Menu" id="${id}" style="${style}" ${Util.htmlProperties(attrs)} contextMenuForWindow="true">
               ${body()}
             </div>
           """
@@ -91,7 +94,7 @@ class MenuTagLib {
      * This will create a menu separator object.
      */
     def menuSeparator = {attrs, body ->
-        out << """ <div dojoType="dijit.MenuSeparator" ${Util.htmlProperties(attrs)}></div> """
+        out << """ <div data-dojo-type="dijit.MenuSeparator" ${Util.htmlProperties(attrs)}></div> """
     }
 
 
@@ -132,24 +135,24 @@ class MenuTagLib {
       }
 
       if (type == 'bar') {
-        out << """ <div dojoType="dijit.MenuBarItem" id="${id}" ${Util.htmlProperties(attrs)}>${label}</div> """
+        out << """ <div data-dojo-type="dijit.MenuBarItem" id="${id}" ${Util.htmlProperties(attrs)}>${label}</div> """
       }
 
       else if (type == 'item') {
-        out << """<div dojoType="dijit.MenuItem" id="${id}" ${Util.htmlProperties(attrs)}>${label}</div>"""
+        out << """<div data-dojo-type="dijit.MenuItem" id="${id}" ${Util.htmlProperties(attrs)}>${label}</div>"""
       }
 
       else if (type == 'popup') {
         out << """
-          <div dojoType="dijit.PopupMenuItem" ${Util.htmlProperties(attrs)}>
-          <div dojoType="dijit.Menu" id="${id}_submenu">${label}</div></div>
+          <div data-dojo-type="dijit.PopupMenuItem" ${Util.htmlProperties(attrs)}>
+          <div data-dojo-type="dijit.Menu" id="${id}_submenu">${label}</div></div>
         """
       }
 
       else if (type =='popupBar') {
         out << """
-          <div dojoType="dijit.PopupMenuBarItem" ${onClick} ${Util.htmlProperties(attrs)}>
-          <div dojoType="dijit.Menu" id="${id}_submenu">${label}</div></div>
+          <div data-dojo-type="dijit.PopupMenuBarItem" ${onClick} ${Util.htmlProperties(attrs)}>
+          <div data-dojo-type="dijit.Menu" id="${id}_submenu">${label}</div></div>
         """
       }
     }

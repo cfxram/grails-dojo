@@ -11,7 +11,7 @@ class ProgressBarTagLib {
      * This will bring in all the resources required by the progressBar tag.
      */
     def progressBarResources = {attrs, body ->
-        out << dojo.require(modules: ['dijit.ProgressBar'])
+        out << dojo.require(modules: ['dijit/ProgressBar'])
     }
     /**
      * This will define a progress bar object.  It supports all the dojo attributes.
@@ -22,6 +22,6 @@ class ProgressBarTagLib {
     def progressBar = {attrs, body ->
         def id = attrs.remove("id") ?: "dojo_ui_dialog${Util.randomId()}"
         def title = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs.remove('title')
-        out << """ <div dojoType="dijit.ProgressBar" id="${id}" title="${title}" ${Util.htmlProperties(attrs)}></div> """
+        out << """ <div data-dojo-type="dijit.ProgressBar" id="${id}" title="${title}" ${Util.htmlProperties(attrs)}></div> """
     }
 }

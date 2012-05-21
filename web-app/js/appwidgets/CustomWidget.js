@@ -1,13 +1,17 @@
-dojo.provide("appwidgets.CustomWidget");
-dojo.require("dijit._Widget");
-dojo.require("dijit._Templated");
-
 /**
  * Widget that will render templates based on a data source.
  */
-dojo.declare("appwidgets.CustomWidget",[dijit._Widget, dijit._Templated],{
-
-   templateString: dojo.cache("appwidgets", "templates/CustomWidget.html")
-
-
+define(["dojo/_base/declare", 
+        "dijit/_WidgetBase", 
+        "dijit/_TemplatedMixin",
+        "dojo/text!./templates/CustomWidget.html"], function(declare,_WidgetBase,_TemplatedMixin, template) {
+		
+		return declare([_WidgetBase, _TemplatedMixin],{
+			
+		   templateString: template,
+		   
+		   postConstruct : function(){
+			   console.debug("Custom widget loaded");
+		   }
+		});
 });

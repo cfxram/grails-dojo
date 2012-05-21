@@ -10,7 +10,7 @@ class GridTagLib {
    */
   def gridResources = {attrs,body ->
 	def theme = attrs?.remove("theme") ?: "tundra"
-    out << dojo.require(modules:['dojoui.data.GrailsQueryReadStore','dojoui.widget.DataGrid','dijit.layout.BorderContainer','dijit.layout.ContentPane','dojoui.Bind'])    
+    out << dojo.require(modules:['dojoui/data/GrailsQueryReadStore','dojoui/widget/DataGrid','dijit/layout/BorderContainer','dijit/layout/ContentPane','dojoui/Bind'])    
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
     out << dojo.css(file:"dojox/grid/resources/${theme}Grid.css") 
     out << dojo.css(file:"dojoui/widget/resources/dataGrid.css")
@@ -42,18 +42,18 @@ class GridTagLib {
 
     // Data Source 
     out << """
-      <div dojoType="dojoui.data.GrailsQueryReadStore" jsid="${storeId}" url="${href}" max="${max}"></div>
+      <div data-dojo-type="dojoui.data.GrailsQueryReadStore" data-dojo-id="${storeId}" url="${href}" max="${max}"></div>
     """
       
     // Grid
     if(header){
       out << """
-        <div dojoType="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
-          <div dojoType="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
+        <div data-dojo-type="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
+          <div data-dojo-type="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
             ${(header && (header instanceof Closure)) ? header.call() : header}
           </div>
-          <div dojoType="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
-            <div dojoType="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
+          <div data-dojo-type="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
+            <div data-dojo-type="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
               sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
               <script type="dojo/method">
                   var gridStruct = [{
@@ -72,7 +72,7 @@ class GridTagLib {
     }
     else{
       out << """
-        <div dojoType="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}"
+        <div data-dojo-type="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}"
           sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
           <script type="dojo/method">
               var gridStruct = [{
@@ -109,9 +109,11 @@ class GridTagLib {
     if (cleanedString.length()) {
       formatter = """
         function(value,rowIndex,obj){
-            var item = obj.grid.getItem(rowIndex).i; 
-            var formatTemplate = ' ${cleanedString} ';
-            return dojo.replace(formatTemplate, {"row":item});
+		  	require(['dojo/_base/lang'], function(lang){
+            	var item = obj.grid.getItem(rowIndex).i; 
+            	var formatTemplate = ' ${cleanedString} ';
+            	return lang.replace(formatTemplate, {"row":item});
+	  		});
         }
       """
     }
@@ -135,7 +137,7 @@ class GridTagLib {
    def bind = {attrs, body ->
      attrs.defaultValue = attrs.remove("default") ?: ""
      out << """
-       <span dojoType="dojoui.Bind" ${Util.htmlProperties(attrs)}>${attrs.defaultValue}</span>
+       <span data-dojo-type="dojoui.Bind" ${Util.htmlProperties(attrs)}>${attrs.defaultValue}</span>
      """
    }  
 
@@ -151,7 +153,7 @@ class GridTagLib {
      def code = attrs.remove('code')
      def label = attrs.remove('label')
      def form = attrs.remove('form') ?: ''     
-     def btnClick = "dijit.byId('${grid}').query('${form}')"
+     def btnClick = "require(['dijit/registry'], function(registry){registry.byId('${grid}').query('${form}');});"
           
      if(code?.length()){
        label = message(code:code)

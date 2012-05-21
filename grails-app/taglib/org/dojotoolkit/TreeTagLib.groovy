@@ -8,7 +8,7 @@ class TreeTagLib {
    * This will bring in all the resources required by the dialog tag.
    */
   def treeResources = {attrs, body ->
-    out << dojo.require(modules: ['dojoui.widget.Tree','dojoui.widget.ForestStoreModel','dojo.data.ItemFileWriteStore'])
+    out << dojo.require(modules: ['dojoui/widget/Tree','dojoui/widget/ForestStoreModel','dojo/data/ItemFileWriteStore'])
   }
 
 
@@ -41,7 +41,7 @@ class TreeTagLib {
     // Define empty data store json string is attached
     if(attrs?.data){
       out << """
-        <div dojoType="dojo.data.ItemFileWriteStore" jsid="${id}_store" urlPreventCache="yes">
+        <div data-dojo-type="dojo.data.ItemFileWriteStore" jsid="${id}_store" urlPreventCache="yes">
           <script type="dojo/method">
             var myData = ${attrs.remove("data")};
             this.data = myData;
@@ -51,15 +51,15 @@ class TreeTagLib {
     }
     else{
       out << """
-        <div dojoType="dojo.data.ItemFileWriteStore" jsid="${id}_store" url="${url}" urlPreventCache="yes"></div>
+        <div data-dojo-type="dojo.data.ItemFileWriteStore" jsid="${id}_store" url="${url}" urlPreventCache="yes"></div>
       """
     }
 
     out << """
-      <div dojoType="dojoui.widget.ForestStoreModel" rootLabel="${attrs.rootLabel}" rootId="treeRoot"
+      <div data-dojo-type="dojoui.widget.ForestStoreModel" rootLabel="${attrs.rootLabel}" rootId="treeRoot"
           store="${id}_store" jsid="${id}_forestStore" childrenAttrs="${attrs.childField}"></div>
-      <div dojoType="dojoui.widget.Tree" model="${id}_forestStore" id="${id}" ${Util.htmlProperties(attrs)}>
-        <script type="dojo/event" event="setGrailsPluginProperties">
+      <div data-dojo-type="dojoui.widget.Tree" model="${id}_forestStore" id="${id}" ${Util.htmlProperties(attrs)}>
+        <script type="dojo/method" data-dojo-event="setGrailsPluginProperties">
           ${body()}
         </script>
       </div>
