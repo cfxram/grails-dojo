@@ -7,7 +7,7 @@ class DataSourceViewTagLib {
 
 
   def dataSourceViewResources = {attrs,body ->
-        out << dojo.require(modules:['dojoui.widget.DataSourceView', 'dojo.data.ItemFileWriteStore'])
+        out << dojo.require(modules:['dojoui/widget/DataSourceView', 'dojo/data/ItemFileWriteStore'])
   }
   
   
@@ -25,7 +25,7 @@ class DataSourceViewTagLib {
     // Define empty data store json string is attached
     if(attrs?.data){
       out << """
-        <div dojoType="dojo.data.ItemFileWriteStore" jsid="${name}_store" urlPreventCache="yes">
+        <div data-dojo-type="dojo.data.ItemFileWriteStore" data-dojo-id="${name}_store" urlPreventCache="yes">
           <script type="dojo/method">
             var myData = ${attrs.remove("data")};
             this.data = myData;
@@ -35,8 +35,8 @@ class DataSourceViewTagLib {
     }
 
     out << """
-      <div dojoType="dojoui.widget.DataSourceView" id="${name}" ${Util.htmlProperties(attrs)}>
-        <script type="dojo/connect" method="postCreate" args="args">
+      <div data-dojo-type="dojoui.widget.DataSourceView" id="${name}" ${Util.htmlProperties(attrs)}>
+        <script type="dojo/connect" data-dojo-event="postCreate" data-dojo-args="args">
           this.store = ${store}
         </script>
         ${body()}

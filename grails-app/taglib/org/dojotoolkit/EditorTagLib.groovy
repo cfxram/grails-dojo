@@ -9,7 +9,7 @@ class EditorTagLib {
    * Outputs the required javascript dojo libraries
    */
   def editorResources = {attrs,body ->
-    out << dojo.require(modules:['dojoui.widget.Editor'])
+    out << dojo.require(modules:['dojoui/widget/Editor'])
     out << dojo.css(file:"dojox/editor/plugins/resources/css/PasteFromWord.css")
   }
 
@@ -29,7 +29,7 @@ class EditorTagLib {
 
     out << """
       <fieldset class="dojo-ui-editor" style="${style}">
-        <div dojoType="dojoui.widget.Editor" ${Util.htmlProperties(attrs)} onclick="this.focus()">${value}</div>
+        <div data-dojo-type="dojoui.widget.Editor" ${Util.htmlProperties(attrs)} onclick="this.focus()">${value}</div>
       </fieldset>
     """
 

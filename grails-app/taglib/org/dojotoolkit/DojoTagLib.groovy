@@ -1,6 +1,6 @@
 package org.dojotoolkit
 
-import grails.converters.deep.JSON
+import grails.converters.JSON
 
 
 class DojoTagLib {
@@ -100,7 +100,7 @@ class DojoTagLib {
    *                                    have to manually include the generated files yourself but it give more
    *                                    fine grain control on when the files get included.
    *
-   * @param attrs.async = Boolean (false) If true will use the AMD loader.
+   * @param attrs.async = Boolean (true) If false will use the loader in non-AMD mode.
    * @param attrs.modules = List (optional) A list of required modules to be included. Just calles require().
    * @param attrs.modulePaths = List (optional) A list of paths to search for required modules.
    */
@@ -108,7 +108,7 @@ class DojoTagLib {
     // Standard Dojo Config Settings (and defaults)
     attrs.isDebug = attrs.isDebug ?: "false"
     attrs.parseOnLoad = attrs.parseOnLoad ?: "true"
-    attrs.async = attrs.async ?: "false"
+    attrs.async = attrs.async ?: "true"
 
 
     // Custom Properties for Dojo Plugin
@@ -121,14 +121,17 @@ class DojoTagLib {
 
     // Add custom tags space to modulePath (Append new path to be relative to plugin's version of dojo.js
     def moduleStringList = []
-	  def packagePaths = []
+	  def paths = []
     modulePaths?.each{k,v->
       moduleStringList.add("'${k}':'${jsRoot}/${v}'")
-	    packagePaths.add("{name : '${k}', location : '${jsRoot}/${v}'}")
+	  paths.add("'${k}':'${v}'")
     }
     //Add DojoUI Module Path
     moduleStringList.add("'dojoui':'../dojoui'")
-	  packagePaths.add("{name : 'dojoui', location : '../dojoui'}")
+	paths.add("'dojoui':'dojo/${Dojo.version}/dojoui'")
+	paths.add("'dojo':'dojo/${Dojo.version}/dojo'")
+	paths.add("'dijit':'dojo/${Dojo.version}/dijit'")
+	paths.add("'dojox':'dojo/${Dojo.version}/dojox'")
 
     def dojoConfig = attrs.collect{ "${it.key}:${it.value}" }.join(', ')
 
@@ -140,7 +143,7 @@ class DojoTagLib {
     if (attrs.async == "true") {
       out << """
         <script>
-          dojoConfig = {${dojoConfig}, packages:[ ${packagePaths.join(',')}] };
+          dojoConfig = {${dojoConfig}, paths:{${paths.join(',')}}, baseUrl : '${jsRoot}' };
           dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
         </script>
         <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
@@ -153,7 +156,7 @@ class DojoTagLib {
           dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}} };
           dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
         </script>
-        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>        
+        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js.uncompressed.js'></script>        
       """
     }
     if(showSpinner == "true"){
@@ -211,50 +214,48 @@ class DojoTagLib {
 
 
   /**
-   * Will include dojo modules via the dojo loader.
+   * Will include dojo modules via the dojo loader and make them available in the body of the tag script
+   * Each require will provide a callback parameter named after the last part of the module name
+   * e.g.: "dijit/form/Form" will provide a parameter called "Form" in the callback
    * @param attrs.modules = This is a map of components to include
-   * @param attrs.async = If true will use the Dojo AMD compatible way to bring in modules.
+   * @param attrs.callbackParamNames = This overrides the default callback parameter names, in case you want to use different ones than the defaults
+   * @param attrs.wrapperFunction = put the require in a wrapper function (include its signature). e.g: myFunction(param1,param2)
    */
-  def require = {attrs ->
-    attrs.async = attrs?.async ?: "false"
-    if (attrs.modules) {
-      if(attrs?.async == "true"){
-        out << amdRequire(attrs)
-      }
-      else{
-        def modules = attrs.modules.collect{"dojo.require('${it}')"}
-        out << "<script type='text/javascript'>${modules.join(';')}</script>"
-      }
-    }
+  def require = {attrs, body ->
+	  def modules = attrs?.modules?.collect{ "'${it}'" }
+	  def callbacks = attrs?.modules?.collect{ it.split("/").last() }
+	  if (attrs?.callbackParamNames) {
+		  callbacks = attrs.callbackParamNames
+	  }
+	  assert attrs?.callbackParamNames?.size() <= modules.size()
+	  
+	  out << """
+		<script type='text/javascript'>
+		  """
+	  if (attrs?.wrapperFunction) {
+		  out << "function ${attrs?.wrapperFunction}{"
+	  }
+      out << """
+		  	require(${modules},
+		  		function(${callbacks.join(',')}){
+	  """
+		attrs?.modulePaths?.each{k,v->
+		  out << " dojo.registerModulePath('${k}','${v}'); "
+		}
+  
+	  out << body()
+	  out << """
+	  		});
+	  """
+
+	  if (attrs?.wrapperFunction) {
+		  out << "}" // wrapper function
+	  }
+	  out << """
+	  </script>
+	  """
+	  
   }
-
-
-
-  /**
-   * Will bring in modules using the new amd async approach.
-   * @param attrs.modules - The modules to include
-   * @param attrs.modulePaths - Defines custom paths to look for those modules.
-   */
-  def amdRequire = {attrs->
-    def modules = attrs.modules.collect{"dojo.require('${it}')"}
-
-    out << """
-      <script type='text/javascript'>
-        require(['dojo/_base/kernel', 'dojo/_base/loader'],
-        function(dojo){
-    """
-      attrs?.modulePaths?.each{k,v->
-        out << " dojo.registerModulePath('${k}','${v}'); "
-      }
-
-    out << """
-        ${modules.join(';')}
-        });
-      </script>
-    """
-  }
-
-
 
 
   /**

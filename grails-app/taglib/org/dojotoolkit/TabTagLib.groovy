@@ -12,7 +12,7 @@ class TabTagLib {
      * This will bring in all the resources required by the tab and its related components.
      */
     def tabResources = {attrs, body ->
-        out << dojo.require(modules: ['dijit.layout.TabContainer'])
+        out << dojo.require(modules: ['dijit/layout/TabContainer'])
     }
     /**
      * This will create a tab container item which can then be filled with content pane. <br/>
@@ -25,7 +25,7 @@ class TabTagLib {
     def tabContainer = {attrs, body ->
         def id = attrs.remove("id") ?: "dojo_ui_dialog${Util.randomId()}"
         out << """
-            <div dojoType="dijit.layout.TabContainer" ${Util.htmlProperties(attrs)}>
+            <div data-dojo-type="dijit.layout.TabContainer" ${Util.htmlProperties(attrs)}>
                 ${body()}
             </div>
         """
