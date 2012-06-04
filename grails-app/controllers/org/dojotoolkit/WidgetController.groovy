@@ -99,6 +99,8 @@ class WidgetController {
 
   def popOverForm = {}
 
+  def dialogAndPopovers = {}
+
 
   def list = {
     Thread.currentThread().sleep(1000);

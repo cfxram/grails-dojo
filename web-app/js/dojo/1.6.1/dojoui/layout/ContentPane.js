@@ -36,9 +36,20 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
   /**
    * Convenience method to load new href in a window. But cleans up previous
    * data from old ajax call.
+   *
+   * This will also close all popups and dialogs before loading content;
+   *
    * @param href
    */
   loadHref:function(urlString){
+    dojo.forEach(this.getChildren(), function(widget){
+      if(widget.closeDropDown){
+        widget.closeDropDown();
+      }
+      if(widget.hide){
+        widget.hide()
+      }
+		});
     this.ioMethod = dojo.xhrGet;
     this.ioArgs = dojo.clone(this.baseIoArgs);
     this.ioArgs.content = null;

@@ -4,7 +4,11 @@
   <meta name="layout" content="main"/>
 	<dojo:tabResources/>
 	<dojo:frameResources/>
-    <dojo:require modules="['dijit.layout.StackContainer']" />
+  <dojo:popOverResources/>
+  <dojo:dateTimeResources/>
+  <dojo:editorResources/>
+  <dojo:dialogResources/>
+  <dojo:require modules="['dijit.layout.StackContainer']" />
   <style type="text/css">
     .stackPane{
       height:200px;
@@ -33,8 +37,7 @@
       This is content in my first tab.<br/>
       <g:link action="list">This will stay in the tab.</g:link>
     </dojo:frame>
-    <dojo:frame title="My second tab">
-      <g:link action="list">This will stay in the tab.</g:link>
+    <dojo:frame title="My second tab" action="dialogAndPopovers" selected="true" name="remoteTabData">
     </dojo:frame>
   </dojo:tabContainer>
 

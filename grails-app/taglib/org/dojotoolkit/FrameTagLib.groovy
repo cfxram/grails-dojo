@@ -65,7 +65,7 @@ class FrameTagLib {
         attrs.remove('params')
         attrs.remove('id')
       }      
-      attrs.onclick="${onclick}; dijit.byId('${frame}').ioArgs.content=null; dijit.byId('${frame}').set('href','${href}'); return false;"
+      attrs.onclick="${onclick}; dijit.byId('${frame}').loadHref('${href}'); return false;"
     }
     
     // If using a g:link elementId.. then make it the id.
