@@ -245,11 +245,11 @@ dojo.declare("dojoui.layout.ContentPane", dijit.layout.ContentPane,{
               error: function(err, args){
                 console.log(args);
                 var errorText = "<h3>Server Error</h3> Make sure your rendered response is wrapped in a <b>&lt;ui:ajaxUploadResponse&gt;</b> tag."
-                currentPane._setContent(errorText, true);
+                currentPane.set("content",errorText);
               },
-              load:function(response,ioArgs){
-                currentPane._setContent(response,true);
-                currentPane._constrainFormSubmissions();
+              load:function(response,ioArgs){              
+                currentPane.set("content",response);
+                currentPane.onDownloadEnd();
               }        
             }
             dojo.io.iframe.send(ioArgs);
