@@ -3,7 +3,7 @@
 </dojo:onload>
 
 
-<div style="margin: 3em; text-align: center">
+<div style="margin: 3em; text-align: center; width:600px; height:400px; overflow: auto;">
   <h1 style="margin-top: 0">Content From a remote gsp.</h1>
   <p>
     <g:link action="list" elementId="">This will load new content in the dialog</g:link>

@@ -69,9 +69,11 @@
 
   <%-- Dialog One --%>
   <dojo:dialog title="Dialog One" id="DialogOne">
-    <h1 style="padding: 3em">Hello. This is dialog One.</h1>
-    <dojo:closeDialog dialogId="DialogOne" style="float:right">Close with link</dojo:closeDialog>
-    <button onclick="${dojo.closeDialogScript(dialogId: 'DialogOne')}">Close with a button</button>
+    <div style="width:600px; height:400px;">
+      <h1 style="padding: 3em;">Hello. This is dialog One.</h1>
+      <dojo:closeDialog dialogId="DialogOne" style="float:right">Close with link</dojo:closeDialog>
+      <button onclick="${dojo.closeDialogScript(dialogId: 'DialogOne')}">Close with a button</button>
+    </div>
   </dojo:dialog>
 
   <%-- Dialog Two --%>

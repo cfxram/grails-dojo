@@ -286,7 +286,42 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
 			userStyle += match + ';';
 		});
 
+    /*
+    
+      Default created by original editor------------
+      body,html {
+        background: transparent;
+        padding: 1px 0 0 0;
+        margin: -1px 0 0 0;
+        width: 100%;
+        height: 100%;
+      }
+      body {
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        font: normal 12px Arial, Verdana, Helvetica, San-Serif;
+        min-height: 1em;
+        line-height: normal;
+      }
+      p {
+        margin: 1em 0;
+      }
+      #dijitEditorBody {
+        overflow-x: auto;
+        overflow-y: auto;
+        outline: 0px;
+      }
+      li > ul:-moz-first-node, li > ol:-moz-first-node {
+        padding-top: 1.2em;
+      }
+      li {
+        min-height: 1.2em;
+      }
 
+      ****** WHAT I CHANGED *****
+      p,blockquote {margin-top:0; margin-bottom:0;}
+    */
 
 
 		// need to find any associated label element and update iframe document title
@@ -321,7 +356,7 @@ dojo.declare("dojoui.widget.Editor",dijit.Editor,{
 			"\t\tmin-height:", this.minHeight, ";\n",
 			"\t\tline-height:", lineHeight,";\n",
 			"\t}\n",
-			"\tp{ margin: 1em 0; }\n",
+			"\tp,blockquote{margin-top: 0;margin-bottom:0}\n",
 
 			// Determine how scrollers should be applied.  In autoexpand mode (height = "") no scrollers on y at all.
 			// But in fixed height mode we want both x/y scrollers.  Also, if it's using wrapping div and in auto-expand
