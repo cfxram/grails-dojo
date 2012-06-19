@@ -1,4 +1,4 @@
-<plugin name='dojo' version='1.6.1.11-DEV-b' grailsVersion='1.3.0 &gt; *'>
+<plugin name='dojo' version='1.6.1.11d' grailsVersion='1.3.0 &gt; *'>
   <author>Rob Meidal</author>
   <authorEmail>cfxram@gmail.com</authorEmail>
   <title>Dojo 1.6.1 for Grails</title>
@@ -59,7 +59,6 @@
     <repository name='http://repo.grails.org/grails/plugins' url='http://repo.grails.org/grails/plugins/' />
     <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
     <repository name='grailsCore' url='http://svn.codehaus.org/grails/trunk/grails-plugins' />
-    <repository name='http://grails.org/plugins' url='http://grails.org/plugins' />
     <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
   </repositories>
   <dependencies />
