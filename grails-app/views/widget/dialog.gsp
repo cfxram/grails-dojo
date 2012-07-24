@@ -18,13 +18,14 @@
 
     function createNewDialog(){
       newDialog = window.newDialog || new dojoui.widget.Dialog({
-        title: "Created by Javascript",
+        title: "",
         id:'testPopUpPanel',
         containLinks:true,
         content:""
       });
 
       newDialog.loadHref('${createLink(action:"remoteDialogContentWithLinks")}');
+      pane.set("title","This was created with javascript");
       newDialog.show();
     }
   </script>
