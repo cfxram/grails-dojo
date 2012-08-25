@@ -8,7 +8,7 @@
 <body style="background:#ccc;" class="tundra">
 	
 	<div style="background:#fff; width:40%;margin:3em auto 0 auto; border:1px solid gray; padding:2em">
-		<h2 style="margin-top:0">Welcome to the Dojo Plugin</h2>
+		<h2 style="margin-top:0">Welcome to the Dojo Plugin - ${g.meta(name:'app.version')}</h2>
 		<h3>
 		  <g:link controller="widget" action="index">Try out the Remoting Tags</g:link>
 		</h3>
