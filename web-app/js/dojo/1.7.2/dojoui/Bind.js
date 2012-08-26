@@ -4,7 +4,7 @@ define(["dojo/_base/declare",
         "dojo/dom-attr"
         ], function(declare,_Widget,topic,domAttr){
 	
-	return declare(_Widget, {
+	return declare("dojoui.Bind",_Widget, {
 	  variable:"",
 	  defaultValue:"",
 	  _propertyArray:"",

@@ -53,7 +53,7 @@
       Stack Pane Two
     </div>
     <div data-dojo-type="dijit.layout.ContentPane" class="stackPane"  id="stackThree" style="height:100px; background: #ccc;">
-      Stack Pane Two
+      Stack Pane Three
     </div>
   </div>
 </div>

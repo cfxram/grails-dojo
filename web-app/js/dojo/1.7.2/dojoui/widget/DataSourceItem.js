@@ -7,7 +7,7 @@ define(["dojo/_base/declare",
 	/**
 	 * Widget that will render templates based on a data source.
 	 */
-	return declare([_Widget, _DomTemplated],{
+	return declare("dojoui.widget.DataSourceItem",[_Widget, _DomTemplated],{
   
 	  //The data used by the template
 	  node:null,

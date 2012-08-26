@@ -4,7 +4,7 @@ define(["dojo/_base/declare",
         "dojo/has"
         ], function(declare,ContentPane,Dialog) {
         
-	return declare([ContentPane, Dialog._DialogBase],{
+	return declare("dojoui.widget.Dialog",[ContentPane, Dialog._DialogBase],{
 
 	  onDownloadEnd:function(){
 	    this.inherited(arguments);

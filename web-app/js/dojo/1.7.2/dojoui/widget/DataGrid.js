@@ -5,7 +5,7 @@ define(["dojo/_base/declare",
         "dojo/data/ItemFileWriteStore",
         "dojo/_base/lang"], function(declare,DataGrid,_Grid,CheckBox,ItemFileWriteStore,lang){
 	
-	var dataGrid = declare(DataGrid, {
+	var dataGrid = declare("dojoui.widget.DataGrid",DataGrid, {
 	    // Used to turn on the indirect selection checkboxes
 	    selectable:false,
 	    

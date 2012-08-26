@@ -16,7 +16,7 @@ define(["dojo/_base/declare",
 	/**
 	 * Widget that will render templates based on a data source.
 	 */
-	return declare([_Widget,_Templated],{
+	return declare("dojoui.widget.DataSourceView",[_Widget,_Templated],{
 	  store:null,
 	  childField:'',
 	  templateString: template,

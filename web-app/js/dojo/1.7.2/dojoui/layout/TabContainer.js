@@ -2,7 +2,7 @@ define(["dojo/_base/declare",
         "dijit/layout/TabContainer", 
         "dojo/io/iframe"], function(declare, TabContainer, iframe) {
 	
-	return declare(TabContainer,{
+	return declare("dojoui.layout.TabContainer",TabContainer,{
 
   
 	  /**

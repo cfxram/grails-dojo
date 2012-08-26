@@ -5,7 +5,7 @@ define(["dojo/_base/declare",
         "dojo/json",
         "dojo/_base/xhr"], function(declare,QueryReadStore,lang,domForm,json,xhr) {
 	
-	return declare(QueryReadStore,{
+	return declare("dojoui.data.GrailsQueryReadStore",QueryReadStore,{
 		urlPreventCache:true,
 		max: 100,
 		sort: "",
