@@ -3,7 +3,10 @@ define(["dojo/_base/declare",
         "dojox/grid/_Grid",
         "dijit/form/CheckBox",
         "dojo/data/ItemFileWriteStore",
-        "dojo/_base/lang"], function(declare,DataGrid,_Grid,CheckBox,ItemFileWriteStore,lang){
+        "dojo/_base/lang",
+        "dojo/topic",
+        "dojo/dom"], function(declare,DataGrid,_Grid,CheckBox,ItemFileWriteStore,lang,topic,dom){
+
 	
 	var dataGrid = declare("dojoui.widget.DataGrid",DataGrid, {
 	    // Used to turn on the indirect selection checkboxes
@@ -91,7 +94,7 @@ define(["dojo/_base/declare",
 	     */
 	    _onFetchComplete:function(items,req){
 	      this.rowCount = req.store._numRows; // TODO: find another way to count this.
-	      dojo.publish(this.publishQueName,[this]);
+        topic.publish(this.publishQueName,[this]);
 	      this.inherited(arguments);
 	    },
 	
@@ -112,7 +115,7 @@ define(["dojo/_base/declare",
 	     * Passes a form id to be serialized and then passed to the server.
 	     */
 	    query:function(form){
-	      var elem = dojo.byId(form);
+	      var elem = dom.byId(form);
 	      if(elem){
 	        this.store.setQueryData(elem);
 	      }
@@ -180,7 +183,7 @@ define(["dojo/_base/declare",
 	                name: "checkBox",
 	                value: id,
 	                checked: checked,
-	                onChange: dojo.hitch(obj.grid, function(checked) {
+	                onChange: lang.hitch(obj.grid, function(checked) {
 	                    if (checked) {
 	                        this.addRowToSelected(checkBox.item);
 	                    }
@@ -217,7 +220,7 @@ define(["dojo/_base/declare",
 	      this.selectedStore.save();    
 	      
 	      // Publish grid object to the publish Queue.
-	      dojo.publish(this.publishQueName,[this]);
+	      topic.publish(this.publishQueName,[this]);
 	    },
 	
 	
@@ -267,13 +270,13 @@ define(["dojo/_base/declare",
 	      this.selected -= 1;
 	      this.selectedStore.fetchItemByIdentity({
 	        "identity":newObj.id,
-	        onItem:dojo.hitch(this,function(item){
+	        onItem:lang.hitch(this,function(item){
 	          this.selectedStore.deleteItem(item)
 	        })
 	      });
 	      
 	      this.selectedStore.save();
-	      dojo.publish(this.publishQueName,[this]);
+	      topic.publish(this.publishQueName,[this]);
 	    }
 	});
 	

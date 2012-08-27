@@ -109,11 +109,13 @@ class GridTagLib {
     if (cleanedString.length()) {
       formatter = """
         function(value,rowIndex,obj){
-		  	require(['dojo/_base/lang'], function(lang){
-            	var item = obj.grid.getItem(rowIndex).i; 
-            	var formatTemplate = ' ${cleanedString} ';
-            	return lang.replace(formatTemplate, {"row":item});
-	  		});
+          var item = obj.grid.getItem(rowIndex).i;
+          var formatTemplate = ' ${cleanedString} ';
+          var templateValue = ""
+          require(['dojo/_base/lang'], function(lang){
+            templateValue = lang.replace(formatTemplate, {"row":item});
+          });
+          return templateValue
         }
       """
     }
