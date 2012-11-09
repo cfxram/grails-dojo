@@ -50,11 +50,15 @@
       var renamedString= prompt ("Enter new name:", name);
       ${remoteFunction(action:'remoteJsFunction', update:'myUpdateRegion',params:"'name':renamedString,'myId':myId")}
     }   
-    
+
     function renameForDojoWithDomElem(name, myId){
       var renamedString= prompt ("Enter new name:", name);
       ${remoteFunction(action:'remoteJsFunction',params:"'name':renamedString,'myId':myId")}
-    }  
+    }
+
+    function testRemoteFuncWithForm(){
+      ${remoteFunction(action:'remoteJsFunction', formName:'searchWidgets')}
+    }
   </g:javascript>
 
 
@@ -151,7 +155,12 @@
 	  <li>
 			Remote Function (Without Dom Elem Update): 
 			<button onclick="renameForDojoWithDomElem('DojoPlugin',34)">Click Me to Activate</button>
-		</li>		
+		</li>
+    <li>
+      Remote Function (with Form Value Serialization)
+      <button onclick="testRemoteFuncWithForm()">Click Me to Submit Form</button>
+
+    </li>
 	</ul>
 	<div id="myUpdateRegion" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
 	<div id="myUpdateRegion2" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>

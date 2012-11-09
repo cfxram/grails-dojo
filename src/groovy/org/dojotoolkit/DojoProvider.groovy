@@ -177,10 +177,16 @@ class DojoProvider implements JavascriptProvider {
     def onLoading     = attrs?.onLoading
     def onLoaded      = attrs?.onLoaded
     def onComplete    = attrs?.onComplete
-    def formName      = attrs?.formName
     def preventCache  = attrs?.preventCache ?: 'true'
     def enctype       = attrs?.enctype   // Used to add file upload capabilities
     def uploadFile    = attrs.uploadFile // Used to add file upload capabilities
+    def formName      = attrs?.formName
+    if(formName){
+      if(!formName.contains("this.form")){
+        formName = "'${formName}'"
+      }
+    }
+
     ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','formName', 'preventCache', 'uploadFile'].each{attrs.remove(it)}
 
     // Http Status Code Handlers
@@ -226,8 +232,8 @@ class DojoProvider implements JavascriptProvider {
       attrs.formName = attrs?.formName ?: "this.form"
     }
     else{
-      // This is for <g:remoteForm>
-      attrs.formName = "'${attrs.name}'"
+      // This is for <g:formRemote>
+      attrs.formName = attrs.name
     }
   }
 }
