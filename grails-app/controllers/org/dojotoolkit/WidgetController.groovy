@@ -2,12 +2,13 @@ package org.dojotoolkit
 
 import grails.converters.JSON
 
-
 class WidgetController {
 
   def index = {
     render(view:"index")
   }
+
+  def fileUpload = {}
 
   def plainRemote = {}
 
@@ -82,8 +83,21 @@ class WidgetController {
   }
 
   def remoteDialogContent = {
-
      render(view:"remoteDialogContent")
+  }
+
+  def saveFileWithAjax = {
+    def f = request.getFile('myFile')
+
+    if(f.empty){
+      render(status: '503', view:'saveFileWithAjax',model: [results:"File content was not found - FAILED.", color: "red"])
+      return
+    }
+    else{
+      render(view:'saveFileWithAjax',model: [results:"Submit File via Ajax - <strong>${f.getOriginalFilename()}</strong>", color: "green"])
+      return
+    }
+
   }
 
 

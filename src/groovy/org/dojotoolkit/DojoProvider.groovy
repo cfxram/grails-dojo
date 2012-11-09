@@ -70,8 +70,9 @@ class DojoProvider implements JavascriptProvider {
     def formName            = props?.formName ?: ""
     def preventCache        = props?.preventCache ?: false
     def updateDomElemScript = ""
-    def errorDomElemScript  = "" 
-      
+    def errorDomElemScript  = ""
+    def dojoString          = ""
+
     // Update property for <g:remoteFunction> is optional so don't run js code if empty    
     if(updateDomElem?.length()){
       updateDomElemScript = 
@@ -80,37 +81,76 @@ class DojoProvider implements JavascriptProvider {
       "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "          
     }
 
-    // Error dom element is optional so don't run js code if empty    
+    // Error dom element is optional so don't run js code if empty
     if(errorDomElem?.length()){
-      errorDomElemScript = "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); "
+      errorDomElemScript =
+      "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${errorDomElem}')), function(w){w.destroyRecursive()});} " +
+      "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " +
+      "if(dojo.parser){dojo.parser.parse(dojo.byId('${errorDomElem}'))} "
     }
 
-    def dojoString =
-    "${onLoading}" +
-    "try{DojoGrailsSpinner.show();}catch(e){} " +
-    "dojo.xhr('${method}',{" +
-        (!async ? "sync:${async}, ": "") +
-        (parameters?.length() ? "content:${parameters}, " : "") +
-        (formName?.length() ? "form:${formName}, " : "") +
-        "preventCache:${preventCache}, " +
-        "url:'${url}', " +
-        "load:function(response){" +
-            "${updateDomElemScript} " + 
+    // If form is a enctype="multipart/form-data" then this is a <g:formRemote>
+    // we must use an iframe to do the transport
+    if(props.enctype == "multipart/form-data" || props.uploadFile == "true"){
+      dojoString =
+      "${onLoading}" +
+      "try{DojoGrailsSpinner.show();}catch(e){} " +
+      "dojo.io.iframe.send({" +
+          "url:'${url}', " +
+          "method:'${method}', " +
+          "form:dojo.byId(${formName}), " +
+          "content:{'dojoIoIframeTransport':'true'}," +
+          "multiPart:true, " +
+          "handleAs:'text', " +
+          "load:function(response,ioargs){" +
+            "ioargs.xhr = {status:Number(dojo.io.iframe.doc(dojo.io.iframe._frame).getElementsByTagName('textarea')[0].getAttribute('status')), responseText:response};" +
+            "if(ioargs.xhr.status!=200){this.error(ioargs); return true}; " +
+            "${updateDomElemScript} " +
             "${onLoaded} " +
             "${onSuccess} " +
-        "}, " +
-        "handle:function(response,ioargs){" +
-          "${statusCodeHandlers}" +
-          "try{DojoGrailsSpinner.hide();}catch(e){}" +
-          "${onComplete} " +          
-        "}, " +
-        "error:function(error,ioargs){" +
-          "try{DojoGrailsSpinner.hide();}catch(e){}" +
-          "${errorDomElemScript}" + 
-          "${onLoaded} " +
-          "${onFailure} " +
-        "} " +
-    "});"
+          "}, " +
+          "handle:function(response,ioargs){" +
+            "${statusCodeHandlers}" +
+            "try{DojoGrailsSpinner.hide();}catch(e){}" +
+            "${onComplete} " +
+          "}, " +
+          "error:function(ioargs){" +
+            "try{DojoGrailsSpinner.hide();}catch(e){}" +
+            "${errorDomElemScript}" +
+            "${onLoaded} " +
+            "${onFailure} " +
+          "} " +
+      "});"
+    }
+    else{
+      dojoString =
+      "${onLoading}" +
+      "try{DojoGrailsSpinner.show();}catch(e){} " +
+      "dojo.xhr('${method}',{" +
+          (!async ? "sync:${async}, ": "") +
+          (parameters?.length() ? "content:${parameters}, " : "") +
+          (formName?.length() ? "form:${formName}, " : "") +
+          "preventCache:${preventCache}, " +
+          "url:'${url}', " +
+          "load:function(response){" +
+              "${updateDomElemScript} " +
+              "${onLoaded} " +
+              "${onSuccess} " +
+          "}, " +
+          "handle:function(response,ioargs){" +
+            "${statusCodeHandlers}" +
+            "try{DojoGrailsSpinner.hide();}catch(e){}" +
+            "${onComplete} " +
+          "}, " +
+          "error:function(error,ioargs){" +
+            "try{DojoGrailsSpinner.hide();}catch(e){}" +
+            "${errorDomElemScript}" +
+            "${onLoaded} " +
+            "${onFailure} " +
+          "} " +
+      "});"
+    }
+
     return dojoString
   }
 
@@ -139,7 +179,9 @@ class DojoProvider implements JavascriptProvider {
     def onComplete    = attrs?.onComplete
     def formName      = attrs?.formName
     def preventCache  = attrs?.preventCache ?: 'true'
-    ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','formName', 'preventCache'].each{attrs.remove(it)}
+    def enctype       = attrs?.enctype   // Used to add file upload capabilities
+    def uploadFile    = attrs.uploadFile // Used to add file upload capabilities
+    ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','formName', 'preventCache', 'uploadFile'].each{attrs.remove(it)}
 
     // Http Status Code Handlers
     def statusCodes = attrs.findAll { k,v ->
@@ -166,7 +208,9 @@ class DojoProvider implements JavascriptProvider {
             onComplete: onComplete,
             statusCodeHandlers: statusCodeHandlers,
             formName: formName,
-            preventCache: preventCache])
+            preventCache: preventCache,
+            enctype: enctype,
+            uploadFile:uploadFile])
   }
 
 

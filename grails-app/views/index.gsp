@@ -12,6 +12,9 @@
 		<h3>
 		  <g:link controller="widget" action="index">Try out the Remoting Tags</g:link>
 		</h3>
+    <h3>
+  		  <g:link controller="widget" action="fileUpload">File Uploads with Ajax</g:link>
+  		</h3>
 		<h3>
 		  <g:link controller="widget" action="plainRemote">Just Remoting Tags (without other dojo dependancies)</g:link>
 		</h3>

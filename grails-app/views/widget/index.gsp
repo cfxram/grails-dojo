@@ -142,7 +142,7 @@
 	  </li>  
 	  <li>
 	    Remote Field:
-	    <g:remoteField action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
+	    <g:remoteField name="remoteFieldName" action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
 	  </li>
 	  <li>
 			Remote Function: 
@@ -212,12 +212,16 @@
       <label for="zipCode">Zip Code:</label>
       <g:textField name="zipCode"/>
     </div>
+
     <g:submitToRemote action="submitToRemoteButton" value="Save Data" update="formUpdateRegion"/>
   </g:form>
 
 
+
+
   <h3>Submit To Remote Button (with a different form)</h3>
-  <g:submitToRemote action="submitToRemoteButton" value="Save Data From Sarch Form" update="formUpdateRegion" formName="searchWidgets"/>
+  <g:submitToRemote action="submitToRemoteButton" value="Save Data From Search Form" update="formUpdateRegion" formName="searchWidgets"/>
+
 
   <div id="formUpdateRegion" style="width:370px; border:1px solid gray; margin-top:2em; padding:1em"></div>
 </div>

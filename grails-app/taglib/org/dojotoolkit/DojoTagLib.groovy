@@ -240,8 +240,8 @@ class DojoTagLib {
    *
    */
   def ajaxUploadResponse = {attrs, body ->
-    if (flash?.dojoIoIframeTransport) {
-      out << "<textarea>${body()}</textarea>"
+    if (flash?.dojoIoIframeTransport || request.getParameter("dojoIoIframeTransport")) {
+      out << """<html><body><textarea status="${response.getStatus()}">${body()}</textarea></body></html>"""
       flash.remove("dojoIoIframeTransport")
     }
     else {
