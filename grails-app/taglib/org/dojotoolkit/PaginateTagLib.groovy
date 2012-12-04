@@ -119,4 +119,12 @@ class PaginateTagLib {
     }
   }
 
+
+  /**
+   * Pagination by showing more like facebook and yammer.
+   */
+  def showMore = { attrs ->
+
+  }
+
 }
