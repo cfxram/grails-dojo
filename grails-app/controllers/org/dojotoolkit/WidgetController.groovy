@@ -127,6 +127,17 @@ class WidgetController {
     render(template: "list", model: [widgetList: Widget.list(params), total: Widget.count()])
   }
 
+  def showMore = {
+    if (!params.max) params.max = 10
+    [widgetList: Widget.list(params), total: Widget.count()]
+  }
+
+  def showMoreListFragment = {
+    if (!params.max) params.max = 10
+    render(template: "showMoreList", model: [widgetList: Widget.list(params), total: Widget.count()])
+  }
+
+
   def dijits = {}
   def grid = {}
   def popOver = {}
