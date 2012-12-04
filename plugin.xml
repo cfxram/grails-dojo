@@ -1,4 +1,4 @@
-<plugin name='dojo' version='1.6.1.12-DEVa' grailsVersion='1.3.0 &gt; *'>
+<plugin name='dojo' version='1.6.1.12' grailsVersion='1.3.0 &gt; *'>
   <author>Rob Meidal</author>
   <authorEmail>cfxram@gmail.com</authorEmail>
   <title>Dojo 1.6.1 for Grails</title>
