@@ -133,6 +133,7 @@ class WidgetController {
   }
 
   def showMoreListFragment = {
+    Thread.currentThread().sleep(2000);
     if (!params.max) params.max = 10
     render(template: "showMoreList", model: [widgetList: Widget.list(params), total: Widget.count()])
   }

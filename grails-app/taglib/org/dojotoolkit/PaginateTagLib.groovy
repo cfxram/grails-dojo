@@ -157,8 +157,8 @@ class PaginateTagLib {
     }
     linkTagAttrs.params = linkParams
 
-    // Add remoteLink specific attrs. (and formName)
-    ['method', 'sync', 'onSuccess', 'onFailure', 'onLoading', 'onLoaded', 'onComplete', 'preventCache', 'update', 'formName', 'position'].each {
+    // Add remoteLink specific attrs.
+    ['method', 'sync', 'onSuccess', 'onFailure', 'onLoading', 'onLoaded', 'onComplete', 'preventCache', 'update', 'formName', 'position', 'style'].each {
       if (attrs[it]) {
         linkTagAttrs[it] = attrs[it];
       }
@@ -171,10 +171,10 @@ class PaginateTagLib {
 
     // display next link when not on laststep
     if (currentstep < laststep) {
-      linkTagAttrs.class = 'showMoreLink'
+      linkTagAttrs.class = "showMoreLink ${attrs.class}"
       linkParams.offset = offset + max
       writer << remoteLink(linkTagAttrs.clone()) {
-        (attrs.next ? attrs.next : messageSource.getMessage('paginate.next', null, messageSource.getMessage('default.paginate.next', null, 'Next', locale), locale))
+        (attrs.label ? attrs.label : messageSource.getMessage('paginate.showMore', null, messageSource.getMessage('default.paginate.showMore', null, 'Show More', locale), locale))
       }
     }
   }
