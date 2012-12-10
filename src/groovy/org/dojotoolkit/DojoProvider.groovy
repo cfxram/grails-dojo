@@ -77,7 +77,8 @@ class DojoProvider implements JavascriptProvider {
     if(updateDomElem?.length()){
       updateDomElemScript = 
       "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});} " +
-      "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
+      "dojo.place(response,'${updateDomElem}','${props.position}'); " +
+      //"dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
       "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "          
     }
 
@@ -85,7 +86,8 @@ class DojoProvider implements JavascriptProvider {
     if(errorDomElem?.length()){
       errorDomElemScript =
       "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${errorDomElem}')), function(w){w.destroyRecursive()});} " +
-      "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " +
+      "dojo.place(ioargs.xhr.responseText,'${updateDomElem}','${props.position}'); " +
+      //"dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " +
       "if(dojo.parser){dojo.parser.parse(dojo.byId('${errorDomElem}'))} "
     }
 
@@ -180,6 +182,7 @@ class DojoProvider implements JavascriptProvider {
     def preventCache  = attrs?.preventCache ?: 'true'
     def enctype       = attrs?.enctype   // Used to add file upload capabilities
     def uploadFile    = attrs.uploadFile // Used to add file upload capabilities
+    def position      = attrs?.position  ?: 'only'
     def formName      = attrs?.formName
     if(formName){
       if(!formName.contains("this.form")){
@@ -187,7 +190,7 @@ class DojoProvider implements JavascriptProvider {
       }
     }
 
-    ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','formName', 'preventCache', 'uploadFile'].each{attrs.remove(it)}
+    ['method','sync','params','options','onSuccess','onFailure','onLoading','onLoaded','onComplete','preventCache','formName', 'preventCache', 'uploadFile','position'].each{attrs.remove(it)}
 
     // Http Status Code Handlers
     def statusCodes = attrs.findAll { k,v ->
@@ -216,6 +219,7 @@ class DojoProvider implements JavascriptProvider {
             formName: formName,
             preventCache: preventCache,
             enctype: enctype,
+            position: position,
             uploadFile:uploadFile])
   }
 

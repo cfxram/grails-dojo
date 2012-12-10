@@ -22,6 +22,10 @@
 		  <g:link controller="widget" action="list">Try out the Paginate and Sortable tags</g:link>
 		</h3>
 
+        <h3>
+          <g:link controller="widget" action="showMore">SHOW MORE</g:link>
+        </h3>
+
 		<h3>
 		  <g:link controller="widget" action="dijits">Try out the Tab Container</g:link>
 		</h3>
