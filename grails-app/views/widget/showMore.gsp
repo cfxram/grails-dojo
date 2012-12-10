@@ -79,8 +79,17 @@
 
 
 <div id="myUpdateRegion" style="width:800px; border:1px solid #ccc; margin:2em">
-  <g:render template="showMoreList"/>
+
+  <div id="myUpdateRegion2" style="width:800px; background: #cfcfcf; border:1px solid #ccc; margin:2em">
+      <g:include action="showInnerList" />
+    </div>
+
+  <g:render template="showMoreList" />
+
+
 </div>
+
+
 
 
 

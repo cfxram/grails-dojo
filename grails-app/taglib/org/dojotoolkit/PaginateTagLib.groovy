@@ -135,8 +135,9 @@ class PaginateTagLib {
     def action = (attrs.action ? attrs.action : (params.action ? params.action : "list"))
     def offset = params.int('offset') ?: 0
     def max = params.int('max')
+    def elementId = "showMore_${attrs.update}_${TagLibUtil.randomId()}"
     attrs.position = attrs.position ?: 'last'
-    attrs.onComplete = "dojo.destroy(dojo.query('#${attrs.update} .showMoreLink')[0]); ${attrs.onComplete}"
+    attrs.onComplete = "dojo.destroy(dojo.byId('${elementId}')); ${attrs.onComplete}"
 
     if (!offset) offset = (attrs.int('offset') ?: 0)
     if (!max) max = (attrs.int('max') ?: 10)
@@ -156,6 +157,7 @@ class PaginateTagLib {
       linkTagAttrs.id = attrs.id
     }
     linkTagAttrs.params = linkParams
+    linkTagAttrs.elementId = elementId
 
     // Add remoteLink specific attrs.
     ['method', 'sync', 'onSuccess', 'onFailure', 'onLoading', 'onLoaded', 'onComplete', 'preventCache', 'update', 'formName', 'position', 'style'].each {

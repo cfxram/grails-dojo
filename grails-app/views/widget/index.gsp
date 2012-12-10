@@ -77,7 +77,7 @@
 	            onLoaded="onLoaded()"
 	            onComplete="onComplete()"
 	            on404="onFailure404()"
-	            on200="onFailure200()" params="[userid:1, myName:'Rob']" position="first">
+	            on200="onFailure200()" params="[userid:1, myName:'Rob']" position="only">
 	      Click Here to Test
 	    </g:remoteLink>
 	  </li>

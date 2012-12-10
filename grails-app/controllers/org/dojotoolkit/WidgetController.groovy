@@ -138,6 +138,11 @@ class WidgetController {
     render(template: "showMoreList", model: [widgetList: Widget.list(params), total: Widget.count()])
   }
 
+  def showInnerList = {
+    if (!params.max) params.max = 10
+    render(template: "showInnerList", model: [widgetList: Widget.list(params), total: Widget.count()])
+  }
+
 
   def dijits = {}
   def grid = {}
