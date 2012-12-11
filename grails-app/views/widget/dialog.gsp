@@ -25,7 +25,7 @@
       });
 
       newDialog.loadHref('${createLink(action:"remoteDialogContentWithLinks")}');
-      pane.set("title","This was created with javascript");
+      newDialog.set("title","New Dialog - created with javascript");
       newDialog.show();
     }
   </script>
