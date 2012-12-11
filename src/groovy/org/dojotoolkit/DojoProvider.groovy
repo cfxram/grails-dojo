@@ -86,8 +86,7 @@ class DojoProvider implements JavascriptProvider {
     if(errorDomElem?.length()){
       errorDomElemScript =
       "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${errorDomElem}')), function(w){w.destroyRecursive()});} " +
-      "dojo.place(ioargs.xhr.responseText,'${updateDomElem}','${props.position}'); " +
-      //"dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " +
+      "dojo.place(ioargs.xhr.responseText,'${errorDomElem}','${props.position}'); " +
       "if(dojo.parser){dojo.parser.parse(dojo.byId('${errorDomElem}'))} "
     }
 
