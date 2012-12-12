@@ -100,13 +100,42 @@ class WidgetController {
 
   }
 
-
   def remoteDialogContentWithLinks = {
     Thread.currentThread().sleep(3000);
     render(view:'remoteDialogContentWithLinks')
   }
 
   def remoteDialogContentWithForm = {}
+
+
+
+  def remoteWithPostion = {}
+
+  def remotePositionTop = {
+    render { div(class:"item-top", "Item should be top") }
+  }
+
+  def remotePositionBottom = {
+    render { div(class:"item-bottom", "Item should be on the bottom") }
+  }
+
+  def remotePositionBefore = {
+    render { div(class:"item-before", "Item should be before") }
+  }
+
+  def remotePositionAfter = {
+    render { div(class:"item-after", "Item should be ater") }
+  }
+
+  def remotePositionReplace = {
+    render { div(class:"item-replace", "Item should replace other div") }
+  }
+
+  def remotePositionFail = {
+    render(template: 'remotePositionFail')
+  }
+
+
 
 
   def remoteDijitContent = {}

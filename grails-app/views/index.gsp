@@ -18,13 +18,18 @@
 		<h3>
 		  <g:link controller="widget" action="plainRemote">Just Remoting Tags (without other dojo dependancies)</g:link>
 		</h3>
+
+    <h3>
+      <g:link controller="widget" action="remoteWithPostion">Try remoting with positions specified.</g:link>
+    </h3>
+
 		<h3>
 		  <g:link controller="widget" action="list">Try out the Paginate and Sortable tags</g:link>
 		</h3>
 
-        <h3>
-          <g:link controller="widget" action="showMore">SHOW MORE</g:link>
-        </h3>
+    <h3>
+      <g:link controller="widget" action="showMore">Use the "Show More" functionality like Yammer and Facebook</g:link>
+    </h3>
 
 		<h3>
 		  <g:link controller="widget" action="dijits">Try out the Tab Container</g:link>
