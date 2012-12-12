@@ -73,20 +73,31 @@ class DojoProvider implements JavascriptProvider {
     def errorDomElemScript  = ""
     def dojoString          = ""
 
+
+    /**
+     * NOTE:
+     * When using dojo.place, if the response from server is NOT an html node, it will think it's a DOM node id
+     * and try to find it. This is defined here: http://dojotoolkit.org/reference-guide/1.6/dojo/place.html.
+     *
+     * So if a dev specifies "only" then just use regular innerHTML syntax. Only when a position is specified,
+     * then use dojo.place.
+     */
+
     // Update property for <g:remoteFunction> is optional so don't run js code if empty    
     if(updateDomElem?.length()){
+      def successPlacementCode = (props.position == "only") ? "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " : "dojo.place(response,'${updateDomElem}','${props.position}'); "
       updateDomElemScript = 
       "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});} " +
-      "dojo.place(response,'${updateDomElem}','${props.position}'); " +
-      //"dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
+      "${successPlacementCode}" +
       "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "          
     }
 
     // Error dom element is optional so don't run js code if empty
     if(errorDomElem?.length()){
+      def errorPlacementCode = (props.position == "only") ? "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " : "dojo.place(ioargs.xhr.responseText,'${errorDomElem}','${props.position}'); "
       errorDomElemScript =
       "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${errorDomElem}')), function(w){w.destroyRecursive()});} " +
-      "dojo.place(ioargs.xhr.responseText,'${errorDomElem}','${props.position}'); " +
+      "${errorPlacementCode} " +
       "if(dojo.parser){dojo.parser.parse(dojo.byId('${errorDomElem}'))} "
     }
 
