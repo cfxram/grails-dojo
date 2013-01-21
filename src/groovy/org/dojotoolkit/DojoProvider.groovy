@@ -85,11 +85,19 @@ class DojoProvider implements JavascriptProvider {
 
     // Update property for <g:remoteFunction> is optional so don't run js code if empty    
     if(updateDomElem?.length()){
-      def successPlacementCode = (props.position == "only") ? "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " : "dojo.place(response,'${updateDomElem}','${props.position}'); "
-      updateDomElemScript = 
-      "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});} " +
-      "${successPlacementCode}" +
-      "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "          
+      if(props.position == "only"){
+        updateDomElemScript =
+        "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});} " +
+        "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
+        "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "
+      }
+      else{
+        def tmpDiv = "${updateDomElem}_${TagLibUtil.randomId()}"
+        updateDomElemScript =
+        "dojo.create('div',{id:'${tmpDiv}'},'${updateDomElem}','${props.position}'); " +
+        "dojo.attr(dojo.byId('${tmpDiv}'),'innerHTML',response); " +
+        "if(dojo.parser){dojo.parser.parse(dojo.byId('${tmpDiv}'))}; "
+      }
     }
 
     // Error dom element is optional so don't run js code if empty
