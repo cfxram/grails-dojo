@@ -87,26 +87,38 @@ class DojoProvider implements JavascriptProvider {
     if(updateDomElem?.length()){
       if(props.position == "only"){
         updateDomElemScript =
+        // Destroy dijits before they get replaced. This cleans up the dijit registry.
         "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(w){w.destroyRecursive()});} " +
+        // Replace existing content with innerHTML
         "dojo.attr(dojo.byId('${updateDomElem}'),'innerHTML',response); " +
+        //Re-run the parser to instantiate any new dijit components
         "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))} "
       }
       else{
-        def tmpDiv = "${updateDomElem}_${TagLibUtil.randomId()}"
         updateDomElemScript =
-        "dojo.create('div',{id:'${tmpDiv}'},'${updateDomElem}','${props.position}'); " +
-        "dojo.attr(dojo.byId('${tmpDiv}'),'innerHTML',response); " +
-        "if(dojo.parser){dojo.parser.parse(dojo.byId('${tmpDiv}'))}; "
+        // Remove dojoType attribute for all dijits that might still have it. This makes sure they wont be parsed again.
+        "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${updateDomElem}')), function(node){dojo.removeAttr(node.domNode,'dojoType')});} " +
+        // Place the new content based on the position
+        "dojo.place(response,'${updateDomElem}','${props.position}'); " +
+        //Re-run the parser to instantiate any new dijit components
+        "if(dojo.parser){dojo.parser.parse(dojo.byId('${updateDomElem}'))};"
       }
     }
 
     // Error dom element is optional so don't run js code if empty
     if(errorDomElem?.length()){
-      def errorPlacementCode = (props.position == "only") ? "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " : "dojo.place(ioargs.xhr.responseText,'${errorDomElem}','${props.position}'); "
-      errorDomElemScript =
-      "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${errorDomElem}')), function(w){w.destroyRecursive()});} " +
-      "${errorPlacementCode} " +
-      "if(dojo.parser){dojo.parser.parse(dojo.byId('${errorDomElem}'))} "
+      if(props.position == "only"){
+        errorDomElemScript =
+        "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${errorDomElem}')), function(w){w.destroyRecursive()});} " +
+        "dojo.attr(dojo.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText); " +
+        "if(dojo.parser){dojo.parser.parse(dojo.byId('${errorDomElem}'))} "
+      }
+      else{
+        errorDomElemScript =
+        "if(dijit.findWidgets){dojo.forEach(dijit.findWidgets(dojo.byId('${errorDomElem}')), function(node){dojo.removeAttr(node.domNode,'dojoType')});} " +
+        "dojo.place(ioargs.xhr.responseText,'${errorDomElem}','${props.position}'); " +
+        "if(dojo.parser){dojo.parser.parse(dojo.byId('${errorDomElem}'))};"
+      }
     }
 
     // If form is a enctype="multipart/form-data" then this is a <g:formRemote>
