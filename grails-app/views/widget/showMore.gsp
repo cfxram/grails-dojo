@@ -1,6 +1,7 @@
 <html>
 <head>
   <title>Widget Show More Page</title>
+  <meta name="layout" content="main"/>
   <dojo:header theme="tundra"/>
   <dojo:dateTimeResources/>
   <dojo:helpResources/>

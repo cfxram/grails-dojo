@@ -1,4 +1,20 @@
 /******************************************/
+/* DojoGrailsSpinner.js */
+body div.grailsdojospinner{
+  position:absolute;
+  top:expression(300+((e=document.documentElement.scrollTop)?e:document.body.scrollTop)+'px');
+  left:0;
+  height:50px;
+  width:98%;
+}
+/* DojoGrailsSpinner.js */
+/******************************************/
+
+
+
+
+
+/******************************************/
 /* Tabs (Fix css bug for IE 6) */
 .soria div.dijitTabContainerTop-spacer{
   height:2px;
