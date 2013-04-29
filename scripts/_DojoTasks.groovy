@@ -8,6 +8,7 @@ Class Dojo = classLoader.parseClass(new File("${dojoPluginDir}/src/groovy/org/do
 
 def srcHref = "http://download.dojotoolkit.org/release-${Dojo.version}/dojo-release-${Dojo.version}-src.zip"
 def downloadDir = "${grailsWorkDir}/download"
+def stagingDir = "${projectWorkDir}/stage"
 def tmpWorkingDir = "${basedir}/web-app/js/dojoTmp"
 def dojoUtilDir = "${tmpWorkingDir}/util/"
 def dojoReleaseDir = "${tmpWorkingDir}/release/dojo"
