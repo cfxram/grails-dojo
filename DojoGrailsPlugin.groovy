@@ -1,7 +1,7 @@
 import org.dojotoolkit.*
 import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptTagLib
 class DojoGrailsPlugin {
-  def version = "1.7.2.0"
+  def version = "1.9.0"
   def grailsVersion = "1.3.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
@@ -15,7 +15,7 @@ class DojoGrailsPlugin {
   ]
   def author = "Rob Meidal"
   def authorEmail = "cfxram@codehaus.org"
-  def title = "Dojo 1.7.2 for Grails"
+  def title = "Dojo 1.9.0 for Grails"
   def description = """
     The Dojo Plugin adds the Dojo toolkit to your application. This javascript library provides
     a complete collection of user interface controls, giving you the power to create web
