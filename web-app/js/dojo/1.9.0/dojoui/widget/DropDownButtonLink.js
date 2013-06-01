@@ -1,10 +1,8 @@
-dojo.provide("dojoui.widget.DropDownButtonLink");
-dojo.require("dijit.form.DropDownButton");
-dojo.require("dojoui.widget.DropDownButton");
-
-/**
- * As a Link
- */
-dojo.declare("dojoui.widget.DropDownButtonLink",dojoui.widget.DropDownButton,{
-  templateString: dojo.cache("dojoui", "widget/templates/DropDownButtonLink.html")
+define(["dojo/_base/declare", "./DropDownButton", "dojo/text!./templates/DropDownButtonLink.html"], function(declare, DropDownButton, template){
+	return declare("dojoui.widget.DropDownButtonLink", DropDownButton, {
+		// summary:
+		//		As a Button
+		
+		templateString: template
+	});
 });

@@ -25,7 +25,7 @@ class TabTagLib {
     def tabContainer = {attrs, body ->
         def id = attrs.remove("id") ?: "dojo_ui_dialog${Util.randomId()}"
         out << """
-            <div data-dojo-type="dijit.layout.TabContainer" ${Util.htmlProperties(attrs)}>
+            <div ${Util.htmlProperties(attrs)} data-dojo-type="dijit/layout/TabContainer" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">
                 ${body()}
             </div>
         """

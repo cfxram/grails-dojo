@@ -201,8 +201,8 @@ define(["dojo/_base/declare",
 	    // Add click handlers to submit elements so the submit button values get
 		// submitted.
 	    // This is needed for get g:actionSubmit working inside of a ContentPane.
-	    query('input[type="submit"][name^="_action"]', pane.domNode).connect("onclick",function(){
-	      var hiddenElem = domConstruct.create("input",{"type":"hidden", "value":this.value, "name":this.name});
+	    query('input[type="submit"][name^="_action"]', pane.domNode).on("click", function(){
+	      var hiddenElem = domConstruct.create("input", {"type":"hidden", "value":this.value, "name":this.name});
 	      domConstruct.place(hiddenElem,this,"before");
 	    });
 
