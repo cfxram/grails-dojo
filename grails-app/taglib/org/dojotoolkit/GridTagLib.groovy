@@ -21,6 +21,8 @@ class GridTagLib {
   /**
    * Creates a dataGrid on the page. The data for the data grid can come from
    * a remote dataset defined in json.
+   * 
+   * @attr header Either a string or {@link Closure} for the Header label
    */
   def grid = {attrs, body ->
     def name = attrs.remove("name") ?: "dojo_ui_grid${Util.randomId()}"
@@ -42,19 +44,19 @@ class GridTagLib {
 
     // Data Source 
     out << """
-      <div data-dojo-type="dojoui.data.GrailsQueryReadStore" data-dojo-id="${storeId}" url="${href}" max="${max}"></div>
+      <div data-dojo-type="dojoui/data/GrailsQueryReadStore" data-dojo-id="${storeId}" data-dojo-props="url: '${href}', max: ${max}"></div>
     """
-      
+	attrs['data-dojo-props'] = "store: ${storeId}, rowsPerPage: ${max}, sortFields: [{attribute:'${sort}',descending:${descending}}], selectable: ${selectable}"
+	      
     // Grid
     if(header){
       out << """
-        <div data-dojo-type="dijit.layout.BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" gutters="false">
-          <div data-dojo-type="dijit.layout.ContentPane" region="top" class="grails-dojo-grid-header" style="height:30px">
+        <div data-dojo-type="dijit/layout/BorderContainer" class="${attrs.remove('class')}" style="${attrs.remove('style')}; padding:2px" data-dojo-props="gutters: false">
+          <div data-dojo-type="dijit/layout/ContentPane" class="grails-dojo-grid-header" style="height:30px" data-dojo-props="region: 'top'">
             ${(header && (header instanceof Closure)) ? header.call() : header}
           </div>
-          <div data-dojo-type="dijit.layout.ContentPane" region="center" style="height:95%; padding:0">
-            <div data-dojo-type="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}" style="border:1px solid #ccc"
-              sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
+          <div data-dojo-type="dijit/layout/ContentPane" style="height:95%; padding:0" data-dojo-props="region: 'center'">
+            <div id="${name}" style="border:1px solid #ccc" ${Util.htmlProperties(attrs)} data-dojo-type="dojoui/widget/DataGrid" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">
               <script type="dojo/method">
                   var gridStruct = [{
                     cells:[
@@ -65,15 +67,13 @@ class GridTagLib {
                   this.setGridStructure(gridStruct);
               </script>
             </div>
-
           </div>
         </div>
       """
     }
     else{
       out << """
-        <div data-dojo-type="dojoui.widget.DataGrid" id="${name}" store="${storeId}" ${Util.htmlProperties(attrs)} rowsPerPage="${max}"
-          sortFields="[{attribute:'${sort}',descending:${descending}}]" selectable="${selectable}">
+        <div id="${name}" ${Util.htmlProperties(attrs)} data-dojo-type="dojoui/widget/DataGrid" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">
           <script type="dojo/method">
               var gridStruct = [{
                 cells:[
@@ -133,13 +133,14 @@ class GridTagLib {
   
   /**
    * Binds a span tag's content to a data property.
-   * @param attrs.variable
-   * @param attrs.default
+   * 
+   * @attr variable
+   * @attr default
    */
    def bind = {attrs, body ->
      attrs.defaultValue = attrs.remove("default") ?: ""
      out << """
-       <span data-dojo-type="dojoui.Bind" ${Util.htmlProperties(attrs)}>${attrs.defaultValue}</span>
+       <span ${Util.htmlProperties(attrs)} data-dojo-type="dojoui/Bind" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">${attrs.defaultValue}</span>
      """
    }  
 
@@ -163,7 +164,7 @@ class GridTagLib {
      
      attrs?.onclick = btnClick + "; " + attrs.onclick;     
      out << """
-      <button ${Util.htmlProperties(attrs)}>${label}</button>
+      <button type="${attrs.remove('type')}" ${Util.htmlProperties(attrs)}>${label}</button>
      """
    }
    

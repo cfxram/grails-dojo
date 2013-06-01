@@ -5,7 +5,14 @@ import grails.converters.JSON
 class TagLibUtil {
 
   // these are mostly HTML5 attributes, minus the ones that don't really make sense for dijits
-  static final String[] CORE_ATTRIBS = ["accesskey", "class", "dir", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title"]
+  static final String[] CORE_ATTRIBS = [
+	  "accesskey", "class", "dir", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title",
+	  "onabort", "onblur", "onchange", "onclick", "ondblclick",
+	  "onerror", "onfocus", "oninput", "oninvalid",
+	  "onkeydown", "onkeypress", "onkeyup", "onload",
+	  "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onmousewheel",
+	  "onreadystatechange", "onreset", "onscroll", "onselect", "onshow", "onsubmit"
+  ]
   static final String DATA_DOJO_TYPE = "data-dojo-type"
   static final String DATA_DOJO_PROPS = "data-dojo-props"
   
@@ -35,9 +42,10 @@ class TagLibUtil {
 	  if(!params){
 		  return ""
 	  }
+	  def props = params.remove(DATA_DOJO_PROPS)
 	  def json = (params.findAll{!isHtmlAttribute(it.key)} as JSON).toString()
 	  json.length() > 2 ? json.substring(1, json.length() - 1) : "" +
-	  	(params[DATA_DOJO_PROPS] ? "," + params[DATA_DOJO_PROPS] : "")
+	  	(props ? (json.length() > 2 ? "," : "") + props : "")
   }
 
   static protected boolean isHtmlAttribute(String attribute){

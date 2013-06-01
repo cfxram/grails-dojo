@@ -46,7 +46,7 @@
 		Total Records <dojo:bind variable="myGrid.rowCount"/>
 		</p>
 	</g:form>
-	<button onclick="myTest()">Test</button>
+	<button type="button" onclick="myTest()">Test</button>
 	</div>
 	
 	
@@ -70,15 +70,15 @@
 		}
 	%>
 
-  <div data-dojo-type="dojoui.layout.TabContainer" style="width:750px; height:300px; margin:2em">
-    <div data-dojo-type="dojoui.layout.ContentPane" title="First Grid" containLinks="true">	
+  <div data-dojo-type="dojoui/layout/TabContainer" style="width:750px; height:300px; margin:2em">
+    <div data-dojo-type="dojoui/layout/ContentPane" title="First Grid" data-dojo-props="containLinks: true">	
 		  <dojo:grid controller="widget" action="listJson" name="myGrid" max="20" sort="name" header="${header}" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 				<dojo:col width="15%" name="Color" field="color"/>
 				<dojo:col width="15%" name="Shape" field="shape"/>
 		  </dojo:grid>		
     </div>
-    <div data-dojo-type="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">	
+    <div data-dojo-type="dojoui/layout/ContentPane" title="My second Grid" data-dojo-props="containLinks: true">	
 		  <dojo:grid controller="widget" action="listJson" name="myGrid2" max="20" sort="color"
 				style="height:200px;" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
@@ -92,7 +92,7 @@
 	<div  style="margin:2em; background:#eee; border:1px solid #ccc; width:750px">
 		<h2 style="margin-top:0">Selected Items (using dojo:bind):</h2>
 		<dojo:bind variable="myGrid.selectedRow.name"/>
-		<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
+		<dojo:dataSourceView store="require('dijit/registry').byId('myGrid').selectedStore" class="dojoGridInGrails">
 			<dojo:nodeDefaultTemplate>
 			
 				<span style="padding:1em; font-weight:bold">*{node.name}</span> 

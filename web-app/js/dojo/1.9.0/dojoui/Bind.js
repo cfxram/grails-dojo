@@ -1,8 +1,9 @@
 define(["dojo/_base/declare",
         "dijit/_Widget",
         "dojo/topic",
-        "dojo/dom-attr"
-        ], function(declare,_Widget,topic,domAttr){
+        "dojo/dom-attr",
+        "dojo/_base/lang"
+        ], function(declare,_Widget,topic,domAttr, lang){
 	
 	return declare("dojoui.Bind",_Widget, {
 	  variable:"",
@@ -15,7 +16,7 @@ define(["dojo/_base/declare",
 	  postCreate:function() {
 	    this._propertyArray = this.variable.split(".");
 	    this._topic = this._propertyArray [0];
-	    _topicQue = topic.subscribe(this._topic, this, "displayValue");
+	    _topicQue = topic.subscribe(this._topic, lang.hitch(this, this.displayValue));
 	  },
 	
 	

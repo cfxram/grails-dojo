@@ -14,18 +14,22 @@ class DataSourceViewTagLib {
 
   /**
    * Will render content based on data defined in a dojo data source like dojo.data.ItemFileWriteStore.
-   * @param name - The id of the dataSourceView
-   * @param store - The data store name to watch. This can be a store from a dojo:tree or a dojo:grid.
-   * @param data - This is Json formatted data that will be used as the store instead of the params.store.
+   * 
+   * @attr name - The id of the dataSourceView
+   * @attr store - The data store name to watch. This can be a store from a dojo:tree or a dojo:grid.
+   * @attr data - This is Json formatted data that will be used as the store instead of the params.store.
    */
   def dataSourceView = {attrs, body ->
     def name = attrs.remove("name") ?: "dojo_ui_dataSourceView${Util.randomId()}"
     def store = attrs.remove("store") ?: "${name}_store"
-
+	
+	attrs['data-dojo-props'] = "store: ${store}"
+	
     // Define empty data store json string is attached
     if(attrs?.data){
+	  // TODO use the new dojo/store API in the future
       out << """
-        <div data-dojo-type="dojo.data.ItemFileWriteStore" data-dojo-id="${name}_store" urlPreventCache="yes">
+        <div data-dojo-type="dojo/data/ItemFileWriteStore" data-dojo-id="${store}" data-dojo-props="urlPreventCache: 'yes'">
           <script type="dojo/method">
             var myData = ${attrs.remove("data")};
             this.data = myData;
@@ -35,8 +39,8 @@ class DataSourceViewTagLib {
     }
 
     out << """
-      <div data-dojo-type="dojoui.widget.DataSourceView" id="${name}" ${Util.htmlProperties(attrs)}>
-        <script type="dojo/connect" data-dojo-event="postCreate" data-dojo-args="args">
+      <div id="${name}" ${Util.htmlProperties(attrs)} data-dojo-type="dojoui/widget/DataSourceView" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">
+        <script type="dojo/aspect" data-dojo-advice="after" data-dojo-method="postCreate" data-dojo-args="args">
           this.store = ${store}
         </script>
         ${body()}

@@ -94,7 +94,7 @@ define(["dojo/_base/declare",
 	     */
 	    _onFetchComplete:function(items,req){
 	      this.rowCount = req.store._numRows; // TODO: find another way to count this.
-        topic.publish(this.publishQueName,[this]);
+        topic.publish(this.publishQueName, this);
 	      this.inherited(arguments);
 	    },
 	
@@ -220,7 +220,7 @@ define(["dojo/_base/declare",
 	      this.selectedStore.save();    
 	      
 	      // Publish grid object to the publish Queue.
-	      topic.publish(this.publishQueName,[this]);
+	      topic.publish(this.publishQueName, this);
 	    },
 	
 	
@@ -276,7 +276,7 @@ define(["dojo/_base/declare",
 	      });
 	      
 	      this.selectedStore.save();
-	      topic.publish(this.publishQueName,[this]);
+	      topic.publish(this.publishQueName, this);
 	    }
 	});
 	

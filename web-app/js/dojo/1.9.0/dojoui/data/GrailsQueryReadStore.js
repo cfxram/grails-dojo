@@ -79,7 +79,7 @@ define(["dojo/_base/declare",
 	    * 
 	    */
 	   setQueryData:function(form){
-		   this.queryData = domForm.formToObject(form);      
+		   this.queryData = domForm.toObject(form);      
 	   },
 	
 	
