@@ -153,7 +153,7 @@
 			<button onclick="renameForDojoWithDomElem('DojoPlugin',34)">Click Me to Activate</button>
 		</li>		
 	</ul>
-	<div id="myUpdateRegion" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
+	<div id="myUpdateRegion" style=" width:500px; border:1px solid gray; margin:2em; padding:1em" data-dojo-type="dijit/layout/ContentPane" data-dojo-props="href: '${createLink(action:'listFragment')}'"></div>
 	<div id="myUpdateRegion2" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
 </div>
 
@@ -231,11 +231,6 @@
   <dojo:gridResources/>
   <div id="dojoContent" style="border:1px solid blue; margin-top:1em"></div>
 </fieldset>
-
-	<h2>Set ContentPane Awareness</h2>
-	<dojo:tabContainer style="width:650px; height:200px; margin-top:1em">
-    	<dojo:contentPane title="My First Tab" style="padding:1em" action="list"></dojo:contentPane>
-  	</dojo:tabContainer>
 
 </body>
 </html>

@@ -118,6 +118,7 @@ class WidgetController {
   def panel = {}
   def treeCombo = {}
   def editorFeatures = {}
+  def remoterPane = {}
 
 
   def saveEditorFeatures = {
