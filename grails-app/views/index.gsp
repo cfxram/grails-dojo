@@ -3,6 +3,7 @@
 <head>
   <link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
   <title>Welcome to the Dojo Plugin</title>
+  <dojo:css file="dojo/resources/dojo.css" />
   <dojo:header theme="tundra" showSpinner="false"/>
 </head>
 <body style="background:#ccc;" class="tundra">

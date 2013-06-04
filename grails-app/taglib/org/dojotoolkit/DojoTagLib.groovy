@@ -102,8 +102,11 @@ class DojoTagLib {
    * @attr async = Boolean (true) If false will use the loader in non-AMD mode.
    * @attr modules = List (optional) A list of required modules to be included. Just calles require().
    * @attr modulePaths = List (optional) A list of paths to search for required modules.
+   * @attr parseOnLoad = Boolean (true) Whether to parse the DOM for widgets
+   * @attr isDebug = Boolean (false) Whether debug mode is on
+   * @attr showSpinner = Boolean (true) Whether to enable the DojoGrailsSpinner
    */
-  def header = {attrs ->
+  def header = {attrs, body ->
     // Standard Dojo Config Settings (and defaults)
     attrs.isDebug = TagLibUtil.toBoolean(attrs.isDebug)
     attrs.parseOnLoad = TagLibUtil.toBoolean(attrs.parseOnLoad ?: true)
@@ -186,8 +189,6 @@ class DojoTagLib {
     }
     else{
       out << """
-        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojo/resources/dojo.css" />
-        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/dijit.css" />
         <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/${theme}/${theme}.css" />
         <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui.css" />
         <!--[if lt IE 8]>
@@ -202,6 +203,8 @@ class DojoTagLib {
   /**
    * Includes a dojo specific css file. This is used mostly for extended css files in dojox.
    * Please use <dojo:header> or <dojo:stylesheets> for the standard files.
+   * 
+   * @attr file REQUIRED The CSS file to include
    */
   def css = {attrs ->
     out << "<link rel='stylesheet' type='text/css' href='${dojoHome()}/${attrs?.file}'/>" 
