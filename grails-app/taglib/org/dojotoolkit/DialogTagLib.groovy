@@ -12,7 +12,10 @@ class DialogTagLib {
 
   /**
    * This will bring in all the resources required by the dialog tag.
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def dialogResources = {attrs, body ->
     out << dojo.require(modules: ['dojoui/widget/Dialog','dojoui/layout/ContentPane'])
   }
@@ -21,18 +24,23 @@ class DialogTagLib {
 
   /**
    * This will create a dialog with a body or a body created by a template rendered within a action.  All the normal
-   * dojo dialog tags are supported in addition to the following:
-   * @param controller - The controller to use to render the body of the dialog
-   * @param action - The action within the controller that will render the body of the dialog
-   * @param params - Any parameters that must be passed to the action to complete the rendering of the body of the dialog.
-   * @params id - id of a domain object which will used to load remote content.
-   * @param code - This can be passed in instead of the title attibute and will use the localization system to locale the code
+   * dojo dialog tags are supported in addition to the following.
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
+   * 
+   * @attr controller - The controller to use to render the body of the dialog
+   * @attr action - The action within the controller that will render the body of the dialog
+   * @attr params - Any parameters that must be passed to the action to complete the rendering of the body of the dialog.
+   * @attr id - id of a domain object which will used to load remote content.
+   * @attr code - This can be passed in instead of the title attibute and will use the localization system to locale the code
    *                into a localized title for the dialog.
-   * @param closable - (false) If true, the x control will not display for the user to close the window.
-   * @param visible  - (false) If true, the dialog will display automatically.
-   * @param modeless - (false) If
-   * @param name - if an id is not passed one will be generated for you.
-   * @param onOpen - javascript that is executed once the dialog is displayed.
+   * @attr closable - (false) If true, the x control will not display for the user to close the window.
+   * @attr visible  - (false) If true, the dialog will display automatically.
+   * @attr modeless - (false) If
+   * @attr name - if an id is not passed one will be generated for you.
+   * @attr onOpen - javascript that is executed once the dialog is displayed.
    */
   def dialog = {attrs, body ->
     attrs.title = (attrs?.code?.length()) ? message(code: attrs.remove('code')) : attrs?.title ?: ""
@@ -46,11 +54,11 @@ class DialogTagLib {
     attrs.name = attrs?.name ?: "dojo_ui_dialog${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("name")
     def onOpen = attrs.remove("onOpen") ?: ""
-    attrs.preventCache = "true"
+    attrs.preventCache = true
 
     // Defines whether the closable x in the upper right shows.
     def closableScript = ""
-    if ("false" == attrs.remove("closable")) {
+    if (attrs.closable && !Util.toBoolean(attrs.remove("closable"))) {
       closableScript = """
 	  	var self = this;
 	  	require(["dojo/dom-style","dojo/keys"], function(domStyle,keys){
@@ -67,13 +75,13 @@ class DialogTagLib {
 
     // Defines whether this dialog should show automatically
     def visibleScript = ""
-    if (attrs.remove("visible") == 'true') {
+    if (Util.toBoolean(attrs.remove("visible"))) {
       visibleScript = "this.show();"
     }
 
     // Defines if the user can interact with content while the window is open.
     def modelessTxt = ""
-    if (attrs.remove("modeless") == "true") {
+    if (Util.toBoolean(attrs.remove("modeless"))) {
       modelessTxt = 'display:none'
     }
 
@@ -122,8 +130,8 @@ class DialogTagLib {
 
   /**
    * This will generate a link to open a dialog.  It will support all the normal dojo and html attributes in addition to.
-   * @param dialogId - The id of the dialog to close via this link
-   * @param name - The if of the link that is generated and if one is not passed in one will be generated.
+   * @attr dialogId - The id of the dialog to open via this link
+   * @attr name - The if of the link that is generated and if one is not passed in one will be generated.
    */
   def openDialog = {attrs, body ->
     attrs.onclick = openDialogScript(attrs)
@@ -137,8 +145,8 @@ class DialogTagLib {
 
   /**
    * This will generate a link to open a dialog.  It will support all the normal dojo and html attributes in addition to.
-   * @param dialogId - The id of the dialog to close via this link
-   * @param name - The if of the link that is generated and if one is not passed in one will be generated.
+   * @attr dialogId - The id of the dialog to close via this link
+   * @attr name - The if of the link that is generated and if one is not passed in one will be generated.
    */
   def closeDialog = {attrs, body ->
     attrs.onclick = closeDialogScript(attrs)
@@ -159,11 +167,12 @@ class DialogTagLib {
    *
    *
    *
-   * @param code - This will be render to a localized string and used as the label for the link.
-   * @param dialogId - The id of the dialog to close via this link
-   * @param id - The if of the link that is generated and if one is not passed in one will be generated.
+   * @attr code - This will be render to a localized string and used as the label for the link.
+   * @attr dialogId - The id of the dialog to close via this link
+   * @attr id - The if of the link that is generated and if one is not passed in one will be generated.
    * @deprecated - This is deprecated. Use <dojo:closeDialog> instead.
    */
+  @Deprecated
   def closeDialogButton = {attrs, body ->
     // Remove the onclick so we can place it at the correct spot
     def onclick = attrs?.onclick ?: ''

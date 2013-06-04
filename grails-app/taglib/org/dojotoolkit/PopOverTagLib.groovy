@@ -6,7 +6,10 @@ class PopOverTagLib {
 
   /**
    * Outputs the required dojo modules needed for the popOver. This is not required.
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def popOverResources = {attrs, body ->
     out << dojo.require(modules:['dojoui/widget/TooltipDialog','dojoui/widget/DropDownButton','dojoui/widget/DropDownButtonLink','dojoui/layout/ContentPane'])
   }
@@ -44,7 +47,7 @@ class PopOverTagLib {
     def type = attrs.remove("type") ?: 'button'   // can be button or link    
     def dojoWidget = (type == 'link') ? "dojoui/widget/DropDownButtonLink" : "dojoui/widget/DropDownButton"
     def label = (attrs?.code?.length()) ? message(code:attrs.remove('code')) : attrs.remove('label')    
-    def containLinks = attrs.remove("containLinks") ?: 'false'
+    def containLinks = Util.toBoolean(attrs.remove("containLinks"))
 	if("hover" != attrs['activate']){
 		attrs['activate'] = "click"
 	}

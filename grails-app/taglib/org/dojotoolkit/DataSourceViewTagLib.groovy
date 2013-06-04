@@ -5,7 +5,11 @@ class DataSourceViewTagLib {
   static namespace = 'dojo'
 
 
-
+  /**
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
+   */
+  @Deprecated
   def dataSourceViewResources = {attrs,body ->
         out << dojo.require(modules:['dojoui/widget/DataSourceView', 'dojo/data/ItemFileWriteStore'])
   }
@@ -13,7 +17,11 @@ class DataSourceViewTagLib {
   
 
   /**
-   * Will render content based on data defined in a dojo data source like dojo.data.ItemFileWriteStore.
+   * Will render content based on data defined in a dojo data source like dojo/data/ItemFileWriteStore.
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
    * 
    * @attr name - The id of the dataSourceView
    * @attr store - The data store name to watch. This can be a store from a dojo:tree or a dojo:grid.
@@ -81,9 +89,9 @@ class DataSourceViewTagLib {
    * Child tag of dataSourceView. Allows customization of how the data elements
    * will display.
    *
-   * @param field (Optional) if defined, then value must be present.
-   * @param value (Optional) if present will define a template view for an item that has the field with a specific value.
-   * @param django (Optional) If true then this template will be rendered via the dojox.dtl package. You can use limited django syntax.
+   * @attr field (Optional) if defined, then value must be present.
+   * @attr value (Optional) if present will define a template view for an item that has the field with a specific value.
+   * @attr django (Optional) If true then this template will be rendered via the dojox.dtl package. You can use limited django syntax.
    */
   def nodeTemplate = {attrs, body ->
     def field = attrs.field ?: ''

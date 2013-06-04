@@ -6,7 +6,10 @@ class FrameTagLib {
 
   /**
    * Outputs the required dojo modules needed for the frame. This is not required.
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def frameResources = {attrs, body ->
     out << dojo.require(modules:['dojoui/layout/ContentPane'])
   }
@@ -14,14 +17,18 @@ class FrameTagLib {
   
   
   /**
-   * This creates an extended Dojo ContentPane (dijit.layout.ContentPane). When the containLinks property
+   * This creates an extended Dojo ContentPane (dijit/layout/ContentPane). When the containLinks property
    * is set to true(default), then it behaves very much like an <iframe> tag (without the memory overhead).
    *   
    * When containLinks is turned on, then all <a href> and <g:link> tags load inside the parent content pane.
    * Also, form submissions stay inside of the frame. The frame can also handle multi-part forms so ajax-style file 
    * uploads can be done.
    * 
-   * This special frame can be used to define a tab instead of the <dojo:ContentPane> (dijit.layout.ContentPane).
+   * This special frame can be used to define a tab instead of the <dojo:ContentPane> (dijit/layout/ContentPane).
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
    * 
    * @attr containLinks Either "true" or "false"
    * @attr code An i18n message code for the pane title
@@ -32,7 +39,7 @@ class FrameTagLib {
    * @attr id Passed to Grails to resolve URL for contents
    */ 
   def frame = {attrs, body ->
-    attrs.containLinks = "false" != attrs.containLinks
+    attrs.containLinks = Util.toBoolean(attrs.containLinks ?: 'true')
     attrs.preventCache = true
     if(attrs?.code?.length()){
       attrs.title = message(code: attrs.remove('code')) 
@@ -92,7 +99,7 @@ class FrameTagLib {
 
   /**
    * Used to run javascript after content has been loaded when it is inside of
-   * a dijit.layout.ContentPane (or <dojo:frame>). The dojo parser will parse
+   * a dijit/layout/ContentPane (or <dojo:frame>). The dojo parser will parse
    * this content pane and then run any javascript inside of the start up
    * event.
    *
@@ -116,7 +123,7 @@ class FrameTagLib {
    * @attr selectParentTabId
    */
   def onload = {attrs, body ->
-    def insideTab = "false" != attrs.insideTab
+    def insideTab = Util.toBoolean(attrs.insideTab ?: true)
     def selectParentTabId = attrs.selectParentTabId ?: ''
     def selectTabScript = ""
     def id = attrs.remove("id") ?: ""

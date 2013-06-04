@@ -93,16 +93,16 @@ class DojoTagLib {
    * Alternative to <g:javascript library="dojo"/>. This will include the dojo.js file,
    * adds the standard dojo headers., and sets the theme.
    *
-   * @param attrs.require = This is a map of components to include
-   * @param attrs.theme = (optional) Will include the theme if it is provided
-   * @param attrs.includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
+   * @attr require = This is a map of components to include
+   * @attr theme = (optional) Will include the theme if it is provided
+   * @attr includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
    *                                    It is recommended you leave this to true. Setting to false, you will
    *                                    have to manually include the generated files yourself but it give more
    *                                    fine grain control on when the files get included.
    *
-   * @param attrs.async = Boolean (true) If false will use the loader in non-AMD mode.
-   * @param attrs.modules = List (optional) A list of required modules to be included. Just calles require().
-   * @param attrs.modulePaths = List (optional) A list of paths to search for required modules.
+   * @attr async = Boolean (true) If false will use the loader in non-AMD mode.
+   * @attr modules = List (optional) A list of required modules to be included. Just calles require().
+   * @attr modulePaths = List (optional) A list of paths to search for required modules.
    */
   def header = {attrs ->
     // Standard Dojo Config Settings (and defaults)
@@ -176,7 +176,7 @@ class DojoTagLib {
 
   /**
    * Will setup the base css and themes.User still needs to define <body class="${theme}">
-   * @param attrs.theme  = (Tundra), Soria, Nihilio. The theme to bring in.
+   * @attr theme  = (Tundra), Soria, Nihilio. The theme to bring in.
    */
   def stylesheets = {attrs ->
     def theme = attrs.remove("theme") ?: "tundra"
@@ -217,9 +217,9 @@ class DojoTagLib {
    * Will include dojo modules via the dojo loader and make them available in the body of the tag script
    * Each require will provide a callback parameter named after the last part of the module name
    * e.g.: "dijit/form/Form" will provide a parameter called "Form" in the callback
-   * @param attrs.modules = This is a map of components to include
-   * @param attrs.callbackParamNames = This overrides the default callback parameter names, in case you want to use different ones than the defaults
-   * @param attrs.wrapperFunction = put the require in a wrapper function (include its signature). e.g: myFunction(param1,param2)
+   * @attr modules = This is a map of components to include
+   * @attr callbackParamNames = This overrides the default callback parameter names, in case you want to use different ones than the defaults
+   * @attr wrapperFunction = put the require in a wrapper function (include its signature). e.g: myFunction(param1,param2)
    */
   def require = {attrs, body ->
 	  def modules = attrs?.modules?.collect{ "'${it}'" }

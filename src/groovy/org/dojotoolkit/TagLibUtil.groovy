@@ -1,5 +1,7 @@
 package org.dojotoolkit
 
+import org.apache.commons.lang.StringUtils;
+
 import grails.converters.JSON
 
 class TagLibUtil {
@@ -15,6 +17,26 @@ class TagLibUtil {
   ]
   static final String DATA_DOJO_TYPE = "data-dojo-type"
   static final String DATA_DOJO_PROPS = "data-dojo-props"
+  
+  /**
+   * Turns any value into a boolean.
+   * 
+   * Null is false, a boolean stays as-is, everything else is turned into a string,
+   * and if it isn't {@code "false"} (case insensitive), it's {@code true}. 
+   * 
+   * @param value The value
+   * @return The value as a boolean
+   */
+  static final boolean toBoolean(value){
+	  if(value == null){
+		  return Boolean.FALSE
+	  } else if(value instanceof Boolean){
+	  	  return Boolean.TRUE == value
+	  } else {
+	  	  return StringUtils.isBlank(value) ?
+			false : !"false".equalsIgnoreCase(value.toString())
+	  }
+  }
   
   /**
    * Gets all HTML5 attributes in a string

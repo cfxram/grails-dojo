@@ -22,6 +22,10 @@ class GridTagLib {
    * Creates a dataGrid on the page. The data for the data grid can come from
    * a remote dataset defined in json.
    * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
+   * 
    * @attr header Either a string or {@link Closure} for the Header label
    */
   def grid = {attrs, body ->
@@ -32,7 +36,7 @@ class GridTagLib {
     def sort = attrs.remove("sort") ?: ""
     def order = attrs.remove("order") ?: "asc" // asc or desc    
     def descending = (order == "desc") ? "true" : "false"
-    def selectable = attrs.remove("selectable") ?: "false"
+    def selectable = Util.toBoolean(attrs.remove("selectable"))
     def header = attrs.remove("header") ?: null
 
     // Clean up the properties added.
@@ -133,6 +137,10 @@ class GridTagLib {
   
   /**
    * Binds a span tag's content to a data property.
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
    * 
    * @attr variable
    * @attr default

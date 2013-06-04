@@ -8,7 +8,10 @@ class PanelTagLib {
 
   /**
    * This will bring in all the resources required by the dialog tag.
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def panelResources = {attrs, body ->
     out << dojo.require(modules: ['dijit/Tooltip'])
   }
@@ -17,8 +20,8 @@ class PanelTagLib {
 
   /**
    * This defines a titled panel that can be styled like a normal div. It is
-   * more light-weight than a dojo.dijit.TitlePane. If you wish to have a closed
-   * panel then a dojo.dijit.TitlePane should be used.
+   * more light-weight than a dijit/TitlePane. If you wish to have a closed
+   * panel then a dijit/TitlePane should be used.
    */
   def panel = {attrs, body ->
     def style = attrs.style ?: ''
@@ -81,7 +84,7 @@ class PanelTagLib {
         <div class="dojo-ui-panel-help" id="${id}"></div>
       """
       helpText = """
-        <div data-dojo-type="dijit.Tooltip" connectId="${id}">${help}</div>
+        <div data-dojo-type="dijit/Tooltip" connectId="${id}">${help}</div>
       """
     }
 

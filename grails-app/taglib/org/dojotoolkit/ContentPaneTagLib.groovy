@@ -9,7 +9,10 @@ class ContentPaneTagLib {
 
   /**
    * This will bring in all the resources required by the tab and its related components.
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def contentPaneResources = {attrs, body ->
       out << dojo.require(modules: ['dijit/layout/ContentPane'])
   }
@@ -18,6 +21,11 @@ class ContentPaneTagLib {
 
   /**
    * This will create a content pane item.
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
+   * 
    * @attr code This can be passed in instead of the title attribute and will use the localization system to locale the code
    * 	into a localized title for the dialog.
    * @attr id If an id is not passed one will be generated for you.
@@ -28,7 +36,7 @@ class ContentPaneTagLib {
    * 	are kept current.
    */
   def contentPane = {attrs, body ->
-    attrs.refreshOnShow = "false" != attrs.refreshOnShow
+    attrs.refreshOnShow = Util.toBoolean(attrs.refreshOnShow ?: true)
     if(attrs?.code?.length()){
       attrs.title = message(code: attrs.remove('code'))
     }

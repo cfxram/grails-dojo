@@ -9,13 +9,22 @@ class MenuTagLib {
     static namespace = 'dojo'
     /**
      * This will bring in all the resources required by the menu tag.
+     * 
+     * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
      */
+    @Deprecated
     def menuResources = {attrs, body ->
         out << dojo.require(modules: ['dijit/Menu', 'dijit/MenuItem', 'dijit/MenuBar', 'dijit/MenuBarItem', 'dijit/MenuSeparator', 'dijit/PopupMenuBarItem', 'dijit/PopupMenuItem'])
     }
+	
     /**
      * This will create the base menu item either a menu bar or a popup menu/right click(context) or sidenav.  The menu is then filled with
      * other menu items and embeded popups, etc.
+     * 
+     * Advanced note: Any attributes that are specified on this tag that match an
+     * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+     * as settings to the Dojo Widget.
+     * 
      * @attr id - The unique id for this item or one will be generated.
      * @attr type bar, popup, barpopup, context , sidenav
      * @attr code If the menu label is to be localized use code rather than label.
@@ -64,7 +73,7 @@ class MenuTagLib {
           out << """
             <div id="${id}" ${Util.htmlProperties(attrs)} data-dojo-type="dijit/PopupMenuItem" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">
               <span>${label}</span>
-              <div data-dojo-type="dijit.Menu">
+              <div data-dojo-type="dijit/Menu">
                 ${body()}
               </div>
             </div>
@@ -104,16 +113,21 @@ class MenuTagLib {
     /**
      * This will create an item within another menu structure.  This must be contained inside an existing menu structure
      * as defined in the menu tag but this helps you nest items within the base menu item.  This item can be a menu item
-     * or another bar within the menu tag.  This item supports all the documented dojo parameters as well as the following:
-     * @param type - The type of item to create either item, bar, popup or popupBar
-     * @patam controller - The controller to reference from this menu item  (The controller action params will replace any href passed in)
-     * @param action - The action within the controller to reference from this menuItem
-     * @param params - Any parameters that go with the controller and action.
-     * @param name - The id of this item
-     * @param onclick - Any actions you want to perform before the menu is migrated to its destination
-     * @param label - You may specify the displayed label here or in param.code or specify it as text in-between the tags.
-     * @param iconClass - The css class to use to display an icon.
-     * @param code - If the menu label is to be localized use code rather than label.
+     * or another bar within the menu tag.  This item supports all the documented dojo parameters as well as the following.
+     * 
+     * Advanced note: Any attributes that are specified on this tag that match an
+     * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+     * as settings to the Dojo Widget.
+     * 
+     * @attr type - The type of item to create either item, bar, popup or popupBar
+     * @attr controller - The controller to reference from this menu item  (The controller action params will replace any href passed in)
+     * @attr action - The action within the controller to reference from this menuItem
+     * @attr params - Any parameters that go with the controller and action.
+     * @attr name - The id of this item
+     * @attr onclick - Any actions you want to perform before the menu is migrated to its destination
+     * @attr label - You may specify the displayed label here or in param.code or specify it as text in-between the tags.
+     * @attr iconClass - The css class to use to display an icon.
+     * @attr code - If the menu label is to be localized use code rather than label.
      */
     def menuItem = {attrs, body ->
       def id = attrs.remove("id") ?: attrs.remove("name") ?: "dojo_menuItem_${Util.randomId()}"

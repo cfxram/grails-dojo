@@ -29,7 +29,7 @@ class EditorTagLib {
 
     out << """
       <fieldset class="dojo-ui-editor" style="${style}">
-        <div data-dojo-type="dojoui.widget.Editor" ${Util.htmlProperties(attrs)} onclick="this.focus()">${value}</div>
+        <div ${Util.htmlProperties(attrs)} onclick="this.focus()" data-dojo-type="dojoui/widget/Editor" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">${value}</div>
       </fieldset>
     """
 
