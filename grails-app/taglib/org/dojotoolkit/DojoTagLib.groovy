@@ -2,7 +2,6 @@ package org.dojotoolkit
 
 import grails.converters.JSON
 
-
 class DojoTagLib {
   static namespace = "dojo"
 
@@ -106,14 +105,13 @@ class DojoTagLib {
    */
   def header = {attrs ->
     // Standard Dojo Config Settings (and defaults)
-    attrs.isDebug = attrs.isDebug ?: "false"
-    attrs.parseOnLoad = attrs.parseOnLoad ?: "true"
-    attrs.async = attrs.async ?: "true"
-
+    attrs.isDebug = TagLibUtil.toBoolean(attrs.isDebug)
+    attrs.parseOnLoad = TagLibUtil.toBoolean(attrs.parseOnLoad ?: true)
+    attrs.async = TagLibUtil.toBoolean(attrs.async ?: true)
 
     // Custom Properties for Dojo Plugin
-    def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
-    def showSpinner = attrs.remove("showSpinner") ?: "true"
+    def includeCustomBuild = TagLibUtil.toBoolean(attrs.remove("includeCustomBuild") ?: true)
+    def showSpinner = TagLibUtil.toBoolean(attrs.remove("showSpinner") ?: true)
     def modulePaths = attrs.remove("modulePaths") ?: [:]
     def modules = attrs.remove("modules") ?: []
     def theme = attrs.remove("theme") ?: "tundra"
@@ -140,11 +138,10 @@ class DojoTagLib {
     }
 
     // New Dojo AMD Loader
-    if (attrs.async == "true") {
+    if (attrs.async) {
       out << """
         <script>
-          dojoConfig = {${dojoConfig}, paths:{${paths.join(',')}}, baseUrl : '${jsRoot}' };
-          dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+          dojoConfig = {${dojoConfig}, paths:{${paths.join(',')}}, baseUrl : '${jsRoot}', showSpinner:${showSpinner}};
         </script>
         <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
       """
@@ -153,18 +150,17 @@ class DojoTagLib {
     else {
       out << """
         <script>
-          dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}} };
-          dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+          dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}}, showSpinner:${showSpinner}};
         </script>
         <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js.uncompressed.js'></script>        
       """
     }
-    if(showSpinner == "true"){
-      out << """ <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script> """
+    if(showSpinner){
+		modules << 'dojoui/DojoGrailsSpinner'
     }
     
     // if custom build then include released js files
-    if(includeCustomBuild == "true"){
+    if(includeCustomBuild){
       out << customDojoScripts()
     }
     if (modules?.size()) {

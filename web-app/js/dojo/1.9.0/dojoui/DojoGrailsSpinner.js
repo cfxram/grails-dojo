@@ -1,11 +1,13 @@
-require(['dojo/dom-construct',
+define(['dojo/dom-construct',
         'dojo/_base/window',
         'dojo/dom',
         'dojo/dom-style',
         'dojo/_base/fx',
-        'dojo/_base/kernel'], function(domConstruct,win,dom,style,fx,kernel) {
+        'dojo/_base/lang', "dojo/_base/config"], function(domConstruct,win,dom,style,fx,lang,config) {
 
-	kernel.global.DojoGrailsSpinner = {
+	var Spinner = lang.getObject("DojoGrailsSpinner", true);
+	
+	lang.mixin(Spinner, {
 		/**
 		 * Creates the spinner object <div> and attaches it to the body as the first
 		 * element.
@@ -24,7 +26,7 @@ require(['dojo/dom-construct',
 		 * Will display the spinner. If it doesn't exist, will create it first.
 		 */
 		show:function() {
-			if (!dojoGrailsPluginConfig.showSpinner){
+			if (!config.showSpinner){
 				return;
 			}
 	
@@ -47,7 +49,7 @@ require(['dojo/dom-construct',
 		 * Will hide the spinner.
 		 */
 		hide:function() {
-			if(!dojoGrailsPluginConfig.showSpinner){
+			if(!config.showSpinner){
 				return;
 			}
 		  
@@ -59,5 +61,7 @@ require(['dojo/dom-construct',
 			    }
 			}).play();
 		}
-	}
+	});
+	
+	return Spinner;
 });
