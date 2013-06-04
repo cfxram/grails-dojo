@@ -184,7 +184,7 @@ define(["dojo/_base/declare",
 		 * pane will destroy the form and in IE 6 before the form content is
 		 * actually sent.
 		 *
-		 * File Uploads: This will detect a multipart form and use a dojo.io.iframe
+		 * File Uploads: This will detect a multipart form and use a dojo/io/iframe
 		 * element if it is found. If this happens the response from the server MUST
 		 * BE WRAPPED in a <textarea> tag or this code will throw an error.
 		 *
@@ -205,14 +205,13 @@ define(["dojo/_base/declare",
 	      var hiddenElem = domConstruct.create("input", {"type":"hidden", "value":this.value, "name":this.name});
 	      domConstruct.place(hiddenElem,this,"before");
 	    });
-
 	    // Add form submit handler to content
-	    var allForms = query("form", pane.domNode);
+	    var allForms = query("form", pane.containerNode);
 	    for(var i=0; i<allForms.length; i++){
 	      var thisForm = allForms[i];
 	      var beenChanged = domAttr.get(thisForm,"newSubmitApplied");
 	      var ignore = domAttr.has(thisForm,"target");
-	      var oldOnSubmit = domAttr.set(thisForm,"onsubmit") || null;
+	      var oldOnSubmit = domAttr.get(thisForm,"onsubmit") || null;
 
 	      if(!beenChanged && !ignore){
 	    	domAttr.set(thisForm,"newSubmitApplied","true");
@@ -253,7 +252,7 @@ define(["dojo/_base/declare",
 	          else { // Send via posted xhr.
 	            currentPane.ioArgs = lang.clone(currentPane.baseIoArgs);
 	            currentPane.ioMethod = xhr.post;
-	            currentPane.ioArgs.content = domForm.formToObject(thisForm);
+	            currentPane.ioArgs.content = domForm.toObject(thisForm);
 	            currentPane.set("href", formHref);
 	          }
 	        });

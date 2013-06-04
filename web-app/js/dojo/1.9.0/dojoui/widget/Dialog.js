@@ -1,8 +1,8 @@
 define(["dojo/_base/declare",
-        "dojoui/layout/ContentPane",
+        "../layout/ContentPane",
         "dijit/Dialog",
         "dojo/has"
-        ], function(declare,ContentPane,Dialog) {
+        ], function(declare,ContentPane,Dialog,has) {
         
 	return declare("dojoui.widget.Dialog",[ContentPane, Dialog._DialogBase],{
 

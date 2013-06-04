@@ -17,7 +17,7 @@ define([
 	//		dojoui/widget/TooltipDialog
 
 
-	var TooltipDialog = declare("dijit.TooltipDialog",
+	var TooltipDialog = declare("dojoui.widget.TooltipDialog",
 		[ContentPane, _TemplatedMixin, _FormMixin, _DialogMixin], {
 			// summary:
 			//		Pops up a dialog that appears like a Tooltip

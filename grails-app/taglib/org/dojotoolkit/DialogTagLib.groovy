@@ -50,14 +50,15 @@ class DialogTagLib {
 
     // Defines whether the closable x in the upper right shows.
     def closableScript = ""
-    if (attrs.remove("closable") == "false") {
+    if ("false" == attrs.remove("closable")) {
       closableScript = """
-	  	require(["dojo/dom-style","dojo/keys], function(domStyle,keys){
-	        domStyle.set(this.closeButtonNode,"display","none");
-	        this._onKey = function(evt){
+	  	var self = this;
+	  	require(["dojo/dom-style","dojo/keys"], function(domStyle,keys){
+	        domStyle.set(self.closeButtonNode,"display","none");
+	        self._onKey = function(evt){
 	            if(evt.charOrCode == keys.ESCAPE) return;
 	        }
-	  	}
+	  	});
       """
     }
 
@@ -78,17 +79,23 @@ class DialogTagLib {
 
     out << """
       <style>#${attrs?.id}_underlay{background:gray; ${modelessTxt};}</style>
-      <div data-dojo-type="dojoui.widget.Dialog" ${Util.htmlProperties(attrs)}>
-        <script type="dojo/connect" data-dojo-event="show">${onOpen}</script>
-        <script type="dojo/connect" data-dojo-event="startup">
+      <div ${Util.htmlProperties(attrs)} data-dojo-type="dojoui/widget/Dialog" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">
+	  """
+	if(onOpen){
+		out << """<script type="dojo/aspect" data-dojo-advice="after" data-dojo-method="show">${onOpen}</script>"""
+	}
+	if(visibleScript || closableScript){
+		out << """
+        <script type="dojo/aspect" data-dojo-advice="after" data-dojo-method="startup">
           ${visibleScript}
           ${closableScript}
         </script>
+		"""
+	}
+      out << """
         ${body()}
-      </div>
-   """
-
-
+		</div>
+		"""
   }
 
 

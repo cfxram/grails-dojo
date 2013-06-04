@@ -11,7 +11,7 @@ define(["dojo/_base/declare", "dijit/form/DropDownButton", "dojo/text!./template
 
 		/**
 		 * Will destroy any dijit that has the same id as this one.
-		 * This is called before this dijit is registered in the dijit.registry.
+		 * This is called before this dijit is registered in the dijit/registry.
 		 */
 		postMixInProperties:function(){
 		    if(registry.byId(this.id)){
