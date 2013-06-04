@@ -10,8 +10,9 @@ define(["dojo/_base/declare",
         "dojo/dom-class",
         "dojo/dom",
         "dojo/_base/connect",
-        "dojo/_base/window"
-        ], function(declare,template,registry,DataSourceItem,_Widget,_Templated,lang,domConstruct,domAttr,domClass,dom,connect,win) {
+        "dojo/_base/window",
+        "dojo/aspect"
+        ], function(declare,template,registry,DataSourceItem,_Widget,_Templated,lang,domConstruct,domAttr,domClass,dom,connect,win,aspect) {
 
 	/**
 	 * Widget that will render templates based on a data source.
@@ -176,7 +177,7 @@ define(["dojo/_base/declare",
 	      }
 	      else{
 	        // Render Simple Template
-	        var htmlString = lang.replace(nodeTemplate, {"node": node,"this": "registry.byId('" + this.id + "')"});
+	        var htmlString = lang.replace(nodeTemplate, {"node": node,"this": "require('dijit/registry').byId('" + this.id + "')"});
 	        if (htmlString.length) {
 	          var existingElem = dom.byId(LI_elemId);
 	          var elemNode = (existingElem) ? existingElem : domConstruct.create("li",{id:LI_elemId, style:{"listStyle":"none"}}, this.nodeList, position);
@@ -216,7 +217,7 @@ define(["dojo/_base/declare",
 	    // Render "No-Item-Found" template.
 	    if(this.nodeList.children.length < 1){
 	      if (this.noItemTemplate) {
-	        var htmlString = lang.replace(this.noItemTemplate, {"this": "registry.byId('" + this.id + "')"});
+	        var htmlString = lang.replace(this.noItemTemplate, {"this": "require('dijit/registry').byId('" + this.id + "')"});
 	        domConstruct.create("li", {id:"no-item-found"+this.id, innerHTML: htmlString, style:{"listStyle":"none"}}, this.nodeList);
 	      }
 	    }
@@ -290,11 +291,11 @@ define(["dojo/_base/declare",
 	    }
 	    // if the store supports Notification, subscribe to the notification events
 	    if(store.getFeatures()['dojo.data.api.Notification']){
-	      this.connects = this.connects.concat([
-	        connect.connect(store, "onNew", this, "onNewItem"),
-	        connect.connect(store, "onDelete", this, "onDeleteItem"),
-	        connect.connect(store, "onSet", this, "onSetItem")
-	      ]);
+	    	this.own(
+	    		aspect.after(store, 'onNew', lang.hitch(this, 'onNewItem'), true),
+	    		aspect.after(store, 'onDelete', lang.hitch(this, 'onDeleteItem'), true),
+	    		aspect.after(store, 'onSet', lang.hitch(this, 'onSetItem'), true)
+	    	);
 	    }
 	    
 	    this.inherited(arguments);

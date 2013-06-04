@@ -68,14 +68,14 @@
   <button onclick="dijit.byId('myContainer').selectChild('Two');">Two</button>
   <button onclick="dijit.byId('myContainer').selectChild('Three');">Three</button>
 
-  <div dojoType="dijit.layout.StackContainer" id="myContainer" style="width:400px; border: 1px solid gray">
-    <div dojoType="dijit.layout.ContentPane" style="height:100px; background: #eee" id="One">
+  <div data-dojo-type="dijit/layout/StackContainer" id="myContainer" style="width:400px; border: 1px solid gray">
+    <div data-dojo-type="dijit/layout/ContentPane" style="height:100px; background: #eee" id="One">
       Pane 1
     </div>
-    <div dojoType="dijit.layout.ContentPane" style="height:100px; background: #ddd" id="Two">
+    <div data-dojo-type="dijit/layout/ContentPane" style="height:100px; background: #ddd" id="Two">
       Pane 2
     </div>
-    <div dojoType="dijit.layout.ContentPane" style="height:100px; background: #ccc" id="Three">
+    <div data-dojo-type="dijit/layout/ContentPane" style="height:100px; background: #ccc" id="Three">
       Pane 3
     </div>
   </div>

@@ -19,13 +19,13 @@ class TreeTagLib {
    */
   def tree = {attrs, body ->
     attrs.childField = attrs?.childField ?: ''
-    attrs.showRoot = attrs.showRoot ?: 'false'
+    attrs.showRoot = "true".equalsIgnoreCase(attrs.showRoot ?: 'false')
     attrs.rootLabel = attrs.rootLabel ?: 'TreeRoot'
-    attrs.autoExpand = attrs.autoExpand ?: 'false'
+    attrs.autoExpand = "true".equalsIgnoreCase(attrs.autoExpand ?: 'false')
     attrs.style = attrs.style ?: ''
-    attrs.searchAble = attrs.searchAble ?: 'false'
-    attrs.expandFirstChild = attrs.expandFirstChild ?: 'false'
-    attrs.persist = attrs.persist ?: 'false'
+    attrs.searchAble = "true".equalsIgnoreCase(attrs.searchAble ?: 'false')
+    attrs.expandFirstChild = "true".equalsIgnoreCase(attrs.expandFirstChild ?: 'false')
+    attrs.persist = "true".equalsIgnoreCase(attrs.persist ?: 'false')
 
     if (attrs?.controller || attrs?.action) {
       attrs.href = createLink(attrs)
@@ -41,7 +41,7 @@ class TreeTagLib {
     // Define empty data store json string is attached
     if(attrs?.data){
       out << """
-        <div data-dojo-type="dojo.data.ItemFileWriteStore" jsid="${id}_store" urlPreventCache="yes">
+        <div data-dojo-type="dojo/data/ItemFileWriteStore" data-dojo-id="${id}_store" data-dojo-props="urlPreventCache: 'yes'">
           <script type="dojo/method">
             var myData = ${attrs.remove("data")};
             this.data = myData;
@@ -51,14 +51,15 @@ class TreeTagLib {
     }
     else{
       out << """
-        <div data-dojo-type="dojo.data.ItemFileWriteStore" jsid="${id}_store" url="${url}" urlPreventCache="yes"></div>
+        <div data-dojo-type="dojo/data/ItemFileWriteStore" data-dojo-id="${id}_store" data-dojo-props="url: '${url}', urlPreventCache: 'yes'"></div>
       """
     }
 
+	attrs['data-dojo-props'] = "model: ${id}_forestStore"
+	
     out << """
-      <div data-dojo-type="dojoui.widget.ForestStoreModel" rootLabel="${attrs.rootLabel}" rootId="treeRoot"
-          store="${id}_store" jsid="${id}_forestStore" childrenAttrs="${attrs.childField}"></div>
-      <div data-dojo-type="dojoui.widget.Tree" model="${id}_forestStore" id="${id}" ${Util.htmlProperties(attrs)}>
+      <div data-dojo-id="${id}_forestStore" data-dojo-type="dojoui/widget/ForestStoreModel" data-dojo-props="rootLabel: '${attrs.rootLabel}', rootId: 'treeRoot', store: ${id}_store, childrenAttrs: ['${attrs.childField}']"></div>
+      <div id="${id}" ${Util.htmlProperties(attrs)} data-dojo-type="dojoui/widget/Tree" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">
         <script type="dojo/method" data-dojo-event="setGrailsPluginProperties">
           ${body()}
         </script>
