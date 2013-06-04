@@ -43,8 +43,11 @@ class TagLibUtil {
 		  return ""
 	  }
 	  def props = params.remove(DATA_DOJO_PROPS)
+	  params.each{k, v -> if(v instanceof String && ("true".equalsIgnoreCase(v) || "false".equalsIgnoreCase(v))){
+		  params[k] = "true".equalsIgnoreCase(v)
+	  }}
 	  def json = (params.findAll{!isHtmlAttribute(it.key)} as JSON).toString()
-	  json.length() > 2 ? json.substring(1, json.length() - 1) : "" +
+	  (json.length() > 2 ? json.substring(1, json.length() - 1) : "") +
 	  	(props ? (json.length() > 2 ? "," : "") + props : "")
   }
 
