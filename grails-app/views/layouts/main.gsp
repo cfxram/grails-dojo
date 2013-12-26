@@ -12,7 +12,8 @@
     -->    
   
     <!--modulePaths="['appwidgets':'appwidgets']" -->
-     <dojo:header theme="tundra" locale="'en-us'" modules="['dijit/layout/TabContainer','dijit/layout/ContentPane']" showSpinner="true">
+	<dojo:css file="dojo/resources/dojo.css" />
+    <dojo:header theme="tundra" locale="'en-us'" modules="['dijit/layout/TabContainer','dijit/layout/ContentPane']" showSpinner="true">
     	//console.debug(new CustomWidget({}));
     </dojo:header>
     <dojo:menuResources/>

@@ -87,36 +87,42 @@ class DojoProvider implements JavascriptProvider {
       errorDomElemScript = "domAttr.set(dom.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText);"
     }
 
+	def options = ["preventCache:${preventCache}"]
+	if(!async){
+		options << "sync:${async}"
+	}
+	if(parameters?.length()){
+		options << "content:${parameters}"
+	}
+	if(formName?.length()){
+		options << "form:${formName}"
+	}
+	if(updateDomElem?.length()){
+		options << "loadNode:'${updateDomElem}'"
+	}
+	if(errorDomElem?.length()){
+		options << "errorNode:'${errorDomElem}'"
+	}
+	if(onSuccess){
+		options << "onSuccess:function(){${onSuccess}}"
+	}
+	if(onFailure){
+		options << "onFailure:function(){${onFailure}}"
+	}
+	if(onLoaded){
+		options << "onLoaded:function(){${onLoaded}}"
+	}
+	if(onComplete){
+		options << "onComplete:function(){${onComplete}}"
+	}
+
     def dojoString =
-    "${onLoading}" +
-    "try{DojoGrailsSpinner.show();}catch(e){} " +
 	"var obj = this;" +
-    "require(['dojo/_base/xhr','dijit/registry', 'dojo/_base/array', 'dojo/dom', 'dojo/dom-attr', 'dojo/parser'], " +
-		"function(xhr,registry, array, dom, domAttr, parser) { " + 
-			"xhr.${method.toLowerCase()}({" +
-        		(!async ? "sync:${async}, ": "") +
-				(parameters?.length() ? "content:${parameters}, " : "") +
-				(formName?.length() ? "form:${formName}, " : "") +
-				"preventCache:${preventCache}, " +
-				"url:'${url}'," +
-				"load:function(response){" +
-					"${updateDomElemScript} " +
-					"${onLoaded} " +
-					"${onSuccess} " +
-				"}, " +
-				"handle:function(response,ioargs){" +
-				  "${statusCodeHandlers}" +
-				  "try{DojoGrailsSpinner.hide();}catch(e){}" +
-				  "${onComplete} " +
-				"}, " +
-				"error:function(error,ioargs){" +
-				  "try{DojoGrailsSpinner.hide();}catch(e){}" +
-				  "${errorDomElemScript}" +
-				  "${onLoaded} " +
-				  "${onFailure} " +
-				"} " +
-			"});" +
-    "});"
+    "${onLoading}" +
+	"require(['dojoui/remoter'],function(r){" +
+	"r('${url}','${method}',{" +
+		options.join(",") +
+	"});});"
     return dojoString
   }
 
@@ -185,7 +191,7 @@ class DojoProvider implements JavascriptProvider {
 
     if(attrs?.forSubmitTag){
       // This is for <g:submitToRemote>
-      attrs.formName = attrs?.formName ?: "this.form"
+      attrs.formName = attrs?.formName ?: "obj.form"
     }
     else{
       // This is for <g:remoteForm>

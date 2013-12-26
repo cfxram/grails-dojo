@@ -9,7 +9,10 @@ class DateAndTimeTagLib {
 
   /**
    * Outputs the required javascript dojo libraries
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def dateTimeResources = {attrs, body ->
     out << dojo.require(modules: ['dijit/form/DateTextBox', 'dijit/form/TimeTextBox', 'dijit/form/NumberSpinner'])
   }
@@ -19,6 +22,10 @@ class DateAndTimeTagLib {
   /**
    * Creates a grails compatible date picker. This date picker can be used
    * like the <g:datePicker> in the controller.
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
    */
   def datePicker = {attrs, body ->
     def style = attrs.style ?: ''
@@ -26,8 +33,8 @@ class DateAndTimeTagLib {
     def id = attrs.id ?: "dojo_ui_date${Util.randomId()}"
     def name = attrs.name ?: attrs.id
     def value = attrs.value ?: null
-    def defaultToday = attrs.defaultToday ?: 'true';
-    def pickEarlierDate = attrs.pickEarlierDate ?: 'true';
+    def defaultToday = Util.toBoolean(attrs.defaultToday ?: true);
+    def pickEarlierDate = Util.toBoolean(attrs.pickEarlierDate ?: true);
     def c = null
     def day = ""
     def month = ""
@@ -36,7 +43,7 @@ class DateAndTimeTagLib {
     def dojoMonth = ""
     def minDate = ""
 
-    if ((defaultToday == 'true') && (attrs?.value == null)) {
+    if (defaultToday && (attrs?.value == null)) {
       value = new Date();
     }
     if (value instanceof Calendar) {
@@ -54,7 +61,7 @@ class DateAndTimeTagLib {
       dojoMonth = (month.length() == 2) ? month : "0${month}"
     }
 
-    if (pickEarlierDate == 'false') {
+    if (!pickEarlierDate) {
       GregorianCalendar today = new GregorianCalendar();
       def minYear = today.get(GregorianCalendar.YEAR).toString();
       def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString();
@@ -76,18 +83,18 @@ class DateAndTimeTagLib {
         <input type="hidden" name="${name}_day" id="${id}_day" value="${day}"/>
         <input type="hidden" name="${name}_month" id="${id}_month" value="${month}"/>
         <input type="hidden" name="${name}_year" id="${id}_year" value="${year}"/>
-        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" data-dojo-type="dijit.form.DateTextBox" ${style} ${className} constraints="{min:'${minDate}'}">
-            <script type="dojo/connect" data-dojo-event="onChange" data-dojo-args="d">
-				require(['dijit/registry'],function(registry) {
+        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" data-dojo-type="dijit/form/DateTextBox" ${style} ${className} constraints="{min:'${minDate}'}">
+            <script type="dojo/aspect" data-dojo-advice="after" data-dojo-method="onChange" data-dojo-args="d">
+				require(['dojo/dom'],function(dom) {
 	                if(d){
-	                    registry.byId("${id}_day").value = d.getDate();
-	                    registry.byId("${id}_month").value = d.getMonth()+1;
-	                    registry.byId("${id}_year").value = d.getFullYear();
+	                    dom.byId("${id}_day").value = d.getDate();
+	                    dom.byId("${id}_month").value = d.getMonth()+1;
+	                    dom.byId("${id}_year").value = d.getFullYear();
 	                }
 	                else{
-	                    registry.byId("${id}_day").value = "";
-	                    registry.byId("${id}_month").value = "";
-	                    registry.byId("${id}_year").value = "";
+	                    dom.byId("${id}_day").value = "";
+	                    dom.byId("${id}_month").value = "";
+	                    dom.byId("${id}_year").value = "";
 	                }
 				});
             </script>
@@ -100,6 +107,10 @@ class DateAndTimeTagLib {
   /**
    * Creates a grails compatible time picker. This time picker can be used
    * like the <g:datePicker> in the controller.
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
    */
   def timerPicker = {attrs, body ->
     def style = attrs.style ?: ''
@@ -146,10 +157,12 @@ class DateAndTimeTagLib {
         <input type="hidden" name="${name}_day" id="${id}_day" value="${day}"/>
         <input type="hidden" name="${name}_month" id="${id}_month" value="${month}"/>
         <input type="hidden" name="${name}_year" id="${id}_year" value="${year}"/>
-        <div type="text" name="${name}-TimePicker" id="${id}-TimePicker" value="T${dojoHour}:${dojoMinute}:00" data-dojo-type="dijit.form.TimeTextBox" ${style} ${className}>
-            <script type="dojo/connect" event="onChange" args="d">
-                dojo.byId("${id}_hour").value = d.getHours();
-                dojo.byId("${id}_minute").value = d.getMinutes();
+        <div type="text" name="${name}-TimePicker" id="${id}-TimePicker" value="T${dojoHour}:${dojoMinute}:00" data-dojo-type="dijit/form/TimeTextBox" ${style} ${className}>
+            <script type="dojo/aspect" data-dojo-advice="after" data-dojo-method="onChange" data-dojo-args="d">
+				require(['dojo/dom'], function(dom){
+                	dom.byId("${id}_hour").value = d.getHours();
+					dom.byId("${id}_minute").value = d.getMinutes();
+				});
             </script>
         </div>
     """
@@ -164,8 +177,8 @@ class DateAndTimeTagLib {
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_dateTime${Util.randomId()}"
     def name = attrs.name ?: attrs.id
-    def defaultToday = attrs.defaultToday ?: 'true';
-    def pickEarlierDate = attrs.pickEarlierDate ?: 'true';
+    def defaultToday = Util.toBoolean(attrs.defaultToday ?: true);
+    def pickEarlierDate = Util.toBoolean(attrs.pickEarlierDate ?: true);
     def value = attrs.value ?: null
     def c = null
     def minute = ""
@@ -180,7 +193,7 @@ class DateAndTimeTagLib {
     def minDate = ""
 
 
-    if ((defaultToday == 'true') && (attrs?.value == null)) {
+    if (defaultToday && (attrs?.value == null)) {
       value = new Date();
     }
     if (value instanceof Calendar) {
@@ -201,7 +214,7 @@ class DateAndTimeTagLib {
       dojoMinute = (minute.length() == 2) ? minute : "0${minute}"
       dojoHour = (hour.length() == 2) ? hour : "0${hour}"
     }
-    if (pickEarlierDate == 'false') {
+    if (!pickEarlierDate) {
       GregorianCalendar today = new GregorianCalendar();
       def minYear = today.get(GregorianCalendar.YEAR).toString();
       def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString();
@@ -226,17 +239,21 @@ class DateAndTimeTagLib {
         <input type="hidden" name="${name}_month" id="${id}_month" value="${month}"/>
         <input type="hidden" name="${name}_year" id="${id}_year" value="${year}"/>
 
-        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" data-dojo-type="dijit.form.DateTextBox" ${style} ${className} constraints="{min:'${minDate}'}">
-            <script type="dojo/connect" event="onChange" args="d">
-                dojo.byId("${id}_day").value = d.getDate();
-                dojo.byId("${id}_month").value = d.getMonth()+1;
-                dojo.byId("${id}_year").value = d.getFullYear();
+        <div type="text" name="${name}-DateChooser" id="${id}-DateChooser" value="${year}-${dojoMonth}-${dojoDay}" data-dojo-type="dijit/form/DateTextBox" ${style} ${className} data-dojo-props="constraints: {min:'${minDate}'}">
+            <script type="dojo/aspect" data-dojo-advice="after" data-dojo-method="onChange" data-dojo-args="d">
+				require(['dojo/dom'], function(dom){
+					dom.byId("${id}_day").value = d.getDate();
+	                dom.byId("${id}_month").value = d.getMonth()+1;
+	                dom.byId("${id}_year").value = d.getFullYear();					
+				});
             </script>
         </div>
-        <div type="text" name="${name}-TimeChooser" id="${id}-TimeChooser" value="T${dojoHour}:${dojoMinute}:00" data-dojo-type="dijit.form.TimeTextBox" ${style} ${className}>
-            <script type="dojo/connect" event="onChange" args="d">
-                dojo.byId("${id}_hour").value = d.getHours();
-                dojo.byId("${id}_minute").value = d.getMinutes();
+        <div type="text" name="${name}-TimeChooser" id="${id}-TimeChooser" value="T${dojoHour}:${dojoMinute}:00" data-dojo-type="dijit/form/TimeTextBox" ${style} ${className}>
+            <script type="dojo/aspect" data-dojo-advice="after" data-dojo-method="onChange" data-dojo-args="d">
+				require(['dojo/dom'], function(dom){
+                	dom.byId("${id}_hour").value = d.getHours();
+					dom.byId("${id}_minute").value = d.getMinutes();
+				});
             </script>
         </div>
     """
@@ -264,7 +281,7 @@ class DateAndTimeTagLib {
       disabledText = "disabled";
     }
     out << """
-        <input id="${id}" ${style} ${className} data-dojo-type="dijit.form.NumberSpinner" value="${value}" constraints="{min:0}" id="${id}" name="${name}" ${disabledText}/>
+        <input id="${id}" ${style} ${className} data-dojo-type="dijit/form/NumberSpinner" value="${value}" data-dojo-props="constraints: {min:0}" id="${id}" name="${name}" ${disabledText}/>
     """
   }
 

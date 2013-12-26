@@ -1,0 +1,10 @@
+{
+	"name": "DojoUI",
+	"version":"1.9.0",
+	"dependencies": {
+		"dojo": "current"
+	},
+	"description": "Extensions to the Dojo Toolkit to make working with dojo and grails easier.",
+	"keywords": ["JavaScript", "Dojo", "Grails"],
+	"homepage": "http://www.grails.org/plugin/dojo"
+}

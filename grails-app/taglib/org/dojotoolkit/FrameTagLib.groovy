@@ -6,7 +6,10 @@ class FrameTagLib {
 
   /**
    * Outputs the required dojo modules needed for the frame. This is not required.
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def frameResources = {attrs, body ->
     out << dojo.require(modules:['dojoui/layout/ContentPane'])
   }
@@ -14,18 +17,30 @@ class FrameTagLib {
   
   
   /**
-   * This creates an extended Dojo ContentPane (dijit.layout.ContentPane). When the containLinks property
+   * This creates an extended Dojo ContentPane (dijit/layout/ContentPane). When the containLinks property
    * is set to true(default), then it behaves very much like an <iframe> tag (without the memory overhead).
    *   
    * When containLinks is turned on, then all <a href> and <g:link> tags load inside the parent content pane.
    * Also, form submissions stay inside of the frame. The frame can also handle multi-part forms so ajax-style file 
    * uploads can be done.
    * 
-   * This special frame can be used to define a tab instead of the <dojo:ContentPane> (dijit.layout.ContentPane).
+   * This special frame can be used to define a tab instead of the <dojo:ContentPane> (dijit/layout/ContentPane).
+   * 
+   * Advanced note: Any attributes that are specified on this tag that match an
+   * HTML5 attribute will be used directly on the tag. Any other attributes will be passed
+   * as settings to the Dojo Widget.
+   * 
+   * @attr containLinks Either "true" or "false"
+   * @attr code An i18n message code for the pane title
+   * @attr href The URL to render inside the content pane
+   * @attr controller Passed to Grails to resolve URL for contents
+   * @attr action Passed to Grails to resolve URL for contents
+   * @attr params Passed to Grails to resolve URL for contents
+   * @attr id Passed to Grails to resolve URL for contents
    */ 
   def frame = {attrs, body ->
-    attrs.containLinks = attrs.containLinks ?: 'true'
-    attrs.preventCache = "true"
+    attrs.containLinks = Util.toBoolean(attrs.containLinks ?: 'true')
+    attrs.preventCache = true
     if(attrs?.code?.length()){
       attrs.title = message(code: attrs.remove('code')) 
     }        
@@ -38,7 +53,7 @@ class FrameTagLib {
     }
     attrs.name = attrs?.name ?: "dojo_ui_frame${Util.randomId()}"
     attrs.id = attrs?.id ?: attrs.remove("name")
-    out << """ <div data-dojo-type="dojoui.layout.ContentPane" ${Util.htmlProperties(attrs)}>${body()}</div> """
+    out << """ <div ${Util.htmlProperties(attrs)} data-dojo-type="dojoui/layout/ContentPane" data-dojo-props="${Util.dataDojoProps(attrs).encodeAsHTML()}">${body()}</div> """
   }
  
  
@@ -50,7 +65,7 @@ class FrameTagLib {
    * The onclick handler will first clear the ioArgs.content so that previous
    * form submissions are cleared from the XHR object.
    * 
-   * @params frame - The id of the <dojo:frame> (required)
+   * @attr frame The id of the <dojo:frame> (required)
    */ 
   def frameLink = {attrs, body ->
     def frame = attrs.remove("frame");
@@ -65,7 +80,7 @@ class FrameTagLib {
         attrs.remove('params')
         attrs.remove('id')
       }      
-      attrs.onclick="${onclick}; dijit.byId('${frame}').ioArgs.content=null; dijit.byId('${frame}').set('href','${href}'); return false;"
+      attrs.onclick="require(['dijit/registry'], function(registry){${onclick}; registry.byId('${frame}').ioArgs.content=null; registry.byId('${frame}').set('href','${href}');}); return false;"
     }
     
     // If using a g:link elementId.. then make it the id.
@@ -84,7 +99,7 @@ class FrameTagLib {
 
   /**
    * Used to run javascript after content has been loaded when it is inside of
-   * a dijit.layout.ContentPane (or <dojo:frame>). The dojo parser will parse
+   * a dijit/layout/ContentPane (or <dojo:frame>). The dojo parser will parse
    * this content pane and then run any javascript inside of the start up
    * event.
    *
@@ -103,21 +118,26 @@ class FrameTagLib {
    * Known issues:
    * 1. doesn't allow dojo.require("").
    * 2. This is not a true onLoad event.
+   * 
+   * @attr insideTab 
+   * @attr selectParentTabId
    */
   def onload = {attrs, body ->
-    def insideTab = attrs.insideTab ?: 'true'
+    def insideTab = Util.toBoolean(attrs.insideTab ?: true)
     def selectParentTabId = attrs.selectParentTabId ?: ''
     def selectTabScript = ""
     def id = attrs.remove("id") ?: ""
 
     if (selectParentTabId.length()) {
       selectTabScript = """
+	  require(["dojo/dom-class", "dojo/dom-attr", "dijit/registry", "dojo/domReady!"], function(dclass, doma, registry){
         var parentTabViewDom = this.domNode.parentNode.parentNode.parentNode;
         var parentTab = this.domNode.parentNode;
-        if( (dojo.hasClass(parentTabViewDom,"dijitTabContainer")) && (dojo.attr(parentTab, "data-dojo-type") == "dijit.layout.ContentPane") ){
-            var parentTabView = dijit.byNode(parentTabViewDom);
+        if( (dclass.has(parentTabViewDom,"dijitTabContainer")) && (doma.get(parentTab, "data-dojo-type") == "dijit/layout/ContentPane") ){
+            var parentTabView = registry.byNode(parentTabViewDom);
             parentTabView.selectChild("${selectParentTabId}");
         }
+	  });
       """
     }
     /*
@@ -125,10 +145,10 @@ class FrameTagLib {
       The &nbsp; is so that IE 6-8 will recognize the ajax content and run the code.
       Strangely, IE will not render the content pane if this is not there.
      */
-    if (insideTab == 'true') {
+    if (insideTab) {
       out << """
-        <div data-dojo-type="dijit.layout.ContentPane" style="display:none" id="${id}">&nbsp;
-            <script type="dojo/method" data-dojo-event="startup">
+        <div data-dojo-type="dijit/layout/ContentPane" style="display:none" id="${id}">&nbsp;
+            <script type="dojo/method">
                 ${selectTabScript}
                 ${body()}
                 window[this.id] = this;
@@ -139,9 +159,7 @@ class FrameTagLib {
     else {
       out << """
         <script type="text/javascript">
-            dojo.ready(function(){
                 ${body()}
-            });
         </script>
       """
     }

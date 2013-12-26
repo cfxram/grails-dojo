@@ -1,0 +1,18 @@
+<div style="position:relative; top:0;" role="group">
+	<div class="dijitHidden" data-dojo-attach-point="searchPane" style="border-bottom:1px solid #ccc; padding:8px; padding-left:2em; height:20px;">
+		<input type="text" data-dojo-attach-point="searchField" data-aadojo-attach-event="onkeyup:_searchFieldOnKeyUp, onkeydown:_searchFieldOnKeyDown" style="font-size:13px; height:18px; width:93%;"/>
+		<div id="clearSearchBtn" class="dijitHidden" role="button" data-dojo-attach-event="onclick:_clearSearchButtonClick" data-dojo-attach-point="clearSearchBtn"
+			style="padding:0 0.5em 0 0.5em; background:#ccc; color:white; font-weight:bold; display:inline-block; margin:3px 0.25em 0 -2.25em; -webkit-border-radius:6px; -moz-border-radius:6px; border:1px solid #bbb; cursor:pointer;">x</div>
+	</div>
+	<div class="dijitHidden" data-dojo-attach-point="searchResultsPane" style="width:90%; background:white; border:1px solid gray; border-top:0; margin-left:5%; position:absolute; z-index:100">
+		<ul data-dojo-attach-point="searchResultsList" style="width:95%; margin:0; padding:0"></ul>
+	</div>
+	<div class="dijitHidden" data-dojo-attach-point="blocker" style="width:100%; height:100%; opacity:0.4; filter: alpha(opacity=40); background:black; position:absolute; z-index:99;"></div>
+	<div role="tree">
+  		<div class="dijitInline dijitTreeIndent" style="position: absolute; top: -9999px" data-dojo-attach-point="indentDetector"></div>
+		<div class="dijitTreeExpando dijitTreeExpandoLoading" data-dojo-attach-point="rootLoadingIndicator"></div>
+		<div data-dojo-attach-point="containerNode" class="dijitTreeContainer" role="presentation">
+		</div>
+  	</div>
+</div>
+    

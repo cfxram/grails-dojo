@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.grails.plugins</groupId>
+    <artifactId>dojo</artifactId>
+    <version>1.9.2.0</version>
+    <packaging>grails-plugin</packaging>
+
+    <name>dojo</name>
+    <description>The Dojo Plugin adds the Dojo toolkit to your application. This javascript library provides
+    a complete collection of user interface controls, giving you the power to create web
+    applications that are highly optimized for usability, performance, internationalization,
+    accessibility, but above all deliver an incredible user experience. This plugin provides full
+    support for &lt;g:formRemote&gt;, &lt;g:remoteField&gt;, &lt;g:remoteFunction&gt;, &lt;g:remoteLink&gt; and
+    &lt;g:submitToRemote&gt;.
+
+    Also adds these two tags: &lt;dojo:paginate&gt; and &lt;dojo:sortableColumn&gt;. These do the same thing
+    that the grails versions of the tags but will do them via ajax calls.
+
+    Adds these convenient widget tags:
+      &lt;dojo:header&gt;, &lt;dojo:require&gt;, &lt;dojo:css&gt;,
+      &lt;dojo:grid&gt; (&lt;dojo:col&gt;, &lt;dojo:bind&gt;),
+      &lt;dojo:dataSourceView&gt; (&lt;dojo:nodeTemplate&gt;, &lt;dojo:nodeDefaultTemplate&gt;),
+      &lt;dojo:popOver&gt; (&lt;dojo:popOverContent&gt;, &lt;dojo:closePopOver&gt;),
+      &lt;dojo:frame&gt; (&lt;dojo:frameLink&gt; &lt;dojo:onload&gt;),
+      &lt;dojo:tree&gt; (&lt;dojo:treeNode&gt;, &lt;dojo:treeLeaf&gt;),
+      &lt;dojo:help&gt;,
+      &lt;dojo:toolip&gt;,
+      &lt;dojo:editor&gt;,
+      &lt;dojo:datePicker&gt;,
+      &lt;dojo:timePicker&gt;,
+      &lt;dojo:dateTimePicker&gt;,
+      &lt;dojo:numberPicker&gt;
+
+    For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.</description>
+
+    <properties>
+        <grails.version>2.3.4</grails.version>
+    </properties>
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <pluginManagement />
+
+        <plugins>
+            <!-- Disables the Maven surefire plugin for Grails applications, as we have our own test runner -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.12</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>surefire-it</id>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.4.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>plugins</directory>
+                            <includes>
+                                <include>**/*</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.grails</groupId>
+                <artifactId>grails-maven-plugin</artifactId>
+                <version>${grails.version}</version>
+                <configuration>
+                    <!-- Whether for Fork a JVM to run Grails commands -->
+                    <fork>true</fork>
+                </configuration>
+                <extensions>true</extensions>
+            </plugin>
+        </plugins>
+    </build>
+
+    <repositories>
+        <repository>
+            <id>grails</id>
+            <name>grails</name>
+            <url>http://repo.grails.org/grails/core</url>
+        </repository>
+        <repository>
+            <id>grails-plugins</id>
+            <name>grails-plugins</name>
+            <url>http://repo.grails.org/grails/plugins</url>
+        </repository>
+    </repositories>
+
+    <profiles>
+        <profile>
+            <id>tools</id>
+            <activation>
+                <property>
+                    <name>java.vendor</name>
+                    <value>Sun Microsystems Inc.</value>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.sun</groupId>
+                    <artifactId>tools</artifactId>
+                    <version>${java.version}</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+</project>

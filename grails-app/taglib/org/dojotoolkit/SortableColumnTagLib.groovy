@@ -7,6 +7,11 @@ class SortableColumnTagLib {
   /**
    * Copied from grails code source code.
    * This was customized to change all links to remoteLinks.
+   * 
+   * @attr property REQUIRED domain property to sort
+   * @attr update REQUIRED ID of region to replace
+   * @attr title Must specify either title or titleKey
+   * @attr titleKey Must specify either title or titleKey 
    */
   def sortableColumn = { attrs ->
     def writer = out

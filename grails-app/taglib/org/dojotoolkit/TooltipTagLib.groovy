@@ -9,7 +9,10 @@ class TooltipTagLib {
 
   /**
    * This will bring in all the resources required by the tab and its related components.
+   * 
+   * @deprecated Dojo now automatically imports required classes for parsed widgets from data-dojo-type.  
    */
+  @Deprecated
   def tooltipResources = {attrs, body ->
     out << dojo.require(modules: ['dijit/Tooltip'])
   }
@@ -35,7 +38,7 @@ class TooltipTagLib {
 
     out << """
       <div class="dojo-ui-panel-help" id="${id}" ${style}></div>
-      <div data-dojo-type="dijit.Tooltip" connectId="${id}">${body()}</div>
+      <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId: '${id}'">${body()}</div>
     """
   }
 
@@ -43,6 +46,8 @@ class TooltipTagLib {
 
   /**
    * Attaches a tooltip to any element with an ID
+   * 
+   * @attr id REQUIRED ID of the DOM node to connect the tooltip
    */
   def tooltip = {attrs, body ->
     def style = attrs.style ?: ''
@@ -55,7 +60,7 @@ class TooltipTagLib {
       style = """style="${style}" """
     }
     out << """
-      <div data-dojo-type="dijit.Tooltip" connectId="${id}">${body()}</div>
+      <div data-dojo-type="dijit/Tooltip" data-dojo-props="connectId: '${id}'">${body()}</div>
     """
   }
 

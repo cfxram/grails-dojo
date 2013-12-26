@@ -2,7 +2,6 @@ package org.dojotoolkit
 
 import grails.converters.JSON
 
-
 class DojoTagLib {
   static namespace = "dojo"
 
@@ -93,27 +92,29 @@ class DojoTagLib {
    * Alternative to <g:javascript library="dojo"/>. This will include the dojo.js file,
    * adds the standard dojo headers., and sets the theme.
    *
-   * @param attrs.require = This is a map of components to include
-   * @param attrs.theme = (optional) Will include the theme if it is provided
-   * @param attrs.includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
+   * @attr require = This is a map of components to include
+   * @attr theme = (optional) Will include the theme if it is provided
+   * @attr includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
    *                                    It is recommended you leave this to true. Setting to false, you will
    *                                    have to manually include the generated files yourself but it give more
    *                                    fine grain control on when the files get included.
    *
-   * @param attrs.async = Boolean (true) If false will use the loader in non-AMD mode.
-   * @param attrs.modules = List (optional) A list of required modules to be included. Just calles require().
-   * @param attrs.modulePaths = List (optional) A list of paths to search for required modules.
+   * @attr async = Boolean (true) If false will use the loader in non-AMD mode.
+   * @attr modules = List (optional) A list of required modules to be included. Just calles require().
+   * @attr modulePaths = List (optional) A list of paths to search for required modules.
+   * @attr parseOnLoad = Boolean (true) Whether to parse the DOM for widgets
+   * @attr isDebug = Boolean (false) Whether debug mode is on
+   * @attr showSpinner = Boolean (true) Whether to enable the DojoGrailsSpinner
    */
-  def header = {attrs ->
+  def header = {attrs, body ->
     // Standard Dojo Config Settings (and defaults)
-    attrs.isDebug = attrs.isDebug ?: "false"
-    attrs.parseOnLoad = attrs.parseOnLoad ?: "true"
-    attrs.async = attrs.async ?: "true"
-
+    attrs.isDebug = TagLibUtil.toBoolean(attrs.isDebug)
+    attrs.parseOnLoad = TagLibUtil.toBoolean(attrs.parseOnLoad ?: true)
+    attrs.async = TagLibUtil.toBoolean(attrs.async ?: true)
 
     // Custom Properties for Dojo Plugin
-    def includeCustomBuild = attrs.remove("includeCustomBuild") ?: "true"
-    def showSpinner = attrs.remove("showSpinner") ?: "true"
+    def includeCustomBuild = TagLibUtil.toBoolean(attrs.remove("includeCustomBuild") ?: true)
+    def showSpinner = TagLibUtil.toBoolean(attrs.remove("showSpinner") ?: true)
     def modulePaths = attrs.remove("modulePaths") ?: [:]
     def modules = attrs.remove("modules") ?: []
     def theme = attrs.remove("theme") ?: "tundra"
@@ -140,11 +141,10 @@ class DojoTagLib {
     }
 
     // New Dojo AMD Loader
-    if (attrs.async == "true") {
+    if (attrs.async) {
       out << """
         <script>
-          dojoConfig = {${dojoConfig}, paths:{${paths.join(',')}}, baseUrl : '${jsRoot}' };
-          dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+          dojoConfig = {${dojoConfig}, paths:{${paths.join(',')}}, baseUrl : '${jsRoot}', showSpinner:${showSpinner}};
         </script>
         <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js'></script>
       """
@@ -153,18 +153,17 @@ class DojoTagLib {
     else {
       out << """
         <script>
-          dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}} };
-          dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
+          dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}}, showSpinner:${showSpinner}};
         </script>
         <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js.uncompressed.js'></script>        
       """
     }
-    if(showSpinner == "true"){
-      out << """ <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script> """
+    if(showSpinner){
+		modules << 'dojoui/DojoGrailsSpinner'
     }
     
     // if custom build then include released js files
-    if(includeCustomBuild == "true"){
+    if(includeCustomBuild){
       out << customDojoScripts()
     }
     if (modules?.size()) {
@@ -176,7 +175,7 @@ class DojoTagLib {
 
   /**
    * Will setup the base css and themes.User still needs to define <body class="${theme}">
-   * @param attrs.theme  = (Tundra), Soria, Nihilio. The theme to bring in.
+   * @attr theme  = (Tundra), Soria, Nihilio. The theme to bring in.
    */
   def stylesheets = {attrs ->
     def theme = attrs.remove("theme") ?: "tundra"
@@ -190,8 +189,6 @@ class DojoTagLib {
     }
     else{
       out << """
-        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojo/resources/dojo.css" />
-        <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/dijit.css" />
         <link rel="stylesheet" type="text/css" href="${dojoHome()}/dijit/themes/${theme}/${theme}.css" />
         <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui.css" />
         <!--[if lt IE 8]>
@@ -206,6 +203,8 @@ class DojoTagLib {
   /**
    * Includes a dojo specific css file. This is used mostly for extended css files in dojox.
    * Please use <dojo:header> or <dojo:stylesheets> for the standard files.
+   * 
+   * @attr file REQUIRED The CSS file to include
    */
   def css = {attrs ->
     out << "<link rel='stylesheet' type='text/css' href='${dojoHome()}/${attrs?.file}'/>" 
@@ -217,9 +216,9 @@ class DojoTagLib {
    * Will include dojo modules via the dojo loader and make them available in the body of the tag script
    * Each require will provide a callback parameter named after the last part of the module name
    * e.g.: "dijit/form/Form" will provide a parameter called "Form" in the callback
-   * @param attrs.modules = This is a map of components to include
-   * @param attrs.callbackParamNames = This overrides the default callback parameter names, in case you want to use different ones than the defaults
-   * @param attrs.wrapperFunction = put the require in a wrapper function (include its signature). e.g: myFunction(param1,param2)
+   * @attr modules = This is a map of components to include
+   * @attr callbackParamNames = This overrides the default callback parameter names, in case you want to use different ones than the defaults
+   * @attr wrapperFunction = put the require in a wrapper function (include its signature). e.g: myFunction(param1,param2)
    */
   def require = {attrs, body ->
 	  def modules = attrs?.modules?.collect{ "'${it}'" }

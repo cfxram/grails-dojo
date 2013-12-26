@@ -45,14 +45,14 @@
   <button onclick="selectPane('genericStack','stackOne');">One</button>
   <button onclick="selectPane('genericStack','stackTwo');">Two</button>
   <button onclick="selectPane('genericStack','stackThree');">Three</button>
-  <div data-dojo-type="dijit.layout.StackContainer" id="genericStack" doLayout="false" style="border: 1px solid gray; width:400px;">
-    <div data-dojo-type="dijit.layout.ContentPane" class="stackPane" id="stackOne" style="height:100px; background: #eee;">
+  <div data-dojo-type="dijit/layout/StackContainer" id="genericStack" style="border: 1px solid gray; width:400px;" data-dojo-props="doLayout: false">
+    <div data-dojo-type="dijit/layout/ContentPane" class="stackPane" id="stackOne" style="height:100px; background: #eee;">
       Stack Pane One
     </div>
-    <div data-dojo-type="dijit.layout.ContentPane" class="stackPane"  id="stackTwo" style="height:100px; background: #ddd;">
+    <div data-dojo-type="dijit/layout/ContentPane" class="stackPane"  id="stackTwo" style="height:100px; background: #ddd;">
       Stack Pane Two
     </div>
-    <div data-dojo-type="dijit.layout.ContentPane" class="stackPane"  id="stackThree" style="height:100px; background: #ccc;">
+    <div data-dojo-type="dijit/layout/ContentPane" class="stackPane"  id="stackThree" style="height:100px; background: #ccc;">
       Stack Pane Three
     </div>
   </div>

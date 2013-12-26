@@ -232,5 +232,10 @@
   <div id="dojoContent" style="border:1px solid blue; margin-top:1em"></div>
 </fieldset>
 
+	<h2>Set ContentPane Awareness</h2>
+	<dojo:tabContainer style="width:650px; height:200px; margin-top:1em">
+    	<dojo:contentPane title="My First Tab" style="padding:1em" action="list"></dojo:contentPane>
+  	</dojo:tabContainer>
+
 </body>
 </html>
