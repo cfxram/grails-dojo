@@ -37,47 +37,10 @@
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.</description>
 
     <properties>
-        <grails.version>2.2.1</grails.version>
+        <grails.version>2.3.4</grails.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.grails</groupId>
-            <artifactId>grails-dependencies</artifactId>
-            <version>${grails.version}</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>org.grails</groupId>
-            <artifactId>grails-test</artifactId>
-            <version>${grails.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.grails</groupId>
-            <artifactId>grails-plugin-testing</artifactId>
-            <version>${grails.version}</version>
-            <scope>test</scope>
-        </dependency>
-		<dependency>
-    		<groupId>org.grails.plugins</groupId>
-    		<artifactId>release</artifactId>
-    		<version>2.2.1</version>
-    		<type>zip</type>
-		</dependency>
-		<dependency>
-  			<groupId>org.grails.plugins</groupId>
-  			<artifactId>tomcat</artifactId>
-  			<version>${grails.version}</version>
-  			<scope>runtime</scope>
-  			<type>zip</type>
-		</dependency>
-		<dependency>
-  			<groupId>org.grails.plugins</groupId>
-  			<artifactId>hibernate</artifactId>
-  			<version>${grails.version}</version>
-  			<type>zip</type>
-		</dependency>
     </dependencies>
 
     <build>
