@@ -7,14 +7,14 @@ import grails.converters.JSON
 class TagLibUtil {
 
   // these are mostly HTML5 attributes, minus the ones that don't really make sense for dijits
-  static final String[] CORE_ATTRIBS = [
+  static final Set<String> CORE_ATTRIBS = ([
 	  "accesskey", "class", "dir", "hidden", "id", "lang", "spellcheck", "style", "tabindex", "title",
 	  "onabort", "onblur", "onchange", "onclick", "ondblclick",
 	  "onerror", "onfocus", "oninput", "oninvalid",
 	  "onkeydown", "onkeypress", "onkeyup", "onload",
 	  "onmousedown", "onmousemove", "onmouseout", "onmouseover", "onmouseup", "onmousewheel",
 	  "onreadystatechange", "onreset", "onscroll", "onselect", "onshow", "onsubmit"
-  ]
+  ] as Set).asImmutable()
   static final String DATA_DOJO_TYPE = "data-dojo-type"
   static final String DATA_DOJO_PROPS = "data-dojo-props"
   

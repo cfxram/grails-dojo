@@ -1,7 +1,7 @@
-<plugin name='dojo' version='1.9.0.0' grailsVersion='1.3.0 &gt; *'>
+<plugin name='dojo' version='1.9.2.0' grailsVersion='1.3.0 &gt; *'>
   <author>Rob Meidal</author>
   <authorEmail>cfxram@codehaus.org</authorEmail>
-  <title>Dojo 1.9.0 for Grails</title>
+  <title>Dojo 1.9.2 for Grails</title>
   <description>
     The Dojo Plugin adds the Dojo toolkit to your application. This javascript library provides
     a complete collection of user interface controls, giving you the power to create web
@@ -51,19 +51,4 @@
     <resource>org.dojotoolkit.TooltipTagLib</resource>
     <resource>org.dojotoolkit.TreeTagLib</resource>
   </resources>
-  <repositories>
-    <repository name='grailsCentral' url='http://grails.org/plugins' />
-  </repositories>
-  <dependencies />
-  <plugins>
-    <compile>
-      <plugin group='org.grails.plugins' name='hibernate' version='2.2.1' />
-      <plugin group='org.grails.plugins' name='release' version='2.2.1' />
-    </compile>
-    <runtime>
-      <plugin group='org.grails.plugins' name='tomcat' version='2.2.1' />
-    </runtime>
-  </plugins>
-  <runtimePluginRequirements />
-  <behavior />
 </plugin>

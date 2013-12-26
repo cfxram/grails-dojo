@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.grails.plugins</groupId>
     <artifactId>dojo</artifactId>
-    <version>1.9.0.0</version>
+    <version>1.9.2.0</version>
     <packaging>grails-plugin</packaging>
 
     <name>dojo</name>
