@@ -26,8 +26,10 @@ class DateAndTimeTagLib {
     def id = attrs.id ?: "dojo_ui_date${Util.randomId()}"
     def name = attrs.name ?: attrs.id
     def value = attrs.value ?: null
-    def defaultToday = attrs.defaultToday ?: 'true';
-    def pickEarlierDate = attrs.pickEarlierDate ?: 'true';
+    def defaultToday = attrs.defaultToday ?: 'true'
+    def pickEarlierDate = attrs.pickEarlierDate ?: 'true'
+    def onChange = attrs.onChange ?: ''
+
     def c = null
     def day = ""
     def month = ""
@@ -88,6 +90,7 @@ class DateAndTimeTagLib {
                     dojo.byId("${id}_month").value = "";
                     dojo.byId("${id}_year").value = "";
                 }
+                $onChange
             </script>
         </div>
     """
@@ -105,6 +108,8 @@ class DateAndTimeTagLib {
     def id = attrs.id ?: "dojo_ui_time${Util.randomId()}"
     def name = attrs.name ?: attrs.id
     def value = attrs.value ?: new Date()
+    def onChange = attrs.onChange ?: ''
+
     def c = null
     def minute = ""
     def hour = ""
@@ -148,6 +153,7 @@ class DateAndTimeTagLib {
             <script type="dojo/connect" event="onChange" args="d">
                 dojo.byId("${id}_hour").value = d.getHours();
                 dojo.byId("${id}_minute").value = d.getMinutes();
+                $onChange
             </script>
         </div>
     """
@@ -162,9 +168,11 @@ class DateAndTimeTagLib {
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_dateTime${Util.randomId()}"
     def name = attrs.name ?: attrs.id
-    def defaultToday = attrs.defaultToday ?: 'true';
-    def pickEarlierDate = attrs.pickEarlierDate ?: 'true';
+    def defaultToday = attrs.defaultToday ?: 'true'
+    def pickEarlierDate = attrs.pickEarlierDate ?: 'true'
     def value = attrs.value ?: null
+    def onChange = attrs.onChange ?: ''
+
     def c = null
     def minute = ""
     def hour = ""
@@ -229,12 +237,14 @@ class DateAndTimeTagLib {
                 dojo.byId("${id}_day").value = d.getDate();
                 dojo.byId("${id}_month").value = d.getMonth()+1;
                 dojo.byId("${id}_year").value = d.getFullYear();
+                $onChange
             </script>
         </div>
         <div type="text" name="${name}-TimeChooser" id="${id}-TimeChooser" value="T${dojoHour}:${dojoMinute}:00" dojoType="dijit.form.TimeTextBox" ${style} ${className}>
             <script type="dojo/connect" event="onChange" args="d">
                 dojo.byId("${id}_hour").value = d.getHours();
                 dojo.byId("${id}_minute").value = d.getMinutes();
+                $onChange
             </script>
         </div>
     """
