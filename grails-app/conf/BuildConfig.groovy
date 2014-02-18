@@ -24,12 +24,18 @@ grails.project.dependency.resolution = {
     mavenCentral()
   }
 
+  dependencies {
+  }
+
   plugins {
-    runtime ":hibernate:$grailsVersion"
-    build ":tomcat:$grailsVersion"
-    build(':release:2.0.3', ':rest-client-builder:1.0.2') {
-      export = false
-    }
+    // plugins for the build system only
+    build ":tomcat:7.0.50"
+
+    // plugins needed at runtime but not for compilation
+    runtime ":hibernate:3.6.10.7" // or ":hibernate4:4.1.11.6"
+    runtime ":database-migration:1.3.8"
+
+    build ":release:3.0.1"
   }
 }
 
