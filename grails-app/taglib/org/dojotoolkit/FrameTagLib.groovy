@@ -1,34 +1,34 @@
 package org.dojotoolkit
+
 import org.dojotoolkit.TagLibUtil as Util
 
 class FrameTagLib {
+
   static namespace = 'dojo'
 
   /**
    * Outputs the required dojo modules needed for the frame. This is not required.
    */
-  def frameResources = {attrs, body ->
+  def frameResources = {attrs ->
     out << dojo.require(modules:['dojoui/layout/ContentPane'])
   }
-  
-  
-  
+
   /**
    * This creates an extended Dojo ContentPane (dijit.layout.ContentPane). When the containLinks property
    * is set to true(default), then it behaves very much like an <iframe> tag (without the memory overhead).
-   *   
+   *
    * When containLinks is turned on, then all <a href> and <g:link> tags load inside the parent content pane.
-   * Also, form submissions stay inside of the frame. The frame can also handle multi-part forms so ajax-style file 
+   * Also, form submissions stay inside of the frame. The frame can also handle multi-part forms so ajax-style file
    * uploads can be done.
-   * 
+   *
    * This special frame can be used to define a tab instead of the <dojo:ContentPane> (dijit.layout.ContentPane).
-   */ 
+   */
   def frame = {attrs, body ->
     attrs.containLinks = attrs.containLinks ?: 'true'
     attrs.preventCache = "true"
     if(attrs?.code?.length()){
-      attrs.title = message(code: attrs.remove('code')) 
-    }        
+      attrs.title = message(code: attrs.remove('code'))
+    }
     if(attrs?.controller || attrs?.action){
       attrs.href = createLink(attrs)
       attrs.remove('controller')
@@ -40,34 +40,32 @@ class FrameTagLib {
     attrs.id = attrs?.id ?: attrs.remove("name")
     out << """ <div data-dojo-type="dojoui.layout.ContentPane" ${Util.htmlProperties(attrs)}>${body()}</div> """
   }
- 
- 
- 
+
   /**
-   * Creates a link that when clicked will load the content in a <dojo:frame>. 
-   * 
+   * Creates a link that when clicked will load the content in a <dojo:frame>.
+   *
    * Implementation Note:
    * The onclick handler will first clear the ioArgs.content so that previous
    * form submissions are cleared from the XHR object.
-   * 
+   *
    * @params frame - The id of the <dojo:frame> (required)
-   */ 
+   */
   def frameLink = {attrs, body ->
-    def frame = attrs.remove("frame");
+    def frame = attrs.remove("frame")
     def href = attrs.remove("href") ?: ""
     def onclick = attrs.remove("onclick") ?: ""
 
-    if(frame){      
+    if(frame){
       if(attrs?.controller || attrs?.action){
         href = createLink(attrs)
         attrs.remove('controller')
         attrs.remove('action')
         attrs.remove('params')
         attrs.remove('id')
-      }      
+      }
       attrs.onclick="${onclick}; dijit.byId('${frame}').ioArgs.content=null; dijit.byId('${frame}').set('href','${href}'); return false;"
     }
-    
+
     // If using a g:link elementId.. then make it the id.
     if( attrs?.elementId?.length() ){
       attrs.name=attrs.remove("elementId")
@@ -75,12 +73,9 @@ class FrameTagLib {
     if(attrs?.name){
       attrs.id = attrs.name
     }
-    
+
     out << """ <a href="#" ${Util.htmlProperties(attrs)}>${body()}</a> """
   }
-
-
-
 
   /**
    * Used to run javascript after content has been loaded when it is inside of
@@ -146,4 +141,4 @@ class FrameTagLib {
       """
     }
   }
-}  
+}

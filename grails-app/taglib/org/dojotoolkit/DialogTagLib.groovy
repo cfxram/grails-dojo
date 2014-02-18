@@ -1,26 +1,24 @@
 package org.dojotoolkit
 
 import org.dojotoolkit.TagLibUtil as Util
+
 /**
- * This class provides support for the dialog function within the Dojo toolkit.  It allows for dialogs that
+ * Provides support for the dialog function within the Dojo toolkit.  It allows for dialogs that
  * can be populated with the current body or can build the body from a template rendered by a controller action.
  */
 class DialogTagLib {
+
   static namespace = 'dojo'
 
-
-
   /**
-   * This will bring in all the resources required by the dialog tag.
+   * Brings in all the resources required by the dialog tag.
    */
-  def dialogResources = {attrs, body ->
+  def dialogResources = {attrs ->
     out << dojo.require(modules: ['dojoui/widget/Dialog','dojoui/layout/ContentPane'])
   }
 
-
-
   /**
-   * This will create a dialog with a body or a body created by a template rendered within a action.  All the normal
+   * Creates a dialog with a body or a body created by a template rendered within a action.  All the normal
    * dojo dialog tags are supported in addition to the following:
    * @param controller - The controller to use to render the body of the dialog
    * @param action - The action within the controller that will render the body of the dialog
@@ -87,34 +85,26 @@ class DialogTagLib {
         ${body()}
       </div>
    """
-
-
   }
 
-
-
   /**
-   * Will generate the javascript needed to open a dialog box.
+   * Generates the javascript needed to open a dialog box.
    */
-  def openDialogScript = {attrs, body ->
+  def openDialogScript = {attrs ->
     def onclick = attrs?.onclick ?: ''
     out << "require(['dijit/registry'],function(registry){registry.byId('${attrs?.dialogId}').show(); ${onclick}; return false;});"
   }
 
-
-
   /**
-   * Will generate the javascript needed to close a dialog window.
+   * Generates the javascript needed to close a dialog window.
    */
-  def closeDialogScript = {attrs,body->
+  def closeDialogScript = {attrs->
     def onclick = attrs?.onclick ?: ''
     out << "require(['dijit/registry'],function(registry){registry.byId('${attrs?.dialogId}').hide(); ${onclick}; return false;});"
   }
 
-
-
   /**
-   * This will generate a link to open a dialog.  It will support all the normal dojo and html attributes in addition to.
+   * Generates a link to open a dialog.  Supports all the normal dojo and html attributes in addition to.
    * @param dialogId - The id of the dialog to close via this link
    * @param name - The if of the link that is generated and if one is not passed in one will be generated.
    */
@@ -126,10 +116,8 @@ class DialogTagLib {
     out << """ <a href="#" ${Util.htmlProperties(attrs)}>${body()}</a> """
   }
 
-
-
   /**
-   * This will generate a link to open a dialog.  It will support all the normal dojo and html attributes in addition to.
+   * Generates a link to open a dialog.  Supports all the normal dojo and html attributes in addition to.
    * @param dialogId - The id of the dialog to close via this link
    * @param name - The if of the link that is generated and if one is not passed in one will be generated.
    */
@@ -141,18 +129,11 @@ class DialogTagLib {
     out << """ <a href="#" ${Util.htmlProperties(attrs)}>${body()}</a> """
   }
 
-
-
-
   /**
+   * DEPRECATED!! (October 30, 2011) - Generates a link to close the dialog indicated by the dialogId.
+   * takes all the normal dojo attributes and in addition support for localization.
    *
-   *
-   * DEPRECATED!! (October 30, 2011) - This will generate a link to close the dialog indicated by the dialogId.
-   * it will take all the normal dojo attributes and in addition support for localization.
-   *
-   *
-   *
-   * @param code - This will be render to a localized string and used as the label for the link.
+   * @param code - rendered to a localized string and used as the label for the link.
    * @param dialogId - The id of the dialog to close via this link
    * @param id - The if of the link that is generated and if one is not passed in one will be generated.
    * @deprecated - This is deprecated. Use <dojo:closeDialog> instead.

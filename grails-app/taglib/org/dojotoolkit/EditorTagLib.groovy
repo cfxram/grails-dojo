@@ -1,19 +1,18 @@
 package org.dojotoolkit
+
 import org.dojotoolkit.TagLibUtil as Util
 
-
 class EditorTagLib {
+
   static namespace = 'dojo'
 
   /**
    * Outputs the required javascript dojo libraries
    */
-  def editorResources = {attrs,body ->
+  def editorResources = {attrs ->
     out << dojo.require(modules:['dojoui/widget/Editor'])
     out << dojo.css(file:"dojox/editor/plugins/resources/css/PasteFromWord.css")
   }
-
-
 
   /**
    * Creates a dojo rich text editor with default values chosen.
@@ -34,5 +33,4 @@ class EditorTagLib {
     """
 
   }
-
 }

@@ -1,19 +1,17 @@
 package org.dojotoolkit
+
 import org.dojotoolkit.TagLibUtil as Util
 
 class DataSourceViewTagLib {
+
   static namespace = 'dojo'
 
-
-
   def dataSourceViewResources = {attrs,body ->
-        out << dojo.require(modules:['dojoui/widget/DataSourceView', 'dojo/data/ItemFileWriteStore'])
+    out << dojo.require(modules:['dojoui/widget/DataSourceView', 'dojo/data/ItemFileWriteStore'])
   }
-  
-  
 
   /**
-   * Will render content based on data defined in a dojo data source like dojo.data.ItemFileWriteStore.
+   * Renders content based on data defined in a dojo data source like dojo.data.ItemFileWriteStore.
    * @param name - The id of the dataSourceView
    * @param store - The data store name to watch. This can be a store from a dojo:tree or a dojo:grid.
    * @param data - This is Json formatted data that will be used as the store instead of the params.store.
@@ -44,8 +42,6 @@ class DataSourceViewTagLib {
     """
   }
 
-
-
   /**
    * Child tag of dataSource. Allows customization of what is displayed when no items are
    * displayed.
@@ -58,8 +54,6 @@ class DataSourceViewTagLib {
     """
   }
 
-
-
   /**
    * Child tag of dataSource. Allows customization of what is displayed when custom template is not found
    */
@@ -70,8 +64,6 @@ class DataSourceViewTagLib {
       </script>
     """
   }
-
-
 
   /**
    * Child tag of dataSourceView. Allows customization of how the data elements
@@ -100,5 +92,4 @@ class DataSourceViewTagLib {
       """
     }
   }
-
 }

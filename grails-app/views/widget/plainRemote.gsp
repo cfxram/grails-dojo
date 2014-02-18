@@ -48,7 +48,7 @@
     function renameForDojo(name, myId){
       var renamedString= prompt ("Enter new name:", name);
       ${remoteFunction(action:'remoteJsFunction', update:'myUpdateRegion',params:"'name':renamedString,'myId':myId")}
-    }    
+    }
   </g:javascript>
 </head>
 <body>
@@ -71,8 +71,8 @@
 		  </li>
 		</ul>
 		<div id="myUpdateRegion" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
-		<div id="myUpdateRegion2" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>		
-	</div>	
-	
-</body>	
+		<div id="myUpdateRegion2" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
+	</div>
+
+</body>
 </html>

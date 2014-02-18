@@ -1,11 +1,13 @@
 package org.dojotoolkit
+
 import org.springframework.web.servlet.support.RequestContextUtils
 
 class PaginateTagLib {
+
   static namespace = 'dojo'
 
   /**
-   * Copied from grails code source code.
+   * Copied from Grails code source code.
    * This was customized to change all links to remoteLinks.
    */
   def paginate = { attrs ->
@@ -44,7 +46,7 @@ class PaginateTagLib {
     // Add remoteLink specific attrs. (and formName)
     ['method', 'sync', 'onSuccess', 'onFailure', 'onLoading', 'onLoaded', 'onComplete', 'preventCache', 'update', 'formName'].each {
       if (attrs[it]) {
-        linkTagAttrs[it] = attrs[it];
+        linkTagAttrs[it] = attrs[it]
       }
     }
 

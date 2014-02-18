@@ -5,20 +5,20 @@
 	  <link rel="shortcut icon" href="${resource()}/images/favicon.ico" type="image/x-icon" />
     <title><g:layoutTitle/></title>
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    
+
     <!--
     <meta name="viewport" content="user-scalable=no, width=device-width" />
     <link rel="apple-touch-icon" href="bookmark-icon.png" />
-    -->    
-  
+    -->
+
     <!--modulePaths="['appwidgets':'appwidgets']" -->
      <dojo:header theme="tundra" locale="'en-us'" modules="['dijit/layout/TabContainer','dijit/layout/ContentPane']" showSpinner="true">
     	//console.debug(new CustomWidget({}));
     </dojo:header>
     <dojo:menuResources/>
-	
+
     <g:layoutHead/>
-	
+
     <style type="text/css">
       .calendar{
         background-image: url(${resource()}/images/date.png);
@@ -54,7 +54,7 @@
 </head>
 <body class="tundra">
   <div style="height:30px; border:1px solid #ccc; background:#eee; color:gray">
-  	
+
     <!-- <div data-dojo-type="appwidgets.CustomWidget" style="display:inline-block; padding: 8px; float:left"></div> -->
 
     <div style="float:right; border-left: 1px solid #ccc; height:30px;">
@@ -87,9 +87,6 @@
       --%>
     </div>
   </div>
-
-
-
 
   <g:layoutBody/>
 </body>

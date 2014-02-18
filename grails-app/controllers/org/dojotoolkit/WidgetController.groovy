@@ -2,17 +2,14 @@ package org.dojotoolkit
 
 import grails.converters.JSON
 
-
 class WidgetController {
 
-  def index = {
-    render(view:"index")
-  }
+  def index = {}
 
   def plainRemote = {}
 
   def testRemoteLink = {
-    Thread.currentThread().sleep(1000);
+    sleep(1000)
     render {
       div(style:"border:3px solid orange; background:#eee; padding:5em;", "Remote Link - Passed.")
     }
@@ -21,47 +18,47 @@ class WidgetController {
   def remotePostFromLink = {
     render {
       div(style:"border:3px solid blue; background:#eee; padding:5em;", "Remote Link with URL Map -  Passed.")
-    }    
+    }
   }
-  
+
   def remoteRequestWithUrlMap = {
     render {
       div(style:"border:3px solid red; background:#eee; padding:5em;", "Remote Request With Url Map - Passed.")
-    }    
+    }
   }
-  
+
   def synchronizedRemoteLink = {
     render {
       div(style:"border:3px solid green; background:#eee; padding:5em;", "Synchronized Remote Link - Passed.")
-    } 
+    }
   }
-  
+
   def remoteFunctionAction = {
     println "In Remote Function Action"
     println params
     render {
       div(style:"border:3px solid ${params?.color}; background:#eee; padding:5em;", "Remote Function - Passed.")
-    }    
-  }  
-  
+    }
+  }
+
   def remoteFunctionWithParams = {
     render {
       div(style:"border:3px solid ${params?.color}; background:#eee; padding:5em;", "${params.pluginName} - Remote Function With Params - Passed.")
     }
   }
-  
+
   def remoteField = {
     render {
       div(style:"border:3px solid ${params?.color}; background:#eee; padding:5em;", "Remote Field - Passed.")
     }
-  }  
+  }
 
   def remoteJsFunction = {
     println "This was passed from the browser: ${params.name}"
     render {
       div(style:"border:3px solid pink; background:#eee; padding:5em;", "${params.name} Remote Function (from JS) - Passed.")
     }
-  }  
+  }
 
   def remoteFormSubmit = {
     render {
@@ -85,18 +82,15 @@ class WidgetController {
      render(view:"remoteDialogContent")
   }
 
-
   def remoteDialogContentWithLinks = {
     render(view:'remoteDialogContentWithLinks')
   }
 
   def remoteDialogContentWithForm = {}
 
-
   def remoteDijitContent = {}
 
   def popOverForm = {}
-
 
   def list = {
     if (!params.max) params.max = 10
@@ -119,7 +113,6 @@ class WidgetController {
   def treeCombo = {}
   def editorFeatures = {}
 
-
   def saveEditorFeatures = {
     println "***************** "
     params?.contentEditor?.each{
@@ -138,13 +131,13 @@ class WidgetController {
   }
 
   /**
-   * Will display examples of the <dojo:tree> object. This will also created a static JSON string to
+   * Displays examples of the <dojo:tree> object. Also creates a static JSON string to
    * test out static data populating a tree object.
    */
   def tree = {
     // Generate the JSON
-    List releasedWidgets = Widget.findAllByReleased(true);
-    List protoTypeWidgets = Widget.findAllByReleased(false);
+    List releasedWidgets = Widget.findAllByReleased(true)
+    List protoTypeWidgets = Widget.findAllByReleased(false)
 
     def jsonMap = [
       identifier: "id",
@@ -176,11 +169,11 @@ class WidgetController {
   }
 
   /**
-   * Will get the widgets nested as a tree structure to demo the tree component
+   * Gets the widgets nested as a tree structure to demo the tree component
    */
   def treeJson = {
-    List releasedWidgets = Widget.findAllByReleased(true);
-    List protoTypeWidgets = Widget.findAllByReleased(false);
+    List releasedWidgets = Widget.findAllByReleased(true)
+    List protoTypeWidgets = Widget.findAllByReleased(false)
 
     def jsonMap = [
       identifier: "id",
@@ -213,20 +206,20 @@ class WidgetController {
 
 
   /**
-   * Will display widgets as JSON to be consumed by the dojo grid component
+   * Displays widgets as JSON to be consumed by the dojo grid component
    */
   def listJson = {
     println params
-    def widgets,widgetsTotal   
-      
+    def widgets,widgetsTotal
+
     if(params?.shape){
-      widgets = Widget.findAllByShapeLike("%${params?.shape}%");
-      widgetsTotal = widgets.size();
-      widgets = Widget.findAllByShapeLike("%${params?.shape}%",params);
-      println widgets.size();
+      widgets = Widget.findAllByShapeLike("%${params?.shape}%")
+      widgetsTotal = widgets.size()
+      widgets = Widget.findAllByShapeLike("%${params?.shape}%",params)
+      println widgets.size()
     }
     else{
-      widgetsTotal = Widget.list().size();      
+      widgetsTotal = Widget.list().size()
       widgets = Widget.list(params)
     }
 
@@ -245,7 +238,5 @@ class WidgetController {
     }
 
     render jsonMap as JSON
-
   }
-
 }

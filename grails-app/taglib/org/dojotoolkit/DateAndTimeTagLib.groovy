@@ -3,31 +3,28 @@ package org.dojotoolkit
 import org.dojotoolkit.TagLibUtil as Util
 
 class DateAndTimeTagLib {
+
   static namespace = 'dojo'
-
-
 
   /**
    * Outputs the required javascript dojo libraries
    */
-  def dateTimeResources = {attrs, body ->
+  def dateTimeResources = {attrs ->
     out << dojo.require(modules: ['dijit/form/DateTextBox', 'dijit/form/TimeTextBox', 'dijit/form/NumberSpinner'])
   }
 
-
-
   /**
-   * Creates a grails compatible date picker. This date picker can be used
+   * Creates a Grails-compatible date picker. This date picker can be used
    * like the <g:datePicker> in the controller.
    */
-  def datePicker = {attrs, body ->
+  def datePicker = {attrs ->
     def style = attrs.style ?: ''
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_date${Util.randomId()}"
     def name = attrs.name ?: attrs.id
     def value = attrs.value ?: null
-    def defaultToday = attrs.defaultToday ?: 'true';
-    def pickEarlierDate = attrs.pickEarlierDate ?: 'true';
+    def defaultToday = attrs.defaultToday ?: 'true'
+    def pickEarlierDate = attrs.pickEarlierDate ?: 'true'
     def c = null
     def day = ""
     def month = ""
@@ -37,13 +34,13 @@ class DateAndTimeTagLib {
     def minDate = ""
 
     if ((defaultToday == 'true') && (attrs?.value == null)) {
-      value = new Date();
+      value = new Date()
     }
     if (value instanceof Calendar) {
       c = value
     }
     else if (value != null) {
-      c = new GregorianCalendar();
+      c = new GregorianCalendar()
       c.setTime(value)
     }
     if (c != null) {
@@ -55,10 +52,10 @@ class DateAndTimeTagLib {
     }
 
     if (pickEarlierDate == 'false') {
-      GregorianCalendar today = new GregorianCalendar();
-      def minYear = today.get(GregorianCalendar.YEAR).toString();
-      def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString();
-      def minDay = today.get(GregorianCalendar.DAY_OF_MONTH).toString();
+      GregorianCalendar today = new GregorianCalendar()
+      def minYear = today.get(GregorianCalendar.YEAR).toString()
+      def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString()
+      def minDay = today.get(GregorianCalendar.DAY_OF_MONTH).toString()
       def minMonthFormat = (minMonth.length() == 2) ? minMonth : "0${minMonth}"
       def minDayFormat = (minDay.length() == 2) ? minDay : "0${minDay}"
       minDate = minYear + "-" + minMonthFormat + "-" + minDayFormat
@@ -95,13 +92,11 @@ class DateAndTimeTagLib {
     """
   }
 
-
-
   /**
-   * Creates a grails compatible time picker. This time picker can be used
+   * Creates a Grails-compatible time picker. This time picker can be used
    * like the <g:datePicker> in the controller.
    */
-  def timerPicker = {attrs, body ->
+  def timerPicker = {attrs ->
     def style = attrs.style ?: ''
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_time${Util.randomId()}"
@@ -120,7 +115,7 @@ class DateAndTimeTagLib {
       c = value
     }
     else if (value != null) {
-      c = new GregorianCalendar();
+      c = new GregorianCalendar()
       c.setTime(value)
     }
     if (c != null) {
@@ -156,7 +151,7 @@ class DateAndTimeTagLib {
   }
 
   /**
-   * Creates a grails compatible time picker. This date and time picker can be
+   * Creates a Grails-compatible time picker. This date and time picker can be
    * used like the <g:datePicker> in the controller.
    */
   def dateTimePicker = {attrs, body ->
@@ -164,8 +159,8 @@ class DateAndTimeTagLib {
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_dateTime${Util.randomId()}"
     def name = attrs.name ?: attrs.id
-    def defaultToday = attrs.defaultToday ?: 'true';
-    def pickEarlierDate = attrs.pickEarlierDate ?: 'true';
+    def defaultToday = attrs.defaultToday ?: 'true'
+    def pickEarlierDate = attrs.pickEarlierDate ?: 'true'
     def value = attrs.value ?: null
     def c = null
     def minute = ""
@@ -181,13 +176,13 @@ class DateAndTimeTagLib {
 
 
     if ((defaultToday == 'true') && (attrs?.value == null)) {
-      value = new Date();
+      value = new Date()
     }
     if (value instanceof Calendar) {
       c = value
     }
     else if (value != null) {
-      c = new GregorianCalendar();
+      c = new GregorianCalendar()
       c.setTime(value)
     }
     if (c != null) {
@@ -202,10 +197,10 @@ class DateAndTimeTagLib {
       dojoHour = (hour.length() == 2) ? hour : "0${hour}"
     }
     if (pickEarlierDate == 'false') {
-      GregorianCalendar today = new GregorianCalendar();
-      def minYear = today.get(GregorianCalendar.YEAR).toString();
-      def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString();
-      def minDay = today.get(GregorianCalendar.DAY_OF_MONTH).toString();
+      GregorianCalendar today = new GregorianCalendar()
+      def minYear = today.get(GregorianCalendar.YEAR).toString()
+      def minMonth =  (today.get(GregorianCalendar.MONTH)+1).toString()
+      def minDay = today.get(GregorianCalendar.DAY_OF_MONTH).toString()
       def minMonthFormat = (minMonth.length() == 2) ? minMonth : "0${minMonth}"
       def minDayFormat = (minDay.length() == 2) ? minDay : "0${minDay}"
       minDate = minYear + "-" + minMonthFormat + "-" + minDayFormat
@@ -245,7 +240,7 @@ class DateAndTimeTagLib {
   /**
    * Creates a number spinner that is also a text field.
    */
-  def numberPicker = {attrs, body ->
+  def numberPicker = {attrs ->
     def style = attrs.style ?: ''
     def className = attrs.class ?: ''
     def id = attrs.id ?: "dojo_ui_date${Util.randomId()}"
@@ -267,6 +262,4 @@ class DateAndTimeTagLib {
         <input id="${id}" ${style} ${className} data-dojo-type="dijit.form.NumberSpinner" value="${value}" constraints="{min:0}" id="${id}" name="${name}" ${disabledText}/>
     """
   }
-
-
 }

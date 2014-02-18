@@ -3,7 +3,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Widget Tester Page</title>
   <meta name="layout" content="main"/>
-	
+
   <g:javascript>
     function beforeEvent() {
       console.log("Before");
@@ -49,12 +49,12 @@
     function renameForDojo(name, myId){
       var renamedString= prompt ("Enter new name:", name);
       ${remoteFunction(action:'remoteJsFunction', update:'myUpdateRegion',params:"'name':renamedString,'myId':myId")}
-    }   
-    
+    }
+
     function renameForDojoWithDomElem(name, myId){
       var renamedString= prompt ("Enter new name:", name);
       ${remoteFunction(action:'remoteJsFunction',params:"'name':renamedString,'myId':myId")}
-    }  
+    }
   </g:javascript>
 
 
@@ -88,7 +88,7 @@
 	            onLoaded="onLoaded()"
 	            onComplete="onComplete()"
 	            on404="onFailure404()">
-	      Click to Fail 
+	      Click to Fail
 	    </g:remoteLink>(fails in lower region)
 	  </li>
 
@@ -139,19 +139,19 @@
 	      <option value="blue">Blue</option>
 	      <option value="transparent">No Color</option>
 	    </select>
-	  </li>  
+	  </li>
 	  <li>
 	    Remote Field:
 	    <g:remoteField action="remoteFunctionAction" update="myUpdateRegion2" paramName="color"/>
 	  </li>
 	  <li>
-			Remote Function: 
+			Remote Function:
 			<button onclick="renameForDojo('DojoPlugin',34)">Click Me to Activate</button>
 		</li>
 	  <li>
-			Remote Function (Without Dom Elem Update): 
+			Remote Function (Without Dom Elem Update):
 			<button onclick="renameForDojoWithDomElem('DojoPlugin',34)">Click Me to Activate</button>
-		</li>		
+		</li>
 	</ul>
 	<div id="myUpdateRegion" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
 	<div id="myUpdateRegion2" style=" width:500px; border:1px solid gray; margin:2em; padding:1em"></div>
@@ -186,7 +186,7 @@
     <g:submitButton name="save" value="Send Form"/>
   </g:formRemote>
 
-  
+
   <g:formRemote name="myForm2" update="formUpdateRegion" url="[action:'remoteFormSubmitAsGet']" method="Get" on200="onFailure200()">
     <h3>FormRemote with Get:</h3>
     <div>

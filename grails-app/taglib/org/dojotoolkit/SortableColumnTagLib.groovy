@@ -1,11 +1,13 @@
 package org.dojotoolkit
+
 import org.springframework.web.servlet.support.RequestContextUtils
 
 class SortableColumnTagLib {
+
   static namespace = 'dojo'
 
   /**
-   * Copied from grails code source code.
+   * Copied from Grails code source code.
    * This was customized to change all links to remoteLinks.
    */
   def sortableColumn = { attrs ->
@@ -63,8 +65,8 @@ class SortableColumnTagLib {
       title = messageSource.getMessage(titleKey, null, title, locale)
     }
 
-    attrs.action = action;
-    attrs.params = linkParams;
+    attrs.action = action
+    attrs.params = linkParams
 
     writer << "<th "
     // process remaining attributes

@@ -2,50 +2,43 @@ package org.dojotoolkit
 
 import grails.converters.JSON
 
-
 class DojoTagLib {
+
   static namespace = "dojo"
 
   /**
-   * Returns the dojo.customBuild value from Config.groovy
-   * @return
+   * @return the dojo.customBuild value from Config.groovy
    */
   private boolean useCustomDojoJsBuild() {
-    def includeCustomScripts = grailsApplication.config.dojo.use.customBuild.js ?: false 
+    def includeCustomScripts = grailsApplication.config.dojo.use.customBuild.js ?: false
     return includeCustomScripts
   }
 
   /**
-   * Returns the dojo.customBuild value from Config.groovy
-   * @return
+   * @return the dojo.customBuild value from Config.groovy
    */
   private boolean useCustomDojoCssBuild() {
     def includeCustomCss = (grailsApplication?.config?.css?.size()) ?: (grailsApplication?.config?.dojo?.use?.customBuild?.css) ?: false
     return includeCustomCss
   }
 
-
-
   /**
-   * Reads the dojo.profile.js file and converts into a grails object
+   * Reads the dojo.profile.js file and converts into a Grails object
    * @return JSONObject
    */
   private Map getDojoCustomProfile() {
     def jsonString = grailsApplication.config.dojo.profile
-    def jsonObj = JSON.parse("{${jsonString}}");
+    def jsonObj = JSON.parse("{${jsonString}}")
     return jsonObj
   }
 
-
-
   /**
-   * Will return the dojo home based on if it has a custom build
-   * @return String
+   * @return the dojo home based on if it has a custom build
    */
   private String dojoHome() {
     def dojoHome = "${g.resource(dir: pluginContextPath)}/js/dojo/${Dojo.version}"
     def customDojo = "${g.resource(dir:'')}/js/dojo/${Dojo.pluginVersion}-custom"
-    
+
     if (useCustomDojoJsBuild()) {
       return customDojo
     }
@@ -54,20 +47,16 @@ class DojoTagLib {
     }
   }
 
-
-
   /**
-   * Will allow other tags to get the dojo home as ${dojo.home()}
+   * Allows other tags to get the dojo home as ${dojo.home()}
    */
   def home = {
     out << dojoHome()
   }
 
-
-
   /**
-   * Will output custom js scripts that were created as part of the custom dojo build.
-   * Will check if dojo.include.custombuild.inHeader is true.
+   * Outputs custom js scripts that were created as part of the custom dojo build.
+   * Checks if dojo.include.custombuild.inHeader is true.
    */
   def customDojoScripts = {
     if (useCustomDojoJsBuild()) {
@@ -87,15 +76,13 @@ class DojoTagLib {
     }
   }
 
-
-
   /**
-   * Alternative to <g:javascript library="dojo"/>. This will include the dojo.js file,
+   * Alternative to <g:javascript library="dojo"/>. Includes the dojo.js file,
    * adds the standard dojo headers., and sets the theme.
    *
    * @param attrs.require = This is a map of components to include
-   * @param attrs.theme = (optional) Will include the theme if it is provided
-   * @param attrs.includeCustomBuild = (true) Will include the js files(layers) defined in dojo.profile.js.
+   * @param attrs.theme = (optional) Includes the theme if it is provided
+   * @param attrs.includeCustomBuild = (true) Includes the js files(layers) defined in dojo.profile.js.
    *                                    It is recommended you leave this to true. Setting to false, you will
    *                                    have to manually include the generated files yourself but it give more
    *                                    fine grain control on when the files get included.
@@ -156,13 +143,13 @@ class DojoTagLib {
           dojoConfig = {${dojoConfig}, modulePaths:{ ${moduleStringList.join(',')}} };
           dojoGrailsPluginConfig = {showSpinner:${showSpinner} };
         </script>
-        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js.uncompressed.js'></script>        
+        <script type='text/javascript' src='${dojoHome()}/dojo/dojo.js.uncompressed.js'></script>
       """
     }
     if(showSpinner == "true"){
       out << """ <script type='text/javascript' src='${dojoHome()}/dojoui/DojoGrailsSpinner.js'></script> """
     }
-    
+
     // if custom build then include released js files
     if(includeCustomBuild == "true"){
       out << customDojoScripts()
@@ -172,10 +159,8 @@ class DojoTagLib {
     }
   }
 
-
-
   /**
-   * Will setup the base css and themes.User still needs to define <body class="${theme}">
+   * Sets up the base css and themes.User still needs to define <body class="${theme}">
    * @param attrs.theme  = (Tundra), Soria, Nihilio. The theme to bring in.
    */
   def stylesheets = {attrs ->
@@ -198,25 +183,21 @@ class DojoTagLib {
           <link rel="stylesheet" type="text/css" href="${dojoHome()}/dojoui/resources/css/dojo-ui-ie.css" />
         <![endif]-->
       """
-    }   
+    }
   }
-
-
 
   /**
    * Includes a dojo specific css file. This is used mostly for extended css files in dojox.
    * Please use <dojo:header> or <dojo:stylesheets> for the standard files.
    */
   def css = {attrs ->
-    out << "<link rel='stylesheet' type='text/css' href='${dojoHome()}/${attrs?.file}'/>" 
+    out << "<link rel='stylesheet' type='text/css' href='${dojoHome()}/${attrs?.file}'/>"
   }
 
-
-
   /**
-   * Will include dojo modules via the dojo loader and make them available in the body of the tag script
-   * Each require will provide a callback parameter named after the last part of the module name
-   * e.g.: "dijit/form/Form" will provide a parameter called "Form" in the callback
+   * Includes dojo modules via the dojo loader and make them available in the body of the tag script
+   * Each require provides a callback parameter named after the last part of the module name
+   * e.g.: "dijit/form/Form" provides a parameter called "Form" in the callback
    * @param attrs.modules = This is a map of components to include
    * @param attrs.callbackParamNames = This overrides the default callback parameter names, in case you want to use different ones than the defaults
    * @param attrs.wrapperFunction = put the require in a wrapper function (include its signature). e.g: myFunction(param1,param2)
@@ -228,7 +209,7 @@ class DojoTagLib {
 		  callbacks = attrs.callbackParamNames
 	  }
 	  assert attrs?.callbackParamNames?.size() <= modules.size()
-	  
+
 	  out << """
 		<script type='text/javascript'>
 		  """
@@ -242,7 +223,7 @@ class DojoTagLib {
 		attrs?.modulePaths?.each{k,v->
 		  out << " dojo.registerModulePath('${k}','${v}'); "
 		}
-  
+
 	  out << body()
 	  out << """
 	  		});
@@ -254,12 +235,10 @@ class DojoTagLib {
 	  out << """
 	  </script>
 	  """
-	  
   }
 
-
   /**
-   * This will wrap a response in a text area element if a flash var is set.
+   * Wraps a response in a text area element if a flash var is set.
    * This is set by a dojo.io.iframe call and intercepted by the BaseController.
    * The end result is that a user is able to do a file upload via an ajax call
    * inside of a ContentPane.
@@ -283,5 +262,4 @@ class DojoTagLib {
       out << body()
     }
   }
-
 }

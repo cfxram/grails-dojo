@@ -6,7 +6,7 @@
   <dojo:header theme="tundra" showSpinner="false"/>
 </head>
 <body style="background:#ccc;" class="tundra">
-	
+
 	<div style="background:#fff; width:40%;margin:3em auto 0 auto; border:1px solid gray; padding:2em">
 		<h2 style="margin-top:0">Welcome to the Dojo Plugin - ${g.meta(name:'app.version')}</h2>
 		<h3>
@@ -46,11 +46,11 @@
 		<h3>
 		  <g:link controller="widget" action="tree">Try out the Tree Component</g:link>
 		</h3>
-		<div style="text-align:center; margin-top:3em">			
+		<div style="text-align:center; margin-top:3em">
 			<img src="${resource()}/images/dojo.png"/><br/>
 			<img src="${resource()}/images/grails.png">
 		</div>
 	</div>
-	
+
 </body>
 </html>
