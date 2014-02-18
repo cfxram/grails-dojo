@@ -26,6 +26,12 @@
   <dojo:datePicker name="startDate" pickEarlierDate="false"/><br/>
 </fieldset>
 
+<fieldset>
+  <legend>Date Field (with onChange script):</legend>
+  <label for="onChangeDate">Date:</label>
+  <dojo:datePicker name="onChangeDate" onChange="alert('Date Field onChange script.');"/>
+</fieldset>
+
 
 <fieldset>
   <legend>Date & Time Field:</legend>
@@ -40,9 +46,21 @@
 </fieldset>
 
 <fieldset>
+  <legend>Date & Time Field (with onChange script):</legend>
+  <label for="dateTime">Date:</label>
+  <dojo:dateTimePicker name="dateTime" onChange="alert('Date & Time Field onChange script.')"/>
+</fieldset>
+
+<fieldset>
   <legend>Time Field:</legend>
   <label for="closeTime">Closing Time:</label>
   <dojo:timerPicker name="closeTime"/>
+</fieldset>
+
+<fieldset>
+  <legend>Time Field: (with onChange script):</legend>
+  <label for="Time">Time:</label>
+  <dojo:timerPicker name="Time" onChange="alert('Time Field onChange script.');"/>
 </fieldset>
 
 
