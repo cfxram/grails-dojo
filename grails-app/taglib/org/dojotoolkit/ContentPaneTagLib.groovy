@@ -1,23 +1,23 @@
 package org.dojotoolkit
 
 import org.dojotoolkit.TagLibUtil as Util
+
 /**
- * This will create content panes for display either in the page or within other items like a tab container.
+ * Creates content panes for display either in the page or within other items like a tab container.
  */
 class ContentPaneTagLib {
+
   static namespace = 'dojo'
 
   /**
-   * This will bring in all the resources required by the tab and its related components.
+   * Brings in all the resources required by the tab and its related components.
    */
-  def contentPaneResources = {attrs, body ->
+  def contentPaneResources = {attrs ->
       out << dojo.require(modules: ['dijit/layout/ContentPane'])
   }
 
-
-
   /**
-   * This will create a content pane item.
+   * Creates a content pane item.
    * @param code - This can be passed in instead of the title attribute and will use the localization system to locale the code
    * into a localized title for the dialog.
    * @param id - if an id is not passed one will be generated for you.

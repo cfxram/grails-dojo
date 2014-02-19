@@ -1,30 +1,28 @@
 package org.dojotoolkit
+
 import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptProvider
 
 /**
  * Dojo implmentation of JavascriptProvider.
- *
  */
 class DojoProvider implements JavascriptProvider {
 
-
-  
   /**
-   * This will convert remoteXXX tag params to a dojo friendly format. Most params should be passed as a regular map but
+   * Converts remoteXXX tag params to a dojo friendly format. Most params should be passed as a regular map but
    * there are some exceptions.
    *
    * The remoteField tag passes the params as a GString. So we deal with that differently.
    *
    * If the user wishes to pass in javascript values as part of the params attribute, the best way is to pass a string
-   * that is structured like this: params="'myVar1':myJsValue, 'myVar2':myJsValue2". 
+   * that is structured like this: params="'myVar1':myJsValue, 'myVar2':myJsValue2".
    *
    * @param params
    * @return String
    */
-  private def convertParamsToDojoJson(params) {
+  private convertParamsToDojoJson(params) {
     def paramString = ""
     if(params instanceof Map){
-      def paramList = []      
+      def paramList = []
       params.each{k, v ->
         if(v instanceof String){
           v = "'${v}'"
@@ -40,21 +38,18 @@ class DojoProvider implements JavascriptProvider {
       paramString = "{${paramString}}"
     }
     else if(params instanceof String){
-      paramString = "{${params}}"      
+      paramString = "{${params}}"
     }
     return paramString.replaceAll("this", "obj")
   }
 
-
-
-
    /**
-    * Will generate the Ajax javascript to be applied to the html dom node.
+    * Generates the Ajax javascript to be applied to the html dom node.
     *
     * @param props
     * @return
     */
-  def private getDojoXhrString(Map props){
+  private getDojoXhrString(Map props){
     def method              = props?.method ?: "Get"
     def url                 = props?.url ?: ""
     def parameters          = props?.parameters ?: ""
@@ -70,19 +65,19 @@ class DojoProvider implements JavascriptProvider {
     def formName            = props?.formName ?: ""
     def preventCache        = props?.preventCache ?: false
     def updateDomElemScript = ""
-    def errorDomElemScript  = "" 
-      
-    // Update property for <g:remoteFunction> is optional so don't run js code if empty    
+    def errorDomElemScript  = ""
+
+    // Update property for <g:remoteFunction> is optional so don't run js code if empty
     if(updateDomElem?.length()){
-      updateDomElemScript = 
+      updateDomElemScript =
       "array.forEach(registry.findWidgets(dom.byId('${updateDomElem}')), function(w){" +
 	  		"console.debug('destroying',w);w.destroyRecursive();" +
 	  "}); " +
       "domAttr.set(dom.byId('${updateDomElem}'),'innerHTML',response); " +
-      "parser.parse(dom.byId('${updateDomElem}')); "          
+      "parser.parse(dom.byId('${updateDomElem}')); "
     }
 
-    // Error dom element is optional so don't run js code if empty    
+    // Error dom element is optional so don't run js code if empty
     if(errorDomElem?.length()){
       errorDomElemScript = "domAttr.set(dom.byId('${errorDomElem}'),'innerHTML',ioargs.xhr.responseText);"
     }
@@ -92,7 +87,7 @@ class DojoProvider implements JavascriptProvider {
     "try{DojoGrailsSpinner.show();}catch(e){} " +
 	"var obj = this;" +
     "require(['dojo/_base/xhr','dijit/registry', 'dojo/_base/array', 'dojo/dom', 'dojo/dom-attr', 'dojo/parser'], " +
-		"function(xhr,registry, array, dom, domAttr, parser) { " + 
+		"function(xhr,registry, array, dom, domAttr, parser) { " +
 			"xhr.${method.toLowerCase()}({" +
         		(!async ? "sync:${async}, ": "") +
 				(parameters?.length() ? "content:${parameters}, " : "") +
@@ -120,8 +115,6 @@ class DojoProvider implements JavascriptProvider {
     return dojoString
   }
 
-
-
   def doRemoteFunction(taglib, attrs, out) {
     def allowedMethods = ["Get", "Post", "Put", "Delete"]
     def method = "Get"
@@ -134,7 +127,7 @@ class DojoProvider implements JavascriptProvider {
     def parameters    = convertParamsToDojoJson(attrs?.params)
     attrs.remove('params') // to not duplicate these params on the url.
 
-    def url           = (attrs?.url instanceof String) ? attrs?.url : taglib.createLink(attrs)    
+    def url           = (attrs?.url instanceof String) ? attrs?.url : taglib.createLink(attrs)
     def updateDomElem = (attrs?.update instanceof Map ? attrs.update.success : attrs.update)
     def errorDomElem  = (attrs?.update instanceof Map ? attrs.update.failure : attrs.update)
     def sync          = attrs.sync && attrs.sync == "true" ?: "false"
@@ -174,9 +167,6 @@ class DojoProvider implements JavascriptProvider {
             formName: formName,
             preventCache: preventCache])
   }
-
-
-
 
   def prepareAjaxForm(attrs) {
     if(!attrs.method){

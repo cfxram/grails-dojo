@@ -3,30 +3,25 @@ package org.dojotoolkit
 import org.dojotoolkit.TagLibUtil as Util
 
 class TooltipTagLib {
+
   static namespace = 'dojo'
 
-
-
   /**
-   * This will bring in all the resources required by the tab and its related components.
+   * Brings in all the resources required by the tab and its related components.
    */
-  def tooltipResources = {attrs, body ->
+  def tooltipResources = {attrs ->
     out << dojo.require(modules: ['dijit/Tooltip'])
   }
 
-
   /**
-   * This will bring in all the resources required by the tab and its related components.
+   * Brings in all the resources required by the tab and its related components.
    */
-  def helpResources = {attrs, body ->
+  def helpResources = {attrs ->
     out << tooltipResources()
   }
 
-
-
   /**
-   * Creates a help icon with content that will display when the user hovers over
-   * the icon.
+   * Creates a help icon with content that displays when the user hovers over the icon.
    */
   def help = {attrs, body ->
     def style = attrs.style ?: ''
@@ -38,8 +33,6 @@ class TooltipTagLib {
       <div data-dojo-type="dijit.Tooltip" connectId="${id}">${body()}</div>
     """
   }
-
-
 
   /**
    * Attaches a tooltip to any element with an ID

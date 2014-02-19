@@ -1,8 +1,8 @@
 package org.dojotoolkit
 
 class Dojo {
-  static version = "1.7.2"
-  static pluginVersion = "1.7.2.0"
-  static srcHref = "http://download.dojotoolkit.org/release-${version}/dojo-release-${version}-src.zip"
-  static releaseHref = "http://download.dojotoolkit.org/release-${version}/dojo-release-${version}.zip"
+  static final String version = "1.7.2"
+  static final String pluginVersion = "1.7.2.0"
+  static final String srcHref = "http://download.dojotoolkit.org/release-${version}/dojo-release-${version}-src.zip"
+  static final String releaseHref = "http://download.dojotoolkit.org/release-${version}/dojo-release-${version}.zip"
 }

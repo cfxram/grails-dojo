@@ -35,11 +35,11 @@
 						<dojo:popOver label="Load the action" type="button" controller="widget" action="popOverForm" containLinks="true"/>
 					</li>
 					<li>
-						<g:link action="list">Ajax Call (without using a grails tag)</g:link>
-					</li>	
-					<li>		
+						<g:link action="list">Ajax Call (without using a Grails tag)</g:link>
+					</li>
+					<li>
 						<dojo:popOver label="Open" type="button">
-							<dojo:frameLink name="myButton" action="list" frame="popOverExamples">Ajax Call (without using a grails tag)</dojo:frameLink>
+							<dojo:frameLink name="myButton" action="list" frame="popOverExamples">Ajax Call (without using a Grails tag)</dojo:frameLink>
 						</dojo:popOver>
 					</li>
           <li>
@@ -54,40 +54,40 @@
 
 
 	</div>
-	
+
 	<ul style="float:left">
-		<li>		
+		<li>
 			<dojo:popOver label="Click to Activate PopOver" type="button">
 				<div style="padding:2em">This is a popover that was activated by a click from a button.</div>
 			</dojo:popOver>
 		</li>
-		<li>		
+		<li>
 			<dojo:popOver label="Hover to Activate PopOver" type="button" activate="hover">
 				<div style="padding:2em">This is a popover that was activated by a mousing over a button.</div>
 			</dojo:popOver>
 		</li>
-		<li>	
+		<li>
 			<dojo:popOver label="Click to Activate PopOver" type="link">
 				<div style="padding:2em">This is a popover that was activated by a click from a link.</div>
 			</dojo:popOver>
-		</li>		
+		</li>
 		<li>
 			<dojo:popOver label="Hover to Activate PopOver" type="link" activate="hover">
 				<div style="padding:2em">This is a popover that was activated by a mousing over a link.</div>
 			</dojo:popOver>
-		</li>	
-		<li>	
+		</li>
+		<li>
 			<dojo:popOver label="Click to see content." type="link" contentDomId="popOverContentRegion" name="myCustomWindow">
 				This content should be replaced with the content inside the dojo:popOverContent tag.
 			</dojo:popOver>
 			<dojo:popOverContent id="popOverContentRegion">
 				<div style="background:#eee; padding:2em; border:1px solid #ccc">
 					This is some external content
-				</div>	
+				</div>
 				<dojo:closePopOver popOver="myCustomWindow">Close</dojo:closePopOver>
 				<button onclick="${dojo.closePopOverScript(popOver:'myCustomWindow')}">Close Button</button>
-			</dojo:popOverContent>			
-		</li>			
+			</dojo:popOverContent>
+		</li>
 		<li>
 			<dojo:popOver label="Load the action in popOver" type="button" controller="widget" action="popOverForm" containLinks="true"/>
 		</li>
@@ -101,12 +101,10 @@
     </li>
 
 	</ul>
-	
 
 <div style="clear:both; margin-top:5em">
 
 </div>
-	
-	
+
 </body>
 </html>

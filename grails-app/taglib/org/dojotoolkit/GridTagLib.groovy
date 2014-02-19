@@ -1,22 +1,21 @@
 package org.dojotoolkit
+
 import org.dojotoolkit.TagLibUtil as Util
 
 class GridTagLib {
+
   static namespace = 'dojo'
-  
 
   /**
    * Outputs the css and javascript files required for the grid.
    */
-  def gridResources = {attrs,body ->
+  def gridResources = {attrs ->
 	def theme = attrs?.remove("theme") ?: "tundra"
-    out << dojo.require(modules:['dojoui/data/GrailsQueryReadStore','dojoui/widget/DataGrid','dijit/layout/BorderContainer','dijit/layout/ContentPane','dojoui/Bind'])    
+    out << dojo.require(modules:['dojoui/data/GrailsQueryReadStore','dojoui/widget/DataGrid','dijit/layout/BorderContainer','dijit/layout/ContentPane','dojoui/Bind'])
     out << dojo.css(file:"dojox/grid/resources/Grid.css")
-    out << dojo.css(file:"dojox/grid/resources/${theme}Grid.css") 
+    out << dojo.css(file:"dojox/grid/resources/${theme}Grid.css")
     out << dojo.css(file:"dojoui/widget/resources/dataGrid.css")
   }
-
-
 
   /**
    * Creates a dataGrid on the page. The data for the data grid can come from
@@ -28,7 +27,7 @@ class GridTagLib {
     def href = attrs.remove("href") ?: g.createLink(attrs)
     def max = attrs.remove("max") ?: 1000
     def sort = attrs.remove("sort") ?: ""
-    def order = attrs.remove("order") ?: "asc" // asc or desc    
+    def order = attrs.remove("order") ?: "asc" // asc or desc
     def descending = (order == "desc") ? "true" : "false"
     def selectable = attrs.remove("selectable") ?: "false"
     def header = attrs.remove("header") ?: null
@@ -40,11 +39,11 @@ class GridTagLib {
     attrs.remove("id")
 
 
-    // Data Source 
+    // Data Source
     out << """
       <div data-dojo-type="dojoui.data.GrailsQueryReadStore" data-dojo-id="${storeId}" url="${href}" max="${max}"></div>
     """
-      
+
     // Grid
     if(header){
       out << """
@@ -89,8 +88,6 @@ class GridTagLib {
   }
 
 
-
-
   /**
    * A child tag of <dojo:grid>, this defines a column.
    */
@@ -103,7 +100,7 @@ class GridTagLib {
     def formatter = attrs.formatter ?: "null"
 
     if (code.length()) {
-      label = message(code: code);
+      label = message(code: code)
     }
     // Custom Formatting Found so create a formatter.
     if (cleanedString.length()) {
@@ -129,44 +126,37 @@ class GridTagLib {
     """
   }
 
-  
-  
   /**
    * Binds a span tag's content to a data property.
    * @param attrs.variable
    * @param attrs.default
    */
-   def bind = {attrs, body ->
+   def bind = {attrs ->
      attrs.defaultValue = attrs.remove("default") ?: ""
      out << """
        <span data-dojo-type="dojoui.Bind" ${Util.htmlProperties(attrs)}>${attrs.defaultValue}</span>
      """
-   }  
-
-
+   }
 
    /**
     * Creates a button with the correct javascript to reload the grid
     * data. Good for reseting a grid after a form has been run.
     */
-   def gridLoadDataButton = {attrs,body ->
+   def gridLoadDataButton = {attrs ->
      attrs.onclick = attrs?.onclick ?: ''
      def grid = attrs.remove('grid')
      def code = attrs.remove('code')
      def label = attrs.remove('label')
-     def form = attrs.remove('form') ?: ''     
+     def form = attrs.remove('form') ?: ''
      def btnClick = "require(['dijit/registry'], function(registry){registry.byId('${grid}').query('${form}');});"
-          
+
      if(code?.length()){
        label = message(code:code)
-     }     
-     
-     attrs?.onclick = btnClick + "; " + attrs.onclick;     
+     }
+
+     attrs?.onclick = btnClick + "; " + attrs.onclick
      out << """
       <button ${Util.htmlProperties(attrs)}>${label}</button>
      """
    }
-   
-   
-   
 }

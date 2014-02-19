@@ -1,23 +1,28 @@
-grails.project.class.dir = "target/classes"
-grails.project.test.class.dir = "target/test-classes"
-grails.project.test.reports.dir = "target/test-reports"
-//grails.project.war.file = "target/${appName}-${appVersion}.war"
+grails.project.work.dir = 'target'
+
 grails.project.dependency.resolution = {
-    // inherit Grails' default dependencies
-    inherits("global") {
-        // uncomment to disable ehcache
-        // excludes 'ehcache'
-    }
-    log "warn" 
+
+    inherits 'global'
+    log 'warn'
+
     repositories {
-        grailsPlugins()
-        grailsHome()
         grailsCentral()
+        mavenLocal()
+        mavenCentral()
     }
-    dependencies {}
+
     plugins {
-      build   ":tomcat:$grailsVersion"
-      compile ":hibernate:$grailsVersion"
-      build ":release:2.0.4"      
-    }  
+
+        build ":tomcat:$grailsVersion", {
+            export = false
+        }
+
+        compile ":hibernate:$grailsVersion", {
+            export = false
+        }
+
+        build ':release:2.2.1', ':rest-client-builder:1.0.3', {
+            export = false
+        }
+    }
 }

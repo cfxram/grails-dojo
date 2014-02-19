@@ -13,14 +13,14 @@
 		      var allGrid = registry.byId('myGrid');
 		      console.log('All Users Grid');
 		      console.log(allGrid.selectedRows);
-		
+
 		      var progGrid = registry.byId('myGrid2');
 		      console.log('Program Users Grid');
 		      console.log(progGrid.selectedRows);
           });
       }
   </script>
-	
+
   <style type="text/css">
 
 	  .tundra .dojoxGridCell,
@@ -31,7 +31,7 @@
 </head>
 <body>
 
-	<div class="dojoGridInGrails" style="padding:1em; background:#eee; float:right; margin:2em; border:1px solid gray">		
+	<div class="dojoGridInGrails" style="padding:1em; background:#eee; float:right; margin:2em; border:1px solid gray">
 	<g:form name="gridForm">
 		<h2 style="margin-top:0; color:gray">Search Test</h2>
 		Name: <input type="text" name="name"><br/>
@@ -40,7 +40,7 @@
 
 		<dojo:gridLoadDataButton label="Search" type="button" grid="myGrid" form="gridForm"/>
 		<dojo:gridLoadDataButton label="Clear" type="reset" grid="myGrid"/>
-		
+
 		<p>
 		Selected: <dojo:bind variable="myGrid.selected" id="asdasd" default="None"/>Selected<br/>
 		Total Records <dojo:bind variable="myGrid.rowCount"/>
@@ -48,8 +48,8 @@
 	</g:form>
 	<button onclick="myTest()">Test</button>
 	</div>
-	
-	
+
+
 	<%
 		header = {
 			return """
@@ -71,14 +71,14 @@
 	%>
 
   <div data-dojo-type="dojoui.layout.TabContainer" style="width:750px; height:300px; margin:2em">
-    <div data-dojo-type="dojoui.layout.ContentPane" title="First Grid" containLinks="true">	
+    <div data-dojo-type="dojoui.layout.ContentPane" title="First Grid" containLinks="true">
 		  <dojo:grid controller="widget" action="listJson" name="myGrid" max="20" sort="name" header="${header}" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 				<dojo:col width="15%" name="Color" field="color"/>
 				<dojo:col width="15%" name="Shape" field="shape"/>
-		  </dojo:grid>		
+		  </dojo:grid>
     </div>
-    <div data-dojo-type="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">	
+    <div data-dojo-type="dojoui.layout.ContentPane" title="My second Grid" containLinks="true">
 		  <dojo:grid controller="widget" action="listJson" name="myGrid2" max="20" sort="color"
 				style="height:200px;" selectable="true">
 				<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
@@ -87,32 +87,32 @@
 		  </dojo:grid>
     </div>
   </div>
-	
-	
+
+
 	<div  style="margin:2em; background:#eee; border:1px solid #ccc; width:750px">
 		<h2 style="margin-top:0">Selected Items (using dojo:bind):</h2>
 		<dojo:bind variable="myGrid.selectedRow.name"/>
 		<dojo:dataSourceView store="dijit.byId('myGrid').selectedStore" class="dojoGridInGrails">
 			<dojo:nodeDefaultTemplate>
-			
-				<span style="padding:1em; font-weight:bold">*{node.name}</span> 
+
+				<span style="padding:1em; font-weight:bold">*{node.name}</span>
 				Color: <span style="color:{node.color}">{node.color}</span>
 				Shape: {node.shape}
 			</dojo:nodeDefaultTemplate>
 			<dojo:noItemTemplate>
 			  <h3 style="color:gray; padding:1em">Click on one of the checkboxes in the grid above.<h3>
 			</dojo:noItemTemplate>
-		</dojo:dataSourceView>		
-	</div>	
+		</dojo:dataSourceView>
+	</div>
 
-  <dojo:grid controller="widget" action="listJson" name="myGrid3" max="20" sort="color" 
-		style="height:200px; width:750px; margin:2em; border:1px solid silver" 
+  <dojo:grid controller="widget" action="listJson" name="myGrid3" max="20" sort="color"
+		style="height:200px; width:750px; margin:2em; border:1px solid silver"
 		header="Third Grid: Make sure to specify a height style.">
 		<dojo:col width="50%" name="Name" field="name">{row.name} ({row.id})</dojo:col>
 		<dojo:col width="15%" name="Color" field="color"/>
 		<dojo:col width="15%" name="Shape" field="shape"/>
   </dojo:grid>
-	
+
 
   <div style="margin:2em; background:#eee; border:1px solid #ccc; width:750px">
     <h2 style="margin-top:0">Notes</h2>
@@ -126,7 +126,7 @@
 			<li>You must specify a height style or the grid will disappear. Specifying the height in a css class doesn't work though.</li>
       <li>IE 6 behaves weirdly if you specify the rowHeight property.</li>
       <li>
-				Use .tundra .dojoxGridCell{height:30px} to style the cells. 
+				Use .tundra .dojoxGridCell{height:30px} to style the cells.
 				(there is a weird scrolling issue that puts spaces when fetching from db.)
 				</li>
     </ul>
@@ -144,7 +144,3 @@
 
 </body>
 </html>
-
-
-
-

@@ -3,17 +3,15 @@ package org.dojotoolkit
 import org.dojotoolkit.TagLibUtil as Util
 
 class PanelTagLib {
+
   static namespace = 'dojo'
 
-
   /**
-   * This will bring in all the resources required by the dialog tag.
+   * Brings in all the resources required by the dialog tag.
    */
-  def panelResources = {attrs, body ->
+  def panelResources = {attrs ->
     out << dojo.require(modules: ['dijit/Tooltip'])
   }
-
-
 
   /**
    * This defines a titled panel that can be styled like a normal div. It is
@@ -44,8 +42,6 @@ class PanelTagLib {
       """
     }
   }
-
-
 
   /**
    * Child tag of panel Creates the header region.
@@ -97,8 +93,6 @@ class PanelTagLib {
     """
   }
 
-
-
   /**
    * Child tag of panel. Creates the body region.
    */
@@ -125,8 +119,6 @@ class PanelTagLib {
     }
   }
 
-
-
   /**
    * A Child tag of panel. Creates a footer region.
    */
@@ -137,6 +129,4 @@ class PanelTagLib {
       </tr>
     """
   }
-
-
 }

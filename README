@@ -2,7 +2,7 @@ Adds Dojo as a Javascript Provider for Grails. This provides full support for
 <g:formRemote>, <g:remoteField>, <g:remoteFunction>, <g:remoteLink> and <g:submitToRemote>.
 
 Also adds two dojo tags: <dojo:paginate> and <dojo:sortableColumn>. These do the same thing
-that the grails versions of the tags but will do them via ajax calls.
+that the Grails versions of the tags but will do them via ajax calls.
 
 The dojo toolkit is bundled with the library so to add more dojo resources to your app, use
 the tags: <dojo:header> and <dojo:require>.
@@ -26,7 +26,7 @@ Contributed Tags:
 <dojo:tabContainer> (<dojo:contentPane>)
 
 The Dojo Plugin also allows you to create a custom dojo release tailored for your application.
-This can be done during war creation or manually using the "install-custom-dojo" grails script.
+This can be done during war creation or manually using the "install-custom-dojo" Grails script.
 Then add these settings to your Config.groovy file:
 dojo.optimize.during.build = true;
 dojo.use.customBuild.js = true;

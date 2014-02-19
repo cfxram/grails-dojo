@@ -1,19 +1,20 @@
 package org.dojotoolkit
+
 import org.dojotoolkit.TagLibUtil as Util
 
 class TreeTagLib {
+
   static namespace = 'dojo'
 
   /**
-   * This will bring in all the resources required by the dialog tag.
+   * Brings in all the resources required by the dialog tag.
    */
   def treeResources = {attrs, body ->
     out << dojo.require(modules: ['dojoui/widget/Tree','dojoui/widget/ForestStoreModel','dojo/data/ItemFileWriteStore'])
   }
 
-
   /**
-   * This will create a client-side tree structure that allows any type of
+   * Creates a client-side tree structure that allows any type of
    * html into the treenodes. It requires a href that points to JSON formated
    * output.
    */

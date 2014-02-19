@@ -1,20 +1,23 @@
 package org.dojotoolkit
 
 import org.dojotoolkit.TagLibUtil as Util
+
 /**
- * This will support creating menus of many kinds.  It supports the bar type menu as well slide out menus and right click
- * menus.
+ * Supports creating menus of many kinds.  It supports the bar type menu as well slide out menus and right click menus.
  */
 class MenuTagLib {
+
     static namespace = 'dojo'
+
     /**
-     * This will bring in all the resources required by the menu tag.
+     * Brings in all the resources required by the menu tag.
      */
-    def menuResources = {attrs, body ->
+    def menuResources = {attrs ->
         out << dojo.require(modules: ['dijit/Menu', 'dijit/MenuItem', 'dijit/MenuBar', 'dijit/MenuBarItem', 'dijit/MenuSeparator', 'dijit/PopupMenuBarItem', 'dijit/PopupMenuItem'])
     }
+
     /**
-     * This will create the base menu item either a menu bar or a popup menu/right click(context) or sidenav.  The menu is then filled with
+     * Creates the base menu item either a menu bar or a popup menu/right click(context) or sidenav.  The menu is then filled with
      * other menu items and embeded popups, etc.
      * @param id - The unique id for this item or one will be generated.
      * @param type bar, popup, barpopup, context , sidenav
@@ -88,19 +91,15 @@ class MenuTagLib {
         }
     }
 
-
-
     /**
-     * This will create a menu separator object.
+     * Creates a menu separator object.
      */
     def menuSeparator = {attrs, body ->
         out << """ <div data-dojo-type="dijit.MenuSeparator" ${Util.htmlProperties(attrs)}></div> """
     }
 
-
-
     /**
-     * This will create an item within another menu structure.  This must be contained inside an existing menu structure
+     * Creates an item within another menu structure.  This must be contained inside an existing menu structure
      * as defined in the menu tag but this helps you nest items within the base menu item.  This item can be a menu item
      * or another bar within the menu tag.  This item supports all the documented dojo parameters as well as the following:
      * @param type - The type of item to create either item, bar, popup or popupBar
