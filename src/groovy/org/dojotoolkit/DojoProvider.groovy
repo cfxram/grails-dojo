@@ -1,16 +1,14 @@
 package org.dojotoolkit
+
 import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptProvider
 
 /**
  * Dojo implmentation of JavascriptProvider.
- *
  */
 class DojoProvider implements JavascriptProvider {
-
-
   
   /**
-   * This will convert remoteXXX tag params to a dojo friendly format. Most params should be passed as a regular map but
+   * Converts remoteXXX tag params to a dojo friendly format. Most params should be passed as a regular map but
    * there are some exceptions.
    *
    * The remoteField tag passes the params as a GString. So we deal with that differently.
@@ -21,7 +19,7 @@ class DojoProvider implements JavascriptProvider {
    * @param params
    * @return String
    */
-  private def convertParamsToDojoJson(params) {
+  private convertParamsToDojoJson(params) {
     def paramString = ""
     if(params instanceof Map){
       def paramList = []      
@@ -45,16 +43,13 @@ class DojoProvider implements JavascriptProvider {
     return paramString
   }
 
-
-
-
    /**
-    * Will generate the Ajax javascript to be applied to the html dom node.
+    * Generates the Ajax javascript to be applied to the html dom node.
     *
     * @param props
     * @return
     */
-  def private getDojoXhrString(Map props){
+  private getDojoXhrString(Map props){
     def method              = props?.method ?: "Get"
     def url                 = props?.url ?: ""
     def parameters          = props?.parameters ?: ""
@@ -186,8 +181,6 @@ class DojoProvider implements JavascriptProvider {
     return dojoString
   }
 
-
-
   def doRemoteFunction(taglib, attrs, out) {
     def allowedMethods = ["Get", "Post", "Put", "Delete"]
     def method = "Get"
@@ -252,9 +245,6 @@ class DojoProvider implements JavascriptProvider {
             position: position,
             uploadFile:uploadFile])
   }
-
-
-
 
   def prepareAjaxForm(attrs) {
     if(!attrs.method){

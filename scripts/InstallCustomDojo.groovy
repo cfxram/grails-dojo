@@ -1,10 +1,10 @@
 includeTargets << grailsScript("_GrailsSettings")
 includeTargets << grailsScript("_GrailsEvents")
 
-includeTargets << new File("${basedir}/scripts/_DojoTasks.groovy")
+includeTargets << new File(dojoPluginDir, "scripts/_DojoTasks.groovy")
 
-target(main: "Will create the optimized dojo version and copy to the application.") {
+target(installCustomDojo: "Creates the optimized dojo version and copies to the application.") {
   depends(downloadDojoSource, createDojoCssBuild, createDojoProfile, buildDojo, copyDojoToApp ,cleanup)
 }
 
-setDefaultTarget(main)
+setDefaultTarget(installCustomDojo)

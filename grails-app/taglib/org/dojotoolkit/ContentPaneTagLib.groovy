@@ -1,8 +1,9 @@
 package org.dojotoolkit
 
 import org.dojotoolkit.TagLibUtil as Util
+
 /**
- * This will create content panes for display either in the page or within other items like a tab container.
+ * Creates content panes for display either in the page or within other items like a tab container.
  */
 class ContentPaneTagLib {
     static namespace = 'dojo'

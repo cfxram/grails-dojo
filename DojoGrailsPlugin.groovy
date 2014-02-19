@@ -1,21 +1,16 @@
-import org.dojotoolkit.*
 import org.codehaus.groovy.grails.plugins.web.taglib.JavascriptTagLib
-// Uncompressed 
+import org.dojotoolkit.Dojo
+import org.dojotoolkit.DojoProvider
+
 class DojoGrailsPlugin {
   def version = "1.6.1.18"
   def grailsVersion = "1.3.0 > *"
-  def dependsOn = [:]
   def pluginExcludes = [
-          "grails-app/conf/Config.groovy",
-          "grails-app/conf/BootStrap.groovy",
           "grails-app/controllers/**",
           "grails-app/domain/**",
           "grails-app/views/**",
-          "web-app/js/prototype/**",
           "web-app/js/appwidgets/**"
   ]
-  def author = "Rob Meidal"
-  def authorEmail = "cfxram@gmail.com"
   def title = "Dojo 1.6.1 for Grails"
   def description = """
     The Dojo Plugin adds the Dojo toolkit to your application. This javascript library provides
@@ -26,7 +21,7 @@ class DojoGrailsPlugin {
     <g:submitToRemote>.
 
     Also adds these two tags: <dojo:paginate> and <dojo:sortableColumn>. These do the same thing
-    that the grails versions of the tags but will do them via ajax calls.
+    that the Grails versions of the tags but does them via Ajax calls.
 
     Adds these convenient widget tags:
       <dojo:header>, <dojo:require>, <dojo:css>,
@@ -45,12 +40,18 @@ class DojoGrailsPlugin {
 
     For more information about the Dojo Toolkit please visit http://www.dojotoolkit.org/.
   """  
+
   def documentation = "http://grails.org/plugin/dojo"
-  def license = "APACHE"
-  def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPDOJO" ]
-  def scm = [ url: "https://github.com/cfxram/grails-dojo" ]
+
+  def license = 'APACHE'
+  def developers = [
+    [name: 'Rob Meidal', email: 'cfxram@codehaus.org']
+  ]
+  def issueManagement = [system: 'JIRA', url: 'http://jira.grails.org/browse/GPDOJO']
+  def scm = [url: 'https://github.com/cfxram/grails-dojo']
+
   def doWithApplicationContext = { applicationContext ->
-    JavascriptTagLib.PROVIDER_MAPPINGS.dojo = DojoProvider.class
+    JavascriptTagLib.PROVIDER_MAPPINGS.dojo = DojoProvider
     JavascriptTagLib.LIBRARY_MAPPINGS.dojo = ["dojo/${Dojo.version}/dojo/dojo"]
   }
 }
