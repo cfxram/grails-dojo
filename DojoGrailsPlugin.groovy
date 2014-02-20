@@ -3,7 +3,7 @@ import org.dojotoolkit.Dojo
 import org.dojotoolkit.DojoProvider
 
 class DojoGrailsPlugin {
-  def version = "1.6.1.18"
+  def version = "1.6.1.19"
   def grailsVersion = "1.3.0 > *"
   def pluginExcludes = [
           "grails-app/controllers/**",
